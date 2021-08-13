@@ -1,0 +1,144 @@
+<template>
+  <section class="news-list">
+    <div class="container">
+      <ul class="crumbs">
+        <li class="crumbs__item">
+          <NuxtLink to="/">Главная</NuxtLink>
+        </li>
+        <li class="crumbs__item current">
+          <NuxtLink to="#">Новости</NuxtLink>
+        </li>
+      </ul>
+      <div class="top-content">
+        <div class="top-content__wrapper top-content__wrapper-6">
+          <h2 class="top-content__title">
+            Новости
+          </h2>
+          <p class="top-content__text">
+            Что происходит в Шымкенте?
+          </p>
+        </div>
+        <div class="top-content__line"></div>
+      </div>
+      <ul class="news-list__categories">
+        <li class="news-list__categories-item active">
+          Все
+        </li>
+        <li class="news-list__categories-item">
+          В Шымкенте
+        </li>
+        <li class="news-list__categories-item">
+          В Казахстане
+        </li>
+        <li class="news-list__categories-item">
+          В мире
+        </li>
+      </ul>
+      <div class="news-list__inner">
+        <div class="news-list__main-news" style="background-image: url('/images/blog-img1.jpg');">
+          <div class="news-list__main-news-wrapper">
+            <h5 class="news-list__main-news-title">
+              <a href="#">Тёплый во всех смыслах: Шымкент становится туристическим хабом Казахстана</a>
+            </h5>
+            <div class="news-list__info">
+              <div class="news-list__date">
+                02.11.2020 | 19:50
+              </div>
+              <div class="news-list__author">
+                <a href="#">Forbes.kz</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="news-list__last-news">
+          <h5 class="news-list__last-news-title">
+            Последние новости
+          </h5>
+          <div class="news-list__last-news-date">
+            Обновлено 02.11.2020 в 19:00
+          </div>
+          <ul class="news-list__last-news-inner">
+            <li class="news-list__last-news-item">
+              <h6 class="news-list__last-news-item-title">
+                <a href="#">Региональный этап национального чемпионата «WorldSkills Kazakhstan-2020» пройдет 26-29 октября.</a>
+              </h6>
+              <div class="news-list__last-news-item-date">
+                Опубликовано: 26.10.2020
+              </div>
+            </li>
+            <li class="news-list__last-news-item">
+              <h6 class="news-list__last-news-item-title">
+                <a href="#">Детективная игра Сэинт Твинс</a>
+              </h6>
+              <div class="news-list__last-news-item-date">
+                Опубликовано: 26.10.2020
+              </div>
+            </li>
+            <li class="news-list__last-news-item">
+              <h6 class="news-list__last-news-item-title">
+                <a href="#">Онлайн экскурсии по музеям и историческим событиям проводят в Туркестанской области</a>
+              </h6>
+              <div class="news-list__last-news-item-date">
+                Опубликовано: 26.10.2020
+              </div>
+            </li>
+            <li class="news-list__last-news-item">
+              <h6 class="news-list__last-news-item-title">
+                <a href="#">Заливать лед начали для фигуристов и хоккеистов Шымкента</a>
+              </h6>
+              <div class="news-list__last-news-item-date">
+                Опубликовано: 26.10.2020
+              </div>
+            </li>
+            <a href="#" class="news-list__last-news-link">
+              <svg xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"/></g></svg>
+            </a>
+          </ul>
+        </div>
+      </div>
+      <div class="news-list__items">
+        <div class="news-list__item" v-for="(New,i) in news.data" :key="i">
+          <NuxtLink class="popup-modal" :to="'/new/'+New.alias">
+            <img class="news-list__item-img" :src="getImages(New.image)" alt="">
+            <div class="news-list__item-date">
+              Опубликовано: <span>{{ New.created_at }}</span>
+            </div>
+            <p class="news-list__item-text" v-html="truncate(New['description_'+$i18n.locale],50)"></p>
+          </NuxtLink>
+        </div>
+      </div>
+      <div class="load-more">
+        <a href="#">Загрузить еще...</a>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+export default {
+  name: "index",
+  methods:{
+    getImages(data){
+      return this.$store.state.image.image + data ;
+    },
+    truncate(string, value) {
+      return string.substring(0, value) + '…';
+    }
+
+  },
+  async asyncData({$axios}) {
+    let news = [];
+    try{
+      await $axios.$get("/all-news").then((e)=>{news = e});
+    }
+    catch (e) {
+      console.log(e);
+    }
+    return {news}
+  },
+}
+</script>
+
+<style scoped>
+
+</style>

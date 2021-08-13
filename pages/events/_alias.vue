@@ -82,9 +82,9 @@
                     :marker-id="i"
                     marker-type="placemark"
                     :coords="item"
-                    :hint-content="place['title_'+$i18n.locale]"
-                    :balloon="{header: 'header', body: 'body', footer: 'footer'}"
-                    :icon="{color: 'green', glyph: 'cinema'}"
+                    :hint-content="event['title_'+$i18n.locale]"
+                    :balloon="{header: event['title_'+$i18n.locale]}"
+                    :icon="{color: 'green', glyph: 'circle'}"
                     cluster-name="1"
                   ></ymap-marker>
                 </div>
@@ -125,19 +125,36 @@ export default {
       placemarks: []
     }
   },
+  methods:{
+    getImages(data){
+      console.log(this.$store.state.image.image);
+      return this.$store.state.image.image + data ;
+    },
+    truncate(string, value) {
+      return string.substring(0, value) + '…';
+    },
+    activeTab(i){
+      this.tabs.forEach((item,i) => {
+        item.active = ''
+      })
+      this.tabs[i].active = 'active'
+    }
+
+  },
   async asyncData({$axios,route,redirect,store}) {
     let event;
     let galleries = [];
+    let placemarks = [];
     await $axios.$get("/event/"+route.params.alias)
       .then(e => {
         if (Object.keys(e).length === 0) throw({ statusCode: 404, message: 'Event not found' })
         else {
           event = e;
-          let placemarks = []
           let TIMA = JSON.parse(event.address_link)
           TIMA.forEach((item, i) => {
             placemarks[i] = [item.lat, item.lng];
           })
+          // console.log(placemarks)
         }
       }).catch(e => {
         error(e)
@@ -153,7 +170,7 @@ export default {
     galleries.push({
       id:100, src:store.state.image.image +event.image, thumbnail:store.state.image.image +event.image
     })
-    return {event,galleries};
+    return {event,galleries,placemarks};
   }
 }
 </script>

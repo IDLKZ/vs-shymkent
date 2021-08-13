@@ -98,7 +98,7 @@
               </button>
             </div>
             <div class="routes-page__list">
-              <a class="routes-page__link" href="#" v-for="(item,i) in routes" :key="i">
+              <NuxtLink class="routes-page__link" :to="'/routes/'+item.alias" v-for="(item,i) in routes" :key="i">
                 <div class="routes-page__item">
                   <div class="routes-page__item-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
                   <div class="routes-page__item-content">
@@ -127,7 +127,7 @@
                     </div>
                   </div>
                 </div>
-              </a>
+              </NuxtLink>
               <div class="load-more">
                 <a href="#">Загрузить еще</a>
               </div>

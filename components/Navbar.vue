@@ -9,7 +9,7 @@
         </div>
         <ul class="footer-nav__content-list">
           <li class="footer-nav__content-item active">
-            <NuxtLink to="/">О городе</NuxtLink>
+            <NuxtLink to="/about">О городе</NuxtLink>
           </li>
           <li class="footer-nav__content-item">
             <NuxtLink to="/places">Путеводитель</NuxtLink>
@@ -24,10 +24,10 @@
             <NuxtLink to="/souvenirs">Cувениры</NuxtLink>
           </li>
           <li class="footer-nav__content-item">
-            <NuxtLink to="/">Новости</NuxtLink>
+            <NuxtLink to="/news">Новости</NuxtLink>
           </li>
           <li class="footer-nav__content-item">
-            <NuxtLink to="/">Блог</NuxtLink>
+            <NuxtLink to="/blogs">Блог</NuxtLink>
           </li>
           <li class="footer-nav__content-item footer-nav__content-item--to-del">
             <NuxtLink to="/">Личный кабинет</NuxtLink>
@@ -98,7 +98,7 @@
           <nav class="header__nav">
             <ul class="header__menu">
               <li class="header__menu-item">
-                <NuxtLink class="popup-modal" to="#modal">О городе</NuxtLink>
+                <NuxtLink class="popup-modal" to="/about">О городе</NuxtLink>
               </li>
               <li class="header__menu-item">
                 <NuxtLink class="popup-modal" to="/places">Путеводитель</NuxtLink>
@@ -118,8 +118,8 @@
                   <svg xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"/></g></svg>
                 </a>
                 <div class="header__more-wrapper">
-                  <NuxtLink class="header__more-wrapper-item popup-modal" to="#modal">Новости</NuxtLink>
-                  <NuxtLink class="header__more-wrapper-item popup-modal" to="#modal">Блог</NuxtLink>
+                  <NuxtLink class="header__more-wrapper-item popup-modal" to="/news">Новости</NuxtLink>
+                  <NuxtLink class="header__more-wrapper-item popup-modal" to="/blogs">Блог</NuxtLink>
                 </div>
               </li>
             </ul>

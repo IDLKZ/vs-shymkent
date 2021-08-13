@@ -383,7 +383,6 @@
 <script>
 import Lingallery from 'lingallery';
 export default {
-  name: "_alias",
   components:{
     Lingallery
   },

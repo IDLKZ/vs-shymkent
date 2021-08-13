@@ -471,8 +471,8 @@ export default {
       console.log(this.$store.state.image.image);
       return this.$store.state.image.image + data ;
     },
-    truncate(string, value) {
-      return string.substring(0, value) + '…';
+    truncate(string = '', value) {
+      return string.substring(0, value) + '...';
     }
 
   },
@@ -482,7 +482,9 @@ export default {
       await $axios.$get("/sliders").then((e)=>{e.length > 0 ? sliders = e : null});
       await $axios.$get("/categoriesofthe-places").then((e)=>{e.length > 0 ? categoryplace = e : null});
       await $axios.$get("/events").then((e)=>{e.length > 0 ? events = e : null});
-      await $axios.$get("/routes").then((e)=>{e.length > 0 ? routes = e : null});
+      await $axios.$get("/routes").then((e)=>{
+        e.length > 0 ? routes = e[0] : null
+      });
       await $axios.$get("/souvenirs").then((e)=>{e.length > 0 ? souvenirs = e : null});
       await $axios.$get("/news").then((e)=>{e.length > 0 ? blogs = e : null});
     }

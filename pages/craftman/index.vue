@@ -73,20 +73,20 @@
                   <NuxtLink :to="'/souvenirs/'+item.alias">
                     <div class="souvenirs__item-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
                   </NuxtLink>
-                    <div class="souvenirs__item-content">
-                      <h4 class="souvenirs__item-title">
-                        <NuxtLink :to="'/souvenirs/'+item.alias">{{ item['title_'+$i18n.locale] }}</NuxtLink>
-                      </h4>
-                      <p class="souvenirs__item-text" v-html="truncate(item['description_'+$i18n.locale],50)"></p>
-                      <div class="souvenirs__item-price-wrapper">
-                        <button class="souvenirs__item-btn popup-modal" v-if="item.eventum">
-                          <span>Купить</span>
-                        </button>
-                        <div class="souvenirs__item-price">
-                          {{ item.price }} ТГ
-                        </div>
+                  <div class="souvenirs__item-content">
+                    <h4 class="souvenirs__item-title">
+                      <NuxtLink :to="'/souvenirs/'+item.alias">{{ item['title_'+$i18n.locale] }}</NuxtLink>
+                    </h4>
+                    <p class="souvenirs__item-text" v-html="truncate(item['description_'+$i18n.locale],50)"></p>
+                    <div class="souvenirs__item-price-wrapper">
+                      <button class="souvenirs__item-btn popup-modal" v-if="item.eventum">
+                        <span>Купить</span>
+                      </button>
+                      <div class="souvenirs__item-price">
+                        {{ item.price }} ТГ
                       </div>
                     </div>
+                  </div>
                 </div>
               </div>
               <div class="load-more">
@@ -155,12 +155,12 @@ export default {
         {
           id: 0,
           title: 'Сувениры',
-          active: 'active'
+          active: ''
         },
         {
           id: 1,
           title: 'Ремесленники',
-          active: ''
+          active: 'active'
         },
         {
           id: 2,
