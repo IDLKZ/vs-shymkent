@@ -30,7 +30,7 @@
             <NuxtLink to="/blogs">Блог</NuxtLink>
           </li>
           <li class="footer-nav__content-item footer-nav__content-item--to-del">
-            <NuxtLink to="/">Личный кабинет</NuxtLink>
+            <NuxtLink to="/login">Личный кабинет</NuxtLink>
           </li>
         </ul>
         <a class="footer-nav__map-link popup-modal" href="#modal">Карта Шымкента</a>
@@ -125,17 +125,23 @@
             </ul>
           </nav>
           <div class="header__icons-inner">
-            <div class="header__map active">
+            <div @mouseover="hoverEffect(true,null,null)"
+                 class="header__map"
+                 :class="{ active: map }">
               <button class="header__map-btn"></button>
               <a class="header__map-link popup-modal" href="#modal">Карта Шымкента</a>
             </div>
-            <div class="header__search">
+            <div @mouseover="hoverEffect(null,true,null)"
+                 class="header__search"
+                 :class="{active: search}">
               <button class="header__search-btn"></button>
               <input class="header__search-input" type="search" placeholder="Поиск">
             </div>
-            <div class="header__personal-account">
+            <div @mouseover="hoverEffect(null, null, true)"
+                 class="header__personal-account"
+                 :class="{active:login}">
               <button class="header__personal-account-btn"></button>
-              <a class="header__personal-account-link popup-modal" href="#modal">Личный кабинет</a>
+              <NuxtLink class="header__personal-account-link popup-modal" to="/login">Личный кабинет</NuxtLink>
             </div>
           </div>
           <div class="header__lang">
@@ -165,7 +171,32 @@
 
 <script>
 export default {
-
+  data(){
+    return {
+      map: true,
+      search: false,
+      login: false
+    }
+  },
+  methods:{
+    hoverEffect(map = null,search = null,login = null){
+      if (map){
+        this.map = true
+        this.search = false
+        this.login = false
+      }
+      if (search){
+        this.search = true
+        this.map = false
+        this.login = false
+      }
+      if (login){
+        this.login = true
+        this.map = false
+        this.search = false
+      }
+    }
+  }
 }
 </script>
 
