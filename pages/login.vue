@@ -21,9 +21,9 @@
         <h4 class="authorization__box-title">
           Вход
         </h4>
-        <form action="" class="authorization__box-form">
-          <input type="email" class="authorization__box-input" placeholder="E-mail">
-          <input type="password" class="authorization__box-input" placeholder="Пароль">
+        <form @submit.prevent="submit" ref="form" class="authorization__box-form">
+          <input v-model="form.email" name="email" type="email" class="authorization__box-input" placeholder="E-mail">
+          <input v-model="form.password" name="password" type="password" class="authorization__box-input" placeholder="Пароль">
           <a href="#" class="authorization__box-form-link">
             Забыли cвой пароль?
           </a>
@@ -41,7 +41,33 @@
 
 <script>
 export default {
-  name: "login"
+  name: "login",
+  middleware: 'guest',
+  data(){
+    return{
+      form:{
+        email:"",
+        password:""
+      }
+    }
+  },
+  methods: {
+    async submit() {
+      try {
+        this.$toast.show('Logging in...')
+        await this.$auth.loginWith("local", {
+          data: this.form
+        })
+        this.$toast.success('Successfully authenticated')
+      } catch (e) {
+        this.$toast.error('Error while authenticating')
+        return console.log(e);
+      }
+      this.$router.push({
+        path: this.$route.query.redirect || "/cabinet"
+      })
+    }
+  }
 }
 </script>
 

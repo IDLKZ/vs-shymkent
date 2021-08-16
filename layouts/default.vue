@@ -13,5 +13,10 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 export default {
   components: {Footer, Navbar},
+  methods:{
+    logout() {
+      this.$auth.logout()
+    }
+  }
 }
 </script>
