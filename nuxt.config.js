@@ -101,7 +101,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: "https://jitsi.idl.kz/api",
+    baseURL: "http://backend.visit-shymkent/api",
     credentials: false,
     proxyHeaders: false
   },
