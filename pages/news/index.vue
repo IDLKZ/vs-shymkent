@@ -24,28 +24,22 @@
         <li class="news-list__categories-item active">
           Все
         </li>
-        <li class="news-list__categories-item">
-          В Шымкенте
-        </li>
-        <li class="news-list__categories-item">
-          В Казахстане
-        </li>
-        <li class="news-list__categories-item">
-          В мире
+        <li class="news-list__categories-item" v-for="category in categories" :key="category.id">
+          {{category['title_'+$i18n.locale]}}
         </li>
       </ul>
       <div class="news-list__inner">
-        <div class="news-list__main-news" style="background-image: url('/images/blog-img1.jpg');">
+        <div class="news-list__main-news" :style="'background-image: url('+getImages(lastNew.image)+');'">
           <div class="news-list__main-news-wrapper">
             <h5 class="news-list__main-news-title">
-              <a href="#">Тёплый во всех смыслах: Шымкент становится туристическим хабом Казахстана</a>
+              <NuxtLink style="color: white!important;" :to="'/news/'+lastNew.alias">{{lastNew['title_'+$i18n.locale]}}</NuxtLink>
             </h5>
             <div class="news-list__info">
               <div class="news-list__date">
-                02.11.2020 | 19:50
+                {{ lastNew.created_at }}
               </div>
               <div class="news-list__author">
-                <a href="#">Forbes.kz</a>
+                <NuxtLink style="color: white!important" to="#">{{lastNew.user.name}}</NuxtLink>
               </div>
             </div>
           </div>
@@ -98,7 +92,7 @@
       </div>
       <div class="news-list__items">
         <div class="news-list__item" v-for="(New,i) in news.data" :key="i">
-          <NuxtLink class="popup-modal" :to="'/new/'+New.alias">
+          <NuxtLink class="popup-modal" :to="'/news/'+New.alias">
             <img class="news-list__item-img" :src="getImages(New.image)" alt="">
             <div class="news-list__item-date">
               Опубликовано: <span>{{ New.created_at }}</span>
@@ -127,15 +121,25 @@ export default {
 
   },
   async asyncData({$axios}) {
-    let news = [];
+    let news = [],
+        categories = [],
+        lastNew;
+
     try{
-      await $axios.$get("/all-news").then((e)=>{news = e});
+      await $axios.$get("/all-news").then((e)=>{
+        news = e[0]
+        lastNew = news.data[news.data.length-1]
+        categories = e[1]
+      });
     }
     catch (e) {
       console.log(e);
     }
-    return {news}
+    return {news,categories,lastNew}
   },
+  mounted() {
+    // console.log(this.lastNew)
+  }
 }
 </script>
 

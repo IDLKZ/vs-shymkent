@@ -36,6 +36,16 @@ export default {
     ]
   },
 
+  loading: {
+    color: 'red',
+    height: '5px',
+    continuous: true
+  },
+  loadingIndicator: {
+    name: 'circle',
+    color: 'red',
+    background: 'white'
+  },
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~/assets/css/pace-theme-minimal.css',
@@ -46,7 +56,10 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/ymapPlugin.js',  mode: 'client' }
+    { src: '~/plugins/ymapPlugin.js',  mode: 'client' },
+    './plugins/mixins/user.js',
+    './plugins/axios.js',
+    './plugins/mixins/validation.js',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -63,6 +76,9 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     'nuxt-i18n',
+    '@nuxtjs/auth',
+    '@nuxtjs/proxy',
+    '@nuxtjs/toast'
   ],
 
   i18n: {
@@ -79,43 +95,58 @@ export default {
     },
   },
 
+  toast: {
+    position: 'top-right',
+    duration : 2000,
+    register: [ // Register custom toasts
+      {
+        name: 'fail_login',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error'
+        }
+      }
+    ]
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: "http://backend.visit-shymkent/api/",
+    baseURL: "http://backend.visit-shymkent/api",
     credentials: false,
     proxyHeaders: false
   },
-  router: {
-    scrollBehavior: async function(to, from, savedPosition) {
-      if (savedPosition) {
-        return savedPosition;
-      }
 
-      const findEl = async (hash, x = 0) => {
-        return (
-          document.querySelector(hash) ||
-          new Promise(resolve => {
-            if (x > 50) {
-              return resolve(document.querySelector("#app"));
-            }
-            setTimeout(() => {
-              resolve(findEl(hash, ++x || 1));
-            }, 100);
-          })
-        );
-      };
-
-      if (to.hash) {
-        let el = await findEl(to.hash);
-        if ("scrollBehavior" in document.documentElement.style) {
-          return window.scrollTo({ top: el.offsetTop, behavior: "smooth" });
-        } else {
-          return window.scrollTo(0, el.offsetTop);
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: "auth/login",
+            method: "post",
+            propertyName: "meta.token"
+          },
+          user: {
+            url: "auth/user",
+            method: "get",
+            propertyName: "data"
+          },
+          logout: {
+            url: "auth/logout",
+            method: "post"
+          }
         }
       }
-
-      return { x: 0, y: 0 };
+    },
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: '/login',
+      home: '/'
     }
+  },
+
+  router: {
+
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify

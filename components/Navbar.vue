@@ -141,7 +141,8 @@
                  class="header__personal-account"
                  :class="{active:login}">
               <button class="header__personal-account-btn"></button>
-              <NuxtLink class="header__personal-account-link popup-modal" to="/login">Личный кабинет</NuxtLink>
+              <NuxtLink class="header__personal-account-link popup-modal" to="/cabinet" v-if="this.$auth.loggedIn">{{this.$auth.user.user.name}}</NuxtLink>
+              <NuxtLink class="header__personal-account-link popup-modal" to="/login" v-else>Личный кабинет</NuxtLink>
             </div>
           </div>
           <div class="header__lang">

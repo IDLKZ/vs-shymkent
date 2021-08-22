@@ -22,9 +22,11 @@
       </div>
       <div class="souvenirs-page__tabs">
         <ul class="souvenirs-page__tabs-caption">
-          <li v-for="tab in tabs" :key="tab.id" :class="tab.active" @click="activeTab(tab.id)">{{tab.title}}</li>
+          <li v-for="tab in tabs" :key="tab.id" :class="tab.active">
+            <NuxtLink :style="'color:'+tab.color" :to="tab.link">{{tab.title}}</NuxtLink>
+          </li>
         </ul>
-        <div :class="'souvenirs-page__tabs-content'+this.tabs[0].active">
+        <div class="souvenirs-page__tabs-content active">
           <div class="souvenirs-page__wrapper">
             <div class="souvenirs-page__categories-inner">
               <button class="open-filter">
@@ -95,51 +97,6 @@
             </div>
           </div>
         </div>
-        <div :class="'souvenirs-page__tabs-content'+this.tabs[1].active">
-          <div class="souvenirs-page__craft-inner">
-            <NuxtLink :to="'/craftman/'+item.alias" class="souvenirs-page__craft-item" v-for="(item,i) in artisans.data" :key="i">
-              <div class="souvenirs-page__craft-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
-              <div class="souvenirs-page__craft-content">
-                <h5 class="souvenirs-page__craft-name">
-                  {{ item['title_'+$i18n.locale] }}
-                </h5>
-                <div class="souvenirs-page__craft-count" v-if="item.souvenirs.length>0">
-                  Товаров: <span>{{item.souvenirs.length}}</span>
-                </div>
-                <div class="souvenirs-page__craft-count" v-else>
-                  Товаров: <span>0</span>
-                </div>
-              </div>
-            </NuxtLink>
-          </div>
-          <div class="load-more">
-            <a href="#">Загрузить еще</a>
-          </div>
-        </div>
-        <div :class="'souvenirs-page__tabs-content'+this.tabs[2].active">
-          <div class="souvenirs-page__craft-inner">
-            <NuxtLink :to="'/craft/'+item.alias" class="souvenirs-page__craft-item" v-for="(item,i) in shops.data" :key="i">
-              <div class="souvenirs-page__craft-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
-              <div class="souvenirs-page__craft-content">
-                <h5 class="souvenirs-page__craft-name">
-                  {{ item['title_'+$i18n.locale] }}
-                </h5>
-                <div class="souvenirs-page__craft-loc">
-                  {{ item.address }}
-                </div>
-                <div class="souvenirs-page__craft-count" v-if="item.souvenirs.length>0">
-                  Товаров: <span>{{item.souvenirs.length}}</span>
-                </div>
-                <div class="souvenirs-page__craft-count" v-else>
-                  Товаров: <span>0</span>
-                </div>
-              </div>
-            </NuxtLink>
-          </div>
-          <div class="load-more">
-            <a href="#">Загрузить еще</a>
-          </div>
-        </div>
       </div>
 
     </div>
@@ -155,17 +112,23 @@ export default {
         {
           id: 0,
           title: 'Сувениры',
-          active: 'active'
+          link: '/souvenirs',
+          active: 'active',
+          color: 'white!important'
         },
         {
           id: 1,
           title: 'Ремесленники',
-          active: ''
+          link: '/craftman',
+          active: '',
+          color: 'black'
         },
         {
           id: 2,
           title: 'Сувенирные магазины',
-          active: ''
+          link: '/craft',
+          active: '',
+          color: 'black'
         },
       ]
     }
@@ -185,18 +148,16 @@ export default {
     }
   },
   async asyncData({$axios}) {
-    let souvenirs, shops, artisans = [];
+    let souvenirs = [];
     try{
       await $axios.$get("/souvenirs").then((e)=>{
-        souvenirs = e[0]
-        shops = e[1]
-        artisans = e[2]
+        souvenirs = e
       });
     }
     catch (e) {
       console.log(e);
     }
-    return {souvenirs,shops,artisans}
+    return {souvenirs}
   },
 }
 </script>
