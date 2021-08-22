@@ -300,7 +300,9 @@ export default {
           this.saveColor = response
           // window.location.reload()
         }).catch(({response}) => {
-          console.log(response)
+          if (response.status === 401){
+            window.location.assign('/login')
+          }
           // this.errors = response.data.errors
         })
       } catch (e) {
@@ -319,9 +321,17 @@ export default {
         else {
           guide = e;
           form.organizator_id = guide.id
-          form.user_id = store.$auth.$state.user.user.id
-          if (guide.savings.length>0){
-            saveColor = 'color--red'
+          if (store.$auth.$state.loggedIn){
+            form.user_id = store.$auth.$state.user.user.id
+            if (guide.savings.length>0){
+              guide.savings.forEach((item,i) => {
+                if (item.user_id == store.$auth.$state.user.user.id){
+                  saveColor = 'color--red'
+                } else {
+                  saveColor = ''
+                }
+              })
+            }
           }
         }
       }).catch(e => {

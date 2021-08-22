@@ -13,10 +13,10 @@
         </li>
       </ul>
       <div class="authorization__box">
-        <a href="#" class="authorization__box-link">
+        <NuxtLink to="/" class="authorization__box-link">
           <svg xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"/></g></svg>
           Назад
-        </a>
+        </NuxtLink>
         <img src="/images/logo.png" alt="" class="authorization__box-img">
         <h4 class="authorization__box-title">
           Вход

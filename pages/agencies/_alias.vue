@@ -261,7 +261,7 @@
         </div>
         <div class="tour-guide__routes-list-wrapper" v-if="agent.routes.length>0">
           <div class="tour-guide__routes-list" v-for="(item,i) in agent.routes" :key="i">
-            <NuxtLink :to="'/places/'+item.alias" class="routes-page__item">
+            <NuxtLink :to="'/routes/'+item.alias" class="routes-page__item">
               <div class="routes-page__item-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
               <div class="routes-page__item-content">
                 <h4 class="routes-page__item-title">
@@ -320,14 +320,16 @@ export default {
           this.saveColor = response
           // window.location.reload()
         }).catch(({response}) => {
-          console.log(response)
+          if (response.status === 401){
+            window.location.assign('/login')
+          }
           // this.errors = response.data.errors
         })
       } catch (e) {
         this.$toast.error('Error')
         console.log(e)
       }
-    },
+    }
   },
   async asyncData({$axios,params,redirect,store}) {
     let agent;
@@ -339,9 +341,17 @@ export default {
         else {
           agent = e;
           form.organizator_id = agent.id
-          form.user_id = store.$auth.$state.user.user.id
-          if (agent.savings.length>0){
-            saveColor = 'color--red'
+          if (store.$auth.$state.loggedIn){
+            form.user_id = store.$auth.$state.user.user.id
+            if (agent.savings.length>0){
+              agent.savings.forEach((item,i) => {
+                if (item.user_id == store.$auth.$state.user.user.id){
+                  saveColor = 'color--red'
+                } else {
+                  saveColor = ''
+                }
+              })
+            }
           }
         }
       }).catch(e => {

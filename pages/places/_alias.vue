@@ -405,9 +405,17 @@ export default {
     const alias = params.alias
     const place = await $axios.$get('/single-place/'+alias);
     form.place_id = place.id
-    form.user_id = store.$auth.$state.user.user.id
-    if (place.savings.length>0){
-      saveColor = 'color--red'
+    if (store.$auth.$state.loggedIn){
+      form.user_id = store.$auth.$state.user.user.id
+      if (place.savings.length>0){
+        place.savings.forEach((item,i) => {
+          if (item.user_id == store.$auth.$state.user.user.id){
+            saveColor = 'color--red'
+          } else {
+            saveColor = ''
+          }
+        })
+      }
     }
     let TIMA = JSON.parse(place.address_link)
     let placemarks = []
@@ -444,7 +452,9 @@ export default {
           this.saveColor = response
           // window.location.reload()
         }).catch(({response}) => {
-          console.log(response)
+          if (response.status === 401){
+            window.location.assign('/login')
+          }
           // this.errors = response.data.errors
         })
       } catch (e) {
@@ -455,7 +465,7 @@ export default {
 
   },
   mounted() {
-    // console.log(this.$store.$auth.$state.user.user)
+    console.log(this.place)
   }
 }
 </script>

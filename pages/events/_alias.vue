@@ -151,7 +151,9 @@ export default {
           this.saveColor = response
           // window.location.reload()
         }).catch(({response}) => {
-          console.log(response)
+          if (response.status === 401){
+            window.location.assign('/login')
+          }
           // this.errors = response.data.errors
         })
       } catch (e) {
@@ -172,9 +174,17 @@ export default {
         else {
           event = e;
           form.event_id = event.id
-          form.user_id = store.$auth.$state.user.user.id
-          if (event.savings.length>0){
-            saveColor = 'color--red'
+          if (store.$auth.$state.loggedIn){
+            form.user_id = store.$auth.$state.user.user.id
+            if (event.savings.length>0){
+              event.savings.forEach((item,i) => {
+                if (item.user_id == store.$auth.$state.user.user.id){
+                  saveColor = 'color--red'
+                } else {
+                  saveColor = ''
+                }
+              })
+            }
           }
           let TIMA = JSON.parse(event.address_link)
           TIMA.forEach((item, i) => {

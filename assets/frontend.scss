@@ -489,3 +489,34 @@ figure img {
 .color--red {
   fill: red;
 }
+.color--white{
+  color: white!important;
+}
+.calendar__inner__cabinet{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 30px;
+}
+.souvenirs-page__craft-inner__cabinet{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 30px;
+  margin-bottom: 40px;
+}
+.souvenirs__items-inner__cabinet{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 30px;
+  margin-bottom: 50px;
+}
+.account__blog-item__cabinet{
+  grid-column: span 1;
+}
+.account__personal-info-form-inner__cabinet{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 30px;
+  width: 100%;
+  margin-bottom: 30px;
+  text-align: left;
+}

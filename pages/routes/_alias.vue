@@ -151,7 +151,9 @@ export default {
           this.saveColor = response
           // window.location.reload()
         }).catch(({response}) => {
-          console.log(response)
+          if (response.status === 401){
+            window.location.assign('/login')
+          }
           // this.errors = response.data.errors
         })
       } catch (e) {
@@ -173,16 +175,34 @@ export default {
         else {
           Route = e;
           form.route_id = Route.id
-          form.user_id = store.$auth.$state.user.user.id
-          if (Route.savings.length>0){
-            saveColor = 'color--red'
+          if (store.$auth.$state.loggedIn){
+            form.user_id = store.$auth.$state.user.user.id
+            if (Route.savings.length>0){
+              Route.savings.forEach((item,i) => {
+                if (item.user_id == store.$auth.$state.user.user.id){
+                  saveColor = 'color--red'
+                } else {
+                  saveColor = ''
+                }
+              })
+            }
           }
-          Route.route_points.forEach((value,i) => {
-            points[value.id] = {id:value.id, placemarks: JSON.parse(value.address_link), val: value, active: ''};
-            points[value.id].placemarks.forEach((item, i) => {
-              points[value.id].placemarks[i] = [item.lat, item.lng];
+
+          if (Route.route_points.length > 0){
+            Route.route_points.forEach((value,i) => {
+              points[value.id] = {id:value.id, placemarks: JSON.parse(value.address_link), val: value, active: ''};
+              points[value.id].placemarks.forEach((item, i) => {
+                points[value.id].placemarks[i] = [item.lat, item.lng];
+              })
             })
-          })
+          } else {
+            let TIMA = JSON.parse(Route.address_link)
+            points[0] = {id:0, placemarks: TIMA, val: {number: 1}, active: ''};
+            TIMA.forEach((item, i) => {
+              points[0].placemarks[i] = [item.lat, item.lng];
+            })
+          }
+
           // console.log(placemarks)
         }
       }).catch(e => {

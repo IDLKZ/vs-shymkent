@@ -36,6 +36,16 @@ export default {
     ]
   },
 
+  loading: {
+    color: 'red',
+    height: '5px',
+    continuous: true
+  },
+  loadingIndicator: {
+    name: 'circle',
+    color: 'red',
+    background: 'white'
+  },
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~/assets/css/pace-theme-minimal.css',
@@ -126,6 +136,12 @@ export default {
           }
         }
       }
+    },
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: '/login',
+      home: '/'
     }
   },
 
