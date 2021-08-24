@@ -22,8 +22,8 @@
         <div class="routes-item__distance">
           Протяженность: <span>{{ Route.distance }}</span>
         </div>
-        <div class="routes-item__points" v-if="Route.route_points.length>0">
-          Количество точек: <span>{{Route.route_points.length}}</span>
+        <div class="routes-item__points" v-if="Route.places.length>0">
+          Количество точек: <span>{{Route.places.length}}</span>
         </div>
       </div>
       <div class="routes-item__wrapper">
@@ -34,8 +34,8 @@
             <NuxtLink :to="'/guides/'+organizator.alias" v-for="(organizator,i) in Route.organizators" :key="i">{{organizator['title_'+$i18n.locale]}}</NuxtLink>
           </div>
           <p class="routes-item__text" v-html="Route['description_'+$i18n.locale]"></p>
-          <div class="routes-points" v-if="Route.route_points.length>0" id="pointNav">
-            <div class="routes-points__item" v-for="(item,i) in Route.route_points" :key="i" :id="'point'+item.id">
+          <div class="routes-points" v-if="Route.places.length>0" id="pointNav">
+            <div class="routes-points__item" v-for="(item,i) in Route.places" :key="i" :id="'point'+item.id">
               <div class="routes-points__item-content">
                 <h4 class="routes-points__item-name">
                   {{ item['title_'+$i18n.locale] }}
@@ -93,7 +93,7 @@
                     :hint-content="point.val['title_'+$i18n.locale]"
                     :balloon="{header: point.val['title_'+$i18n.locale]}"
                     :icon="{color: 'green', glyph: 'circle'}"
-                    :properties="{iconContent: point.val.number}"
+                    :properties="{iconContent: point.num}"
                     cluster-name="1"
                   ></ymap-marker>
                 </div>
@@ -188,29 +188,29 @@ export default {
             }
           }
 
-          if (Route.route_points.length > 0){
-            Route.route_points.forEach((value,i) => {
-              points[value.id] = {id:value.id, placemarks: JSON.parse(value.address_link), val: value, active: ''};
+          if (Route.route_place.length > 0){
+            Route.route_place.forEach((value,i) => {
+              points[value.id] = {id:value.id, placemarks: JSON.parse(value.place.address_link), num: value.number, val: value.place, active: ''};
               points[value.id].placemarks.forEach((item, i) => {
                 points[value.id].placemarks[i] = [item.lat, item.lng];
               })
             })
           } else {
             let TIMA = JSON.parse(Route.address_link)
-            points[0] = {id:0, placemarks: TIMA, val: {number: 1}, active: ''};
+            points[0] = {id:0, placemarks: TIMA, num: 1, active: ''};
             TIMA.forEach((item, i) => {
               points[0].placemarks[i] = [item.lat, item.lng];
             })
           }
 
-          // console.log(placemarks)
+          console.log(points)
         }
       }).catch(e => {
         console.log(e)
       })
 
-    if(Route.route_points.length > 0){
-      Route.route_points.forEach((item,i) => {
+    if(Route.places.length > 0){
+      Route.places.forEach((item,i) => {
         galleries[item.id] = [];
         for(let i = 0; i < item.galleries.length; i++){
           galleries[item.id].push(

@@ -11,35 +11,30 @@
         <button class="account__save-tabs-btn" @click="activeTrue"><span>Добавить запись</span></button>
       </ul>
       <div :class="'account__save-tabs-content '+this.tabs[0].active">
-        <div class="calendar__inner__cabinet" v-if="events.data.length>0">
-          <div class="calendar__item" v-for="(item,i) in events.data" :key="i">
-            <div class="calendar__item-img" :style="'background-image: url('+getImages(item.image)+');'">
-              <div class="calendar__item-day" v-if="item.workdays.length>0">
-                <div v-for="(day,index) in item.workdays" :key="index">
-                  <span>Дата </span>{{day.date_start}} - {{day.date_end}}
-                </div>
-
-              </div>
-              <div class="calendar__item-time">
-                <div v-for="(day,index) in item.workdays" :key="index">
-                  <span>Время </span>{{day.time_start}} - {{day.time_end}}
+        <div class="souvenirs-page__items-wrapper" v-if="souvenirs.data.length>0">
+          <div class="souvenirs__items-inner__cabinet">
+            <div class="souvenirs__item" v-for="(item,i) in souvenirs.data" :key="i">
+              <NuxtLink :to="'/souvenirs/'+item.alias">
+                <div class="souvenirs__item-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
+              </NuxtLink>
+              <div class="souvenirs__item-content">
+                <h4 class="souvenirs__item-title">
+                  <NuxtLink :to="'/souvenirs/'+item.alias">{{ item['title_'+$i18n.locale] }}</NuxtLink>
+                </h4>
+                <p class="souvenirs__item-text" v-html="truncate(item['description_'+$i18n.locale],50)"></p>
+                <div class="souvenirs__item-price-wrapper">
+                  <button class="souvenirs__item-btn popup-modal" v-if="item.eventum">
+                    <span>Купить</span>
+                  </button>
+                  <div class="souvenirs__item-price">
+                    {{ item.price }} ТГ
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="calendar__item-inner">
-              <h4 class="calendar__item-title">
-                {{ item['title_'+$i18n.locale] }}
-              </h4>
-              <div class="calendar__item-location">
-                {{ item.address }}
-              </div>
-              <p class="calendar__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></p>
-              <div class="calendar__btn-wrapper">
-                <NuxtLink class="calendar__item-btn popup-modal" :to="'/events/' + item.alias">
-                  <span>Подробнее</span>
-                </NuxtLink>
-              </div>
-            </div>
+          </div>
+          <div class="load-more">
+            <a href="#">Загрузить еще</a>
           </div>
         </div>
         <div class="account__not-found" v-else>
@@ -54,35 +49,30 @@
         </div>
       </div>
       <div :class="'account__save-tabs-content '+this.tabs[1].active">
-        <div class="calendar__inner__cabinet" v-if="moderation.data.length>0">
-          <div class="calendar__item" v-for="(item,i) in moderation.data" :key="i">
-            <div class="calendar__item-img" :style="'background-image: url('+getImages(item.image)+');'">
-              <div class="calendar__item-day" v-if="item.workdays.length>0">
-                <div v-for="(day,index) in item.workdays" :key="index">
-                  <span>Дата </span>{{day.date_start}} - {{day.date_end}}
-                </div>
-
-              </div>
-              <div class="calendar__item-time">
-                <div v-for="(day,index) in item.workdays" :key="index">
-                  <span>Время </span>{{day.time_start}} - {{day.time_end}}
+        <div class="souvenirs-page__items-wrapper" v-if="moderation.data.length>0">
+          <div class="souvenirs__items-inner__cabinet">
+            <div class="souvenirs__item" v-for="(item,i) in moderation.data" :key="i">
+              <NuxtLink :to="'/souvenirs/'+item.alias">
+                <div class="souvenirs__item-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
+              </NuxtLink>
+              <div class="souvenirs__item-content">
+                <h4 class="souvenirs__item-title">
+                  <NuxtLink :to="'/souvenirs/'+item.alias">{{ item['title_'+$i18n.locale] }}</NuxtLink>
+                </h4>
+                <p class="souvenirs__item-text" v-html="truncate(item['description_'+$i18n.locale],50)"></p>
+                <div class="souvenirs__item-price-wrapper">
+                  <button class="souvenirs__item-btn popup-modal" v-if="item.eventum">
+                    <span>Купить</span>
+                  </button>
+                  <div class="souvenirs__item-price">
+                    {{ item.price }} ТГ
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="calendar__item-inner">
-              <h4 class="calendar__item-title">
-                {{ item['title_'+$i18n.locale] }}
-              </h4>
-              <div class="calendar__item-location">
-                {{ item.address }}
-              </div>
-              <p class="calendar__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></p>
-              <div class="calendar__btn-wrapper">
-                <NuxtLink class="calendar__item-btn popup-modal" :to="'/events/' + item.alias">
-                  <span>Подробнее</span>
-                </NuxtLink>
-              </div>
-            </div>
+          </div>
+          <div class="load-more">
+            <a href="#">Загрузить еще</a>
           </div>
         </div>
         <div class="account__not-found" v-else>
@@ -103,7 +93,7 @@
           <!--            Назад-->
           <!--          </a>-->
           <h3 class="account__blog-title">
-            Редактор мероприятий
+            Редактор товара
           </h3>
 
           <form @submit.prevent="submit" enctype="multipart/form-data" class="account__blog-form">
@@ -153,94 +143,6 @@
               <div v-if="fails.title_en">
                 <span class="error--text v-size--small" v-for="(err,i) in fails.title_en" :key="i">{{err}}</span>
               </div>
-              <h5 class="account__blog-item-title">
-                Место проведения
-              </h5>
-              <v-autocomplete
-                chips
-                clearable
-                dense
-                outlined
-                solo
-                :items="places"
-                item-text="title_ru"
-                item-value="id"
-                v-model="form.place_id"
-              ></v-autocomplete>
-              <div v-if="fails.address">
-                <span class="error--text v-size--small" v-for="(err,i) in fails.address" :key="i">{{err}}</span>
-              </div>
-            </div>
-            <div class="account__blog-item__cabinet">
-              <h5 class="account__blog-item-title">
-                Дата проведения
-              </h5>
-              <v-menu
-                v-model="menu"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                transition="scale-transition"
-                offset-y
-                min-width="auto"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    v-model="form.date"
-                    prepend-icon="mdi-calendar"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-model="form.date"
-                  @input="menu = false"
-                ></v-date-picker>
-              </v-menu>
-            </div>
-            <div class="account__blog-item__cabinet">
-              <h5 class="account__blog-item-title">
-                Время начала
-              </h5>
-              <v-dialog
-                ref="dialog"
-                v-model="modal"
-                :return-value.sync="form.time"
-                persistent
-                width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    v-model="form.time"
-                    label="--:--"
-                    prepend-icon="mdi-clock-time-four-outline"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-time-picker
-                  v-if="modal"
-                  v-model="form.time"
-                  full-width
-                >
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="modal = false"
-                  >
-                    Cancel
-                  </v-btn>
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="$refs.dialog.save(form.time)"
-                  >
-                    OK
-                  </v-btn>
-                </v-time-picker>
-              </v-dialog>
             </div>
             <div class="account__blog-item">
               <h5 class="account__blog-item-title">
@@ -270,13 +172,10 @@
               <span class="error--text v-size--small" v-for="(err,i) in fails.description_en" :key="i">{{err}}</span>
             </div>
             <div class="account__blog-item">
-              <v-textarea
-                counter
-                label="Средний чек"
-                prepend-icon="mdi-comment"
-                v-model="form.price"
-                rows="1"
-              ></v-textarea>
+              <h5 class="account__blog-item-title">
+                Цена
+              </h5>
+              <input v-model="form.price" type="text" class="account__personal-info-input" :placeholder="form.price">
               <div v-if="fails.price">
                 <span class="error--text v-size--small" v-for="(err,i) in fails.price" :key="i">{{err}}</span>
               </div>
@@ -317,8 +216,7 @@
 </template>
 
 <script>
-import vue2Dropzone from 'vue2-dropzone'
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+
 let ClassicEditor
 let CKEditor
 
@@ -329,13 +227,12 @@ if (process.client) {
   CKEditor = { component : {template:'<div></div>'}}
 }
 export default {
-  name: "suggest-event",
+  name: "create-souvenir",
   middleware: 'auth',
   layout: 'cabinet',
   components: {
     'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
     ckeditor: CKEditor.component,
-    vueDropzone: vue2Dropzone
   },
   data() {
     return {
@@ -391,8 +288,7 @@ export default {
           }
         })
 
-        await this.$axios.$post('/cabinet/send-event', formData).then(async (e) => {
-          console.log(e)
+        await this.$axios.$post('/cabinet/send-souvenir', formData).then(async (e) => {
           this.$toast.success('Успешно отправлен на модерацию')
           setTimeout(window.location.reload(), 500)
         }).catch(({response}) => {
@@ -405,9 +301,8 @@ export default {
     },
   },
   async asyncData({$axios}) {
-    let events, moderation, places = []
+    let souvenirs, moderation = []
     let form = {
-      place_id: '',
       title_kz: '',
       title_ru: '',
       title_en: '',
@@ -415,25 +310,19 @@ export default {
       description_ru: '',
       description_en: '',
       image: '',
-      price: '',
-      date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
-      time: null
+      price: ''
     }
     try{
-      await $axios.$get("/cabinet/my-events").then((e)=>{
-        events = e[0]
+      await $axios.$get("/cabinet/my-souvenirs").then((e)=>{
+        souvenirs = e[0]
         moderation = e[1]
-        places = e[2]
-        form.organizator_id = e[3].id
-        // e[1].forEach((item,i) => {
-        //   tags.push(item.title_ru)
-        // })
+        form.shop_id = e[2].id
       });
     }
     catch (e) {
       console.log(e);
     }
-    return {events,moderation, places, form}
+    return {souvenirs,moderation, form}
   },
   mounted() {
     // console.log(this.places)

@@ -260,8 +260,8 @@
                   <div class="routes-page__item-distance">
                     Протяженность: <span>{{ item.distance }}.</span>
                   </div>
-                  <div class="routes-page__item-points" v-if="item.route_points.length>0">
-                    Количество точек: <span>{{item.route_points.length}}</span>
+                  <div class="routes-page__item-points" v-if="item.places.length>0">
+                    Количество точек: <span>{{item.places.length}}</span>
                   </div>
                   <div class="routes-page__item-points" v-else>
                     Количество точек: <span>0</span>

@@ -123,8 +123,44 @@
                 {{ item.address }}
               </div>
               <p class="calendar__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></p>
-              <div class="calendar__btn-wrapper">
-                <NuxtLink class="calendar__item-btn popup-modal" :to="'/events/' + item.alias">
+              <div class="calendar-page__btn-wrapper">
+                <v-dialog
+                  v-if="item.eventum"
+                  v-model="dialog"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn class="calendar-page__item-btn"
+                           color="red"
+                       v-bind="attrs"
+                       v-on="on">
+                      <span>Купить билеты</span>
+                    </v-btn>
+                  </template>
+
+                  <v-card>
+                    <v-card-text>
+                      <div style="position: relative;margin-left:auto;margin-top:15px;margin-right:auto;width:95%;max-width:990px;max-height: 575px; height:100%;-webkit-overflow-scrolling: touch;background: #E5E5E5 url(https://eventum.one/progress.svg) center center no-repeat;">
+                        <div id="modal-eventumCloseBtn" @click="dialog = false"
+                             style="float: right;height: 10px;width: 15px;cursor: pointer;position: absolute;right: 10px;top: 8px;">
+                          <svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" width="100%" height="100%">
+                            <rect fill="#000000" x="-1.8" y="6.2"
+                                  transform="matrix(0.7071 0.7071 -0.7071 0.7071 7.5178 -3.1079)" width="18.6"
+                                  height="2.7"></rect>
+                            <rect fill="#000000" x="-1.8" y="6.2"
+                                  transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 18.1391 7.5282)" width="18.6"
+                                  height="2.7"></rect>
+                          </svg>
+                        </div>
+                        <iframe :src="getEventum(item.eventum)" style="max-width: 990px;height:573px;width:100%;"
+                                frameborder="0"></iframe>
+                      </div>
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                  </v-card>
+                </v-dialog>
+                <NuxtLink class="calendar-page__item-link popup-modal" :to="'/events/' + item.alias">
                   <span>Подробнее</span>
                 </NuxtLink>
               </div>
@@ -384,7 +420,44 @@
               </h4>
               <p class="souvenirs__item-text" v-html="truncate(item['description_'+$i18n.locale], 75)"></p>
               <div class="souvenirs__item-price-wrapper">
-                <button v-if="item.eventum" class="souvenirs__item-btn popup-modal" href="#"><span>Купить</span></button>
+                <v-dialog
+                  v-if="item.eventum"
+                  v-model="dialog"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      color="red lighten-2"
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      Купить
+                    </v-btn>
+                  </template>
+
+                  <v-card>
+                    <v-card-text>
+                        <div style="position: relative;margin-left:auto;margin-top:15px;margin-right:auto;width:95%;max-width:990px;max-height: 575px; height:100%;-webkit-overflow-scrolling: touch;background: #E5E5E5 url(https://eventum.one/progress.svg) center center no-repeat;">
+                          <div id="modal-eventumCloseBtn" @click="dialog = false"
+                               style="float: right;height: 10px;width: 15px;cursor: pointer;position: absolute;right: 10px;top: 8px;">
+                            <svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" width="100%" height="100%">
+                              <rect fill="#000000" x="-1.8" y="6.2"
+                                    transform="matrix(0.7071 0.7071 -0.7071 0.7071 7.5178 -3.1079)" width="18.6"
+                                    height="2.7"></rect>
+                              <rect fill="#000000" x="-1.8" y="6.2"
+                                    transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 18.1391 7.5282)" width="18.6"
+                                    height="2.7"></rect>
+                            </svg>
+                          </div>
+                          <iframe :src="getEventum(item.eventum)" style="max-width: 990px;height:573px;width:100%;"
+                                  frameborder="0"></iframe>
+                        </div>
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                  </v-card>
+                </v-dialog>
                 <div class="souvenirs__item-price">
                   {{item.price}} ТГ
                 </div>
@@ -434,6 +507,7 @@
 export default {
   data() {
     return {
+      dialog: false,
       tabs: [
         {
           id: 0,
@@ -466,6 +540,9 @@ export default {
     getImages(data){
       console.log(this.$store.state.image.image);
       return this.$store.state.image.image + data ;
+    },
+    getEventum(id){
+      return this.$store.state.eventum.code + id
     },
     truncate(string = '', value) {
       return string.substring(0, value) + '...';
