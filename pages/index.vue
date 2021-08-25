@@ -139,7 +139,6 @@
 
                   <v-card>
                     <v-card-text>
-                      <div style="position: relative;margin-left:auto;margin-top:15px;margin-right:auto;width:95%;max-width:990px;max-height: 575px; height:100%;-webkit-overflow-scrolling: touch;background: #E5E5E5 url(https://eventum.one/progress.svg) center center no-repeat;">
                         <div id="modal-eventumCloseBtn" @click="dialog = false"
                              style="float: right;height: 10px;width: 15px;cursor: pointer;position: absolute;right: 10px;top: 8px;">
                           <svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" width="100%" height="100%">
@@ -151,9 +150,8 @@
                                   height="2.7"></rect>
                           </svg>
                         </div>
-                        <iframe :src="getEventum(item.eventum)" style="max-width: 990px;height:573px;width:100%;"
+                        <iframe :src="getEventum(item.eventum)" style="height:573px;width:100%;"
                                 frameborder="0"></iframe>
-                      </div>
                     </v-card-text>
 
                     <v-divider></v-divider>
@@ -422,7 +420,7 @@
               <div class="souvenirs__item-price-wrapper">
                 <v-dialog
                   v-if="item.eventum"
-                  v-model="dialog"
+                  v-model="dialog2"
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn
@@ -437,8 +435,7 @@
 
                   <v-card>
                     <v-card-text>
-                        <div style="position: relative;margin-left:auto;margin-top:15px;margin-right:auto;width:95%;max-width:990px;max-height: 575px; height:100%;-webkit-overflow-scrolling: touch;background: #E5E5E5 url(https://eventum.one/progress.svg) center center no-repeat;">
-                          <div id="modal-eventumCloseBtn" @click="dialog = false"
+                          <div id="modal-eventumCloseBtn" @click="dialog2 = false"
                                style="float: right;height: 10px;width: 15px;cursor: pointer;position: absolute;right: 10px;top: 8px;">
                             <svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" width="100%" height="100%">
                               <rect fill="#000000" x="-1.8" y="6.2"
@@ -449,9 +446,8 @@
                                     height="2.7"></rect>
                             </svg>
                           </div>
-                          <iframe :src="getEventum(item.eventum)" style="max-width: 990px;height:573px;width:100%;"
+                          <iframe :src="getEventum(item.eventum)" style="height:573px;width:100%;"
                                   frameborder="0"></iframe>
-                        </div>
                     </v-card-text>
 
                     <v-divider></v-divider>
@@ -508,6 +504,7 @@ export default {
   data() {
     return {
       dialog: false,
+      dialog2: false,
       tabs: [
         {
           id: 0,
