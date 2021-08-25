@@ -60,6 +60,7 @@ export default {
     './plugins/mixins/user.js',
     './plugins/axios.js',
     './plugins/mixins/validation.js',
+    '~/mixins/global.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

@@ -26,8 +26,8 @@
           <li>Места</li>
           <li>Мнения</li>
           <li>Кухня</li>
-          <li>Интервью</li>
-          <li class="active">Авторы</li>
+          <li>Интервью2</li>
+          <li>Авторы</li>
         </ul>
         <div class="blog-list__select-inner">
           <div class="blog-list__select-wrapper select__wrapper">
