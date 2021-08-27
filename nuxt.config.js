@@ -32,7 +32,7 @@ export default {
       // {src: '/js/bvi.min.js'},
       // {src: '/js/libs.min.js'},
       // {src: '/js/main.js'},
-      {src: '/js/script.js'},
+      {src: '/js/script.js'}
     ]
   },
 
@@ -49,7 +49,8 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~/assets/css/pace-theme-minimal.css',
-    '~/assets/css/bvi.min.css',
+    '~/assets/css/letsee.css',
+    // '~/assets/css/bvi.min.css',
     '~/assets/css/style.min.css',
     '~/assets/frontend.scss'
   ],
@@ -62,8 +63,7 @@ export default {
     './plugins/mixins/validation.js',
     './plugins/share.js',
     './plugins/stars.js',
-    // './plugins/vue-announcer.js',
-    // '~/mixins/global.js'
+    '~/mixins/global.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

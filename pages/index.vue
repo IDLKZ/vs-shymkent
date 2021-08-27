@@ -568,7 +568,7 @@ export default {
     return {sliders,categoryplace,events,routes,souvenirs,blogs}
   },
   mounted() {
-    console.log(this.souvenirs)
+    // console.log(this.souvenirs)
   }
 }
 </script>

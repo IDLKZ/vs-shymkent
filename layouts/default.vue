@@ -1,7 +1,6 @@
 <template>
   <section>
     <v-app>
-      <VueAnnouncer />
       <Navbar/>
       <Nuxt/>
       <Footer/>
