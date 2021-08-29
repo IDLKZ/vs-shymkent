@@ -3,10 +3,10 @@
     <div class="container">
       <ul class="crumbs">
         <li class="crumbs__item">
-          <a href="/">Главная</a>
+          <a href="/">{{ $t('main') }}</a>
         </li>
         <li class="crumbs__item">
-          <a href="#">Маршруты</a>
+          <a href="#">{{ $t('routes_title') }}</a>
         </li>
         <li class="crumbs__item current">
           <a href="#">Готовые маршруты</a>
@@ -26,7 +26,7 @@
       <div class="routes-page__tabs">
         <ul class="routes-page__tabs-caption">
           <li v-for="tab in tabs" :key="tab.id" :class="tab.active">
-            <NuxtLink :to="tab.link">{{tab.title}}</NuxtLink>
+            <NuxtLink :style="'color:'+tab.color" :to="tab.link">{{tab.title}}</NuxtLink>
           </li>
         </ul>
         <div class="routes-page__tabs-content active">
@@ -92,19 +92,22 @@ export default {
           id: 0,
           title: 'Готовые маршруты',
           link: '/routes',
-          active: ''
+          active: '',
+          color: ''
         },
         {
           id: 1,
           title: 'Гиды',
           link: '/guides',
-          active: ''
+          active: '',
+          color: ''
         },
         {
           id: 2,
           title: 'Тур. агентства',
           link: '/agencies',
-          active: 'active'
+          active: 'active',
+          color: 'white!important'
         },
       ]
     }

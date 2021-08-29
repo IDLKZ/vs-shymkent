@@ -217,7 +217,6 @@ if (process.client) {
 }
 export default {
   name: "write-to-blog",
-  middleware: 'auth',
   layout: 'cabinet',
   components: {
     'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },

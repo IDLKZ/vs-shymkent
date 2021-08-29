@@ -36,6 +36,7 @@ import Navbar from "../components/Navbar";
 export default {
   name: "cabinet",
   components: {Footer, Navbar},
+  middleware: ['auth', 'localeLang'],
   data(){
     return {
       tabs: [
@@ -109,6 +110,7 @@ export default {
       this.tabs[4].link = '/cabinet/create-souvenir'
     }
   },
+
   mounted() {
     this.tabs.forEach((item,i) => {
       if (item.link == this.$route.path){

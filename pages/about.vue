@@ -4,10 +4,10 @@
       <a href="#" class="linkToTop"></a>
       <ul class="crumbs">
         <li class="crumbs__item">
-          <NuxtLink to="/">Главная</NuxtLink>
+          <NuxtLink to="/">{{ $t('main') }}</NuxtLink>
         </li>
         <li class="crumbs__item current">
-          <NuxtLink to="#">О городе</NuxtLink>
+          <NuxtLink to="#">{{ $t('about_city') }}</NuxtLink>
         </li>
       </ul>
       <div class="top-content calendar__top-content">

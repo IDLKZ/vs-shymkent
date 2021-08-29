@@ -447,7 +447,6 @@ if (process.client) {
 }
 export default {
   name: "index",
-  middleware: 'auth',
   layout: 'cabinet',
   components: {
     ckeditor: CKEditor.component

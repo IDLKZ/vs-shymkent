@@ -330,7 +330,6 @@ if (process.client) {
 }
 export default {
   name: "suggest-event",
-  middleware: 'auth',
   layout: 'cabinet',
   components: {
     'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
