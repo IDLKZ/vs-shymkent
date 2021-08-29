@@ -17,6 +17,9 @@ export default {
     logout() {
       this.$auth.logout()
     }
+  },
+  mounted() {
+
   }
 }
 </script>

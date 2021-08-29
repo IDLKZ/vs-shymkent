@@ -3,7 +3,7 @@
     <footer class="footer">
       <div class="container">
         <div class="footer__slider-wrapper">
-          Партнеры
+          {{ $t('partners') }}
           <div class="footer__slider-prev"></div>
           <div class="footer__slider">
             <a class="footer__slider-item" href="#">
@@ -40,73 +40,65 @@
           <div class="footer__inner">
             <a class="footer__logo" href="/"><img src="/images/logo.png" alt=""></a>
             <a id="ms-informer-link-aac4dfb64d116283aa27639d673023e7" class="ms-informer-link" href="https://www.meteoservice.ru/weather/overview/shyimkent-kazahstan">Погода в Шымкенте, Казахстан</a>
-            <a class="footer__app-link" href="#"><img src="/images/AppStoreBadge.svg" alt=""></a>
-            <a class="footer__app-link" href="#"><img src="/images/GooglePlayBadge.svg" alt=""></a>
+            <a class="footer__app-link" href="https://apps.apple.com/tj/app/visit-shymkent/id1536047607"><img src="/images/AppStoreBadge.svg" alt=""></a>
+            <a class="footer__app-link" href="https://apps.apple.com/tj/app/visit-shymkent/id1536047607"><img src="/images/GooglePlayBadge.svg" alt=""></a>
+            <NuxtLink class="footer__app-link" to="/privacystatement">{{$t('privacy_statement')}}</NuxtLink>
           </div>
           <nav class="footer__nav">
             <ul class="footer__nav-list">
               <h5 class="footer__nav-title">
-                <a href="#">Путеводитель </a>
+                {{$t('place_title')}}
               </h5>
-              <li class="footer__nav-list-item">
-                <a href="#">Религиозные объекты</a>
-              </li>
-              <li class="footer__nav-list-item">
-                <a href="#">Природа и фауна</a>
-              </li>
-              <li class="footer__nav-list-item">
-                <a href="#">Музеи</a>
-              </li>
-              <li class="footer__nav-list-item">
-                <a href="#">Парки отдыха и развлечений</a>
-              </li>
-              <li class="footer__nav-list-item">
-                <a href="#">Карта города</a>
+              <li class="footer__nav-list-item" v-for="(category,key) in fts.categories" :key="key">
+                <a href="#">{{category['title_'+$i18n.locale]}}</a>
               </li>
             </ul>
             <ul class="footer__nav-list">
               <h5 class="footer__nav-title">
-                <a href="#">События</a>
+                {{ $t('events') }}
               </h5>
               <li class="footer__nav-list-item">
-                <a href="#">Календарь событий</a>
+                <NuxtLink to="/events">{{ $t('events_title') }}</NuxtLink>
               </li>
               <li class="footer__nav-list-item">
-                <a href="#">Новости</a>
+                <NuxtLink to="/news">{{ $t('news') }}</NuxtLink>
               </li>
               <li class="footer__nav-list-item">
-                <a href="#">Covid19</a>
+                <a href="https://www.coronavirus2020.kz/">Covid19</a>
               </li>
             </ul>
             <ul class="footer__nav-list">
               <h5 class="footer__nav-title">
-                <a href="#">Магазин</a>
+                {{ $t('shop') }}
               </h5>
               <li class="footer__nav-list-item">
-                <a href="#">Сувениры</a>
+                <NuxtLink to="/souvenirs">{{ $t('souvenirs') }}</NuxtLink>
               </li>
-              <li class="footer__nav-list-item">
-                <a href="#">Украшения</a>
-              </li>
+<!--              <li class="footer__nav-list-item">-->
+<!--                <a href="#">Украшения</a>-->
+<!--              </li>-->
             </ul>
             <ul class="footer__nav-list">
               <h5 class="footer__nav-title">
-                <a href="#">Путешествие</a>
+                Путешествие
               </h5>
               <li class="footer__nav-list-item">
-                <a href="#">Авиабилеты</a>
+                <a href="#">{{ $t('trip_type_1') }}</a>
               </li>
               <li class="footer__nav-list-item">
-                <a href="#">Ж/Д билеты</a>
+                <a href="#">{{ $t('trip_type_2') }}</a>
               </li>
               <li class="footer__nav-list-item">
-                <a href="#">Отели</a>
+                <a href="#">{{ $t('trip_type_3') }}</a>
               </li>
               <li class="footer__nav-list-item">
-                <a href="#">Квартиры</a>
+                <a href="#">{{ $t('trip_type_4') }}</a>
               </li>
               <li class="footer__nav-list-item">
-                <a href="#">Табло аэропорта</a>
+                <a href="http://www.airserver.kz/flights/online-flights/">{{$t('trip_table')}}</a>
+              </li>
+              <li class="footer__nav-list-item">
+                <a target="_blank" download href="/map.pdf">{{$t('footer_tourist_map')}}</a>
               </li>
             </ul>
           </nav>
@@ -115,44 +107,40 @@
               <a href="#">Контакты</a>
             </h5>
             <div class="footer__contact-social">
-              <a href="#" class="footer__contact-social-item" style="background-image: url('/images/instagramLogo.svg');"></a>
+              <a href="#" class="footer__contact-social-item fab fa-instagram-square" ></a>
               <a href="#" class="footer__contact-social-item" style="background-image: url('/images/facebookLogo.svg');"></a>
               <a href="#" class="footer__contact-social-item" style="background-image: url('/images/youtubeLogo.svg');"></a>
             </div>
             <ul class="footer__contact-list">
-              <li class="footer__contact-list-item">
-                <a href="tel:77022695885">+7 702 269 5885</a>
-              </li>
-              <li class="footer__contact-list-item">
-                <a href="tel:77772695885">+7 777 269 5885</a>
-              </li>
-              <li class="footer__contact-list-item">
-                <a href="mailto:info@visit-shymkent.kz">info@visit-shymkent.kz</a>
-              </li>
+              <div v-if="this.fts.phones.length>0">
+                <li class="footer__contact-list-item" v-for="(item,i) in this.fts.phones" :key="i">
+                  <a :href="'tel:'+item.phone">{{item.phone}}</a>
+                </li>
+              </div>
+              <div v-else>
+                <li class="footer__contact-list-item">
+                  <a href="tel:77022695885">+7 702 269 5885</a>
+                </li>
+              </div>
+              <div v-if="this.fts.emails.length>0">
+                <li class="footer__contact-list-item" v-for="(item,i) in this.fts.emails" :key="i">
+                  <a :href="'mailto:'+item.email">{{item.email}}</a>
+                </li>
+              </div>
+              <div v-else>
+                <li class="footer__contact-list-item">
+                  <a href="mailto:info@visit-shymkent.kz">info@visit-shymkent.kz</a>
+                </li>
+              </div>
+
               <li class="footer__contact-list-item">
                 <a class="error-form-link" href="#error-form">Сообщить об ошибке</a>
               </li>
             </ul>
-            <div class="footer__lang">
-              <ul class="footer__lang-list">
-                <li class="footer__lang-item">
-                  <a class="footer__lang-link" href="#">Русский</a>
-                </li>
-                <li class="footer__lang-item">
-                  <a class="footer__lang-link popup-modal" href="#modal">Казахский</a>
-                </li>
-                <li class="footer__lang-item">
-                  <a class="footer__lang-link popup-modal" href="#modal">English</a>
-                </li>
-              </ul>
-              <div class="footer__lang-current">
-                Язык: <span>русский</span>
-              </div>
-            </div>
           </div>
         </div>
         <p class="copyright">
-          Сайт создан при поддержке управления туризма г. Шымкент.
+          {{$t('footer_text')}}
         </p>
       </div>
     </footer>
@@ -178,15 +166,6 @@
       </div>
     </form>
 
-    <div id="modal" class="popup-block mfp-hide">
-      <div class="modal__content">
-        <h3>Web-сайт в разработке.</h3>
-        <p>
-          Туристический портал города Шымкент все еще в разработке и будет доступен в скором времени!
-        </p>
-      </div>
-      <a class="popup-modal-dismiss" href="#"><img src="//images/dismiss.png" alt=""></a>
-    </div>
   </section>
 </template>
 
@@ -194,6 +173,23 @@
 
 export default {
   name: "Footer",
+  data(){
+    return {
+      fts: {
+        categories: [],
+        phones: [],
+        emails: []
+      }
+    }
+  },
+  methods: {
+    async loadSettings(){
+      this.fts = await this.$axios.$get("/footer")
+    }
+  },
+  mounted() {
+    this.loadSettings()
+  }
 
 }
 </script>
