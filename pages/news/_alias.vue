@@ -274,12 +274,10 @@ export default {
           this.$toast.error("Убедитесь что ваши запросы потверждены, и попробуйте позже");
         }
       })
+      this.forms.review = "";
     }
 
   },
-  mounted() {
-    // console.log(this.$store.$auth.$state.loggedIn)
-  }
 }
 </script>
 

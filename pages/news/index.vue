@@ -21,17 +21,20 @@
         <div class="top-content__line"></div>
       </div>
       <ul class="news-list__categories">
-        <li class="news-list__categories-item active">
+        <li :class="getActiveClass(0)"
+            @click="toggleActiveClass(0)">
           Все
         </li>
         <template v-if="categories">
-          <li class="news-list__categories-item" v-for="category in categories" :key="category.id">
+          <li v-for="category in categories" :key="category.id" :class="getActiveClass(category.id)"
+                @click="toggleActiveClass(category.id)"
+          >
             {{category['title_'+$i18n.locale]}}
           </li>
         </template>
 
       </ul>
-      <div class="news-list__inner">
+      <div class="news-list__inner" v-if="lastNew">
         <div class="news-list__main-news" :style="'background-image: url('+getImages(lastNew.image)+');'">
           <div class="news-list__main-news-wrapper">
             <h5 class="news-list__main-news-title">
@@ -52,7 +55,7 @@
             Последние новости
           </h5>
           <ul class="news-list__last-news-inner" v-if="hotNews.length">
-            <li class="news-list__last-news-item" v-for="(hot,index) in hotNews" :key="hot.created_at">
+            <li class="news-list__last-news-item" v-for="(hot,index) in hotNews" :key="hot.created_at + index">
               <h6 class="news-list__last-news-item-title">
                 <NuxtLink v-text="truncateTitle(hot['title_'+$i18n.locale],50)"
                   :to="'/news/' + hot.alias"
@@ -67,7 +70,7 @@
             </a>
           </ul>
         </div>
-      </div>
+      </div v-i>
       <template v-if="news.length">
         <div class="news-list__items">
           <div class="news-list__item" v-for="(New,i) in news" :key="i">
@@ -83,7 +86,7 @@
       </template>
 
       <div class="load-more" v-if="current_page < last_page">
-        <a @click.prevent="loadMore"  href="#">Загрузить еще...</a>
+        <a @click.prevent="paginate"  href="#">Загрузить еще...</a>
       </div>
     </div>
   </section>
@@ -100,22 +103,45 @@ export default {
       current_page:1,
       last_page:1,
       hotNews:[],
+      activeClass:0,
+    }
+  },
+  computed:{
+    getCategoryId(){
+      let arr = [-1,0];
+      return arr.includes(this.activeClass) == true ? "" : "&category_id="+this.activeClass
     }
   },
   methods:{
+
+    getActiveClass(index){
+      if(index == this.activeClass){
+        return "news-list__categories-item active"
+      }
+      else{
+        return "news-list__categories-item"
+      }
+    },
+    toggleActiveClass(index){
+      this.activeClass = index;
+      this.current_page =1;
+      this.loadData();
+    },
+
     getImages(data){
       return this.$store.state.image.image + data ;
     },
     truncate(string, value) {
       return string.substring(0, value) + '…';
     },
-    async loadMore(){
-      this.current_page++
+    async loadData(){
       try{
-        await this.$axios.$get("/all-news?page=" + this.current_page).then((e)=>{
-           this.news.push(...e[0].data);
-           this.current_page = e[0].current_page;
-           this.last_page = e[0].last_page;
+        await this.$axios.$get("/all-news?page=" + this.current_page + this.getCategoryId).then((e)=>{
+          this.current_page == 1 ? (this.news = e[0].data) : (this.news.push(...e[0].data));
+          this.current_page = e[0].current_page;
+          this.last_page = e[0].last_page;
+          this.lastNew = e[2];
+          console.log(this.news)
         }).catch((e)=>{
           console.log(e);
         })
@@ -123,9 +149,10 @@ export default {
       catch (e) {
         this.$toast.error("Упс произошла ошибка! Попробуйте позже");
       }
-
-
-
+    },
+    async paginate(){
+      this.current_page +=1;
+      this.loadData();
     }
   },
   async asyncData({$axios}) {
@@ -136,7 +163,6 @@ export default {
       await $axios.$get("/all-news").then((e)=>{
         news = e[0].data;
         hotNews = news.slice(0,4);
-        console.log(hotNews);
         lastNew = news[0];
         current_page = e[0].current_page;
         last_page = e[0].last_page;

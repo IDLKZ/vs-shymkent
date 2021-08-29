@@ -20,369 +20,269 @@
         </div>
         <div class="top-content__line"></div>
       </div>
-      <div class="blog-list__tabs">
+      <div class="blog-list__tabs active">
         <ul class="blog-list__tabs-caption">
-          <li>Все</li>
-          <li>Места</li>
-          <li>Мнения</li>
-          <li>Кухня</li>
-          <li>Интервью2</li>
-          <li>Авторы</li>
+          <li :class="getActiveClass(0)"  @click="toggleActiveClass(0)">
+            Все
+          </li>
+          <template v-if="tags.length">
+          <li  v-for="(item) in tags" :key="item.created_at + item.id" :class="getActiveClass(item.id)" @click="toggleActiveClass(item.id)">
+            {{item['title_'+$i18n.locale]}}
+          </li>
+            <li :class="getActiveClass(-1)" @click="toggleActiveClass(-1)">
+              Авторы
+            </li>
+          </template>
         </ul>
         <div class="blog-list__select-inner">
           <div class="blog-list__select-wrapper select__wrapper">
-            <div class="blog-list__select-label select__label">Сортировка:</div>
-            <div class="blog-list__select select">
-              <div class="blog-list__select-header select__header">
-                                <span class="blog-list__select-current select__current">
-                                    По дате выхода
-                                </span>
-                <div class="blog-list__select-icon select__icon"></div>
-              </div>
-              <div class="blog-list__select-body select__body">
-                <div class="blog-list__select-item select__item active">По дате выхода</div>
-                <div class="blog-list__select-item select__item">По популярности</div>
+            <div class="blog-list__select select d-flex">
+              <div class="blog-list__select-label select__label">Сортировка:</div>
+              <div class="blog-list__select-header select__header mx-2">
+                <v-select
+                  :items="sorts"
+                  v-model="sorts.value"
+                  label="По дате"
+                  item-text='title'
+                  @change="sortBySelect"
+                  dense
+                ></v-select>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <template v-if="activeClass == -1">
+        <div class="blog-list__authors">
+          <div class="blog-list__authors-categories">
+            <h3 class="blog-list__categories-title">
+              Категории
+            </h3>
+            <ul class="blog-list__authors-categories-list">
+              <li>
+                <input type="checkbox" id="0" :checked="getActiveCheckBox(0)" @click="toggleActiveCheckBox(0)">
+                <label :for="0">Все</label>
+              </li>
+              <li v-for="item in tags">
+                <input type="checkbox" :id="item.id" :checked="getActiveCheckBox(item.id)" @click="toggleActiveCheckBox(item.id)">
+                <label :for="item.id">{{ item["title_" + $i18n.locale] }}</label>
+              </li>
 
-      <div class="blog-list__authors">
-        <div class="blog-list__authors-categories">
-          <h3 class="blog-list__categories-title">
-            Категории
-          </h3>
-          <ul class="blog-list__authors-categories-list">
-            <li>
-              <input type="checkbox" id="c1">
-              <label for="c1">Все</label>
-            </li>
-            <li>
-              <input type="checkbox" id="c2">
-              <label for="c2">Интервью</label>
-            </li>
-            <li>
-              <input type="checkbox" id="c3">
-              <label for="c3">Места</label>
-            </li>
-            <li>
-              <input type="checkbox" id="c4">
-              <label for="c4">Кухня</label>
-            </li>
-            <li>
-              <input type="checkbox" id="c5">
-              <label for="c5">Мнения</label>
-            </li>
-          </ul>
-        </div>
-        <div class="blog-list__authors-content">
-          <div class="blog-list__authors-search-inner">
-            <input id="blog-list__authors-search" type="search" placeholder="Введите имя автора">
-            <label for="blog-list__authors-search"></label>
+            </ul>
           </div>
-          <div class="blog-list__authors-list">
-            <div class="blog-list__author-item">
-              <a href="#" class="blog-list__author-title">
-                Абдураимова Санобар
-              </a>
-              <p class="blog-list__author-notecount">Количество записей: <span>5</span></p>
-              <div class="blog-list__author-categories-wrapper">
-                <span>Категории:</span>
-                <ul class="blog-list__author-categories">
-                  <li>
-                    <a href="#">#Интервью</a>
-                  </li>
-                  <li>
-                    <a href="#">#Места</a>
-                  </li>
-                  <li>
-                    <a href="#">#Кухня</a>
-                  </li>
-                  <li>
-                    <a href="#">#Мнения</a>
-                  </li>
-                </ul>
-              </div>
+          <div class="blog-list__authors-content">
+            <div class="blog-list__authors-search-inner">
+              <input id="blog-list__authors-search" type="search" placeholder="Введите имя автора" v-model="search" @keyup.enter="onSearch">
+              <label for="blog-list__authors-search"></label>
             </div>
-            <div class="blog-list__author-item">
-              <a href="#" class="blog-list__author-title">
-                Абдураимова Санобар
-              </a>
-              <p class="blog-list__author-notecount">Количество записей: <span>5</span></p>
-              <div class="blog-list__author-categories-wrapper">
-                <span>Категории:</span>
-                <ul class="blog-list__author-categories">
-                  <li>
-                    <a href="#">#Интервью</a>
-                  </li>
-                  <li>
-                    <a href="#">#Места</a>
-                  </li>
-                  <li>
-                    <a href="#">#Кухня</a>
-                  </li>
-                  <li>
-                    <a href="#">#Мнения</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="blog-list__author-item">
-              <a href="#" class="blog-list__author-title">
-                Абдураимова Санобар
-              </a>
-              <p class="blog-list__author-notecount">Количество записей: <span>5</span></p>
-              <div class="blog-list__author-categories-wrapper">
-                <span>Категории:</span>
-                <ul class="blog-list__author-categories">
-                  <li>
-                    <a href="#">#Интервью</a>
-                  </li>
-                  <li>
-                    <a href="#">#Места</a>
-                  </li>
-                  <li>
-                    <a href="#">#Кухня</a>
-                  </li>
-                  <li>
-                    <a href="#">#Мнения</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="blog-list__author-item">
-              <a href="#" class="blog-list__author-title">
-                Абдураимова Санобар
-              </a>
-              <p class="blog-list__author-notecount">Количество записей: <span>5</span></p>
-              <div class="blog-list__author-categories-wrapper">
-                <span>Категории:</span>
-                <ul class="blog-list__author-categories">
-                  <li>
-                    <a href="#">#Интервью</a>
-                  </li>
-                  <li>
-                    <a href="#">#Места</a>
-                  </li>
-                  <li>
-                    <a href="#">#Кухня</a>
-                  </li>
-                  <li>
-                    <a href="#">#Мнения</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="blog-list__author-item">
-              <a href="#" class="blog-list__author-title">
-                Абдураимова Санобар
-              </a>
-              <p class="blog-list__author-notecount">Количество записей: <span>5</span></p>
-              <div class="blog-list__author-categories-wrapper">
-                <span>Категории:</span>
-                <ul class="blog-list__author-categories">
-                  <li>
-                    <a href="#">#Интервью</a>
-                  </li>
-                  <li>
-                    <a href="#">#Места</a>
-                  </li>
-                  <li>
-                    <a href="#">#Кухня</a>
-                  </li>
-                  <li>
-                    <a href="#">#Мнения</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="blog-list__author-item">
-              <a href="#" class="blog-list__author-title">
-                Абдураимова Санобар
-              </a>
-              <p class="blog-list__author-notecount">Количество записей: <span>5</span></p>
-              <div class="blog-list__author-categories-wrapper">
-                <span>Категории:</span>
-                <ul class="blog-list__author-categories">
-                  <li>
-                    <a href="#">#Интервью</a>
-                  </li>
-                  <li>
-                    <a href="#">#Места</a>
-                  </li>
-                  <li>
-                    <a href="#">#Кухня</a>
-                  </li>
-                  <li>
-                    <a href="#">#Мнения</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="load-more">
-            <a href="#">Загрузить еще</a>
-          </div>
-        </div>
-      </div>
+            <div class="blog-list__authors-list" v-if="authors.length">
+              <div class="blog-list__author-item" v-for="(author,index) in authors" :key="author.created_at + index">
 
-      <div class="blog-list__items">
-          <div class="blog-list__item">
-              <div class="blog-list__item-img" style="background-image: url('/images/blog-item-1.jpg');"></div>
-              <div class="blog-list__item-content">
-                  <div class="blog-list__info">
-                      <div class="blog-list__date">
-                          Дата публикации: <span>03.11.20</span>
-                      </div>
-                      <div class="blog-list__tag">
-                          #Туризм
-                      </div>
-                  </div>
-                  <a href="#" class="blog-list__text">
-                      Будет ли анимация в отелях, как работают аквапарки: ответы на самые главные вопросы.
-                  </a>
-                  <div class="blog-list__info">
-                      <div class="blog-list__author">
-                          Никита Синьков
-                      </div>
-                      <div class="blog-list__views">
-                          12 532
-                      </div>
-                  </div>
+                <a href="#" class="blog-list-title text--bold">
+                  <v-avatar>
+                    <img :src="getImage(author.image)">
+                  </v-avatar>
+                  {{author.name}}
+                </a>
+                <p class="blog-list__author-notecount">Количество записей: <span>
+                  {{author.blogs.length}}
+                </span></p>
+                <div class="blog-list__author-categories-wrapper">
+                  <span>Категории:</span>
+                  <ul class="blog-list__author-categories" v-if="author.blogs.length">
+                    <li v-for="(blog,index) in author.blogs" :key="blog.created_at + index">
+                      <a href="#">#{{blog.tag["title_" + $i18n.locale]}}</a>
+                    </li>
+                  </ul>
+                </div>
               </div>
+
+
+            </div>
+            <div class="load-more" v-if="current_page < last_page">
+              <a @click.prevent="paginate">Загрузить еще</a>
+            </div>
           </div>
-          <div class="blog-list__item">
-              <div class="blog-list__item-img" style="background-image: url('/images/blog-item-1.jpg');"></div>
-              <div class="blog-list__item-content">
-                  <div class="blog-list__info">
-                      <div class="blog-list__date">
-                          Дата публикации: <span>03.11.20</span>
-                      </div>
-                      <div class="blog-list__tag">
-                          #Туризм
-                      </div>
-                  </div>
-                  <a href="#" class="blog-list__text">
-                      Будет ли анимация в отелях, как работают аквапарки: ответы на самые главные вопросы.
-                  </a>
-                  <div class="blog-list__info">
-                      <div class="blog-list__author">
-                          Никита Синьков
-                      </div>
-                      <div class="blog-list__views">
-                          12 532
-                      </div>
-                  </div>
+        </div>
+      </template>
+      <template v-if="activeClass != -1">
+        <div class="blog-list__items" v-if="blogs.length">
+          <div class="blog-list__item" v-for="blog in blogs" :key="blog.created_at +blog.id">
+            <div class="blog-list__item-img" :style="{backgroundImage:'url(' + getImage(blog.image) + ')'}"></div>
+            <div class="blog-list__item-content">
+              <div class="blog-list__info">
+                <div class="blog-list__date">
+                  Дата публикации: <span>{{blog.created_at}}</span>
+                </div>
+                <div class="blog-list__tag">
+                  #{{blog.tag["title_" + $i18n.locale]}}
+                </div>
               </div>
-          </div>
-          <div class="blog-list__item">
-              <div class="blog-list__item-img" style="background-image: url('/images/blog-item-1.jpg');"></div>
-              <div class="blog-list__item-content">
-                  <div class="blog-list__info">
-                      <div class="blog-list__date">
-                          Дата публикации: <span>03.11.20</span>
-                      </div>
-                      <div class="blog-list__tag">
-                          #Туризм
-                      </div>
-                  </div>
-                  <a href="#" class="blog-list__text">
-                      Будет ли анимация в отелях, как работают аквапарки: ответы на самые главные вопросы.
-                  </a>
-                  <div class="blog-list__info">
-                      <div class="blog-list__author">
-                          Никита Синьков
-                      </div>
-                      <div class="blog-list__views">
-                          12 532
-                      </div>
-                  </div>
+              <NuxtLink :to="'/blogs/' + blog.alias" class="blog-list__text">
+                {{truncateTitle(blog["title_" + $i18n.locale],100)}}
+              </NuxtLink>
+              <div class="blog-list__info">
+                <div class="blog-list__author">
+                  {{blog.user.name}}
+                </div>
               </div>
+            </div>
           </div>
-          <div class="blog-list__item">
-              <div class="blog-list__item-img" style="background-image: url('/images/blog-item-1.jpg');"></div>
-              <div class="blog-list__item-content">
-                  <div class="blog-list__info">
-                      <div class="blog-list__date">
-                          Дата публикации: <span>03.11.20</span>
-                      </div>
-                      <div class="blog-list__tag">
-                          #Туризм
-                      </div>
-                  </div>
-                  <a href="#" class="blog-list__text">
-                      Будет ли анимация в отелях, как работают аквапарки: ответы на самые главные вопросы.
-                  </a>
-                  <div class="blog-list__info">
-                      <div class="blog-list__author">
-                          Никита Синьков
-                      </div>
-                      <div class="blog-list__views">
-                          12 532
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="blog-list__item">
-              <div class="blog-list__item-img" style="background-image: url('/images/blog-item-1.jpg');"></div>
-              <div class="blog-list__item-content">
-                  <div class="blog-list__info">
-                      <div class="blog-list__date">
-                          Дата публикации: <span>03.11.20</span>
-                      </div>
-                      <div class="blog-list__tag">
-                          #Туризм
-                      </div>
-                  </div>
-                  <a href="#" class="blog-list__text">
-                      Будет ли анимация в отелях, как работают аквапарки: ответы на самые главные вопросы.
-                  </a>
-                  <div class="blog-list__info">
-                      <div class="blog-list__author">
-                          Никита Синьков
-                      </div>
-                      <div class="blog-list__views">
-                          12 532
-                      </div>
-                  </div>
-              </div>
-          </div>
-          <div class="blog-list__item">
-              <div class="blog-list__item-img" style="background-image: url('/images/blog-item-1.jpg');"></div>
-              <div class="blog-list__item-content">
-                  <div class="blog-list__info">
-                      <div class="blog-list__date">
-                          Дата публикации: <span>03.11.20</span>
-                      </div>
-                      <div class="blog-list__tag">
-                          #Туризм
-                      </div>
-                  </div>
-                  <a href="#" class="blog-list__text">
-                      Будет ли анимация в отелях, как работают аквапарки: ответы на самые главные вопросы.
-                  </a>
-                  <div class="blog-list__info">
-                      <div class="blog-list__author">
-                          Никита Синьков
-                      </div>
-                      <div class="blog-list__views">
-                          12 532
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="load-more">
-          <a href="#">Загрузить еще</a>
-      </div>
+
+        </div>
+        <div class="load-more" v-if="current_page < last_page">
+          <a @click.prevent="paginate">Загрузить еще</a>
+        </div>
+      </template>
+
     </div>
   </section>
 </template>
 
 <script>
 export default {
-  name: "index"
+  name: "index",
+  data(){
+    return{
+      tags:[],
+      authors:[],
+      activeClass:0,
+      blogs:[],
+      current_page:1,
+      last_page:1,
+      sorts:[
+        {title:"Новые записи",value:"desc"},
+        {title:"Старые записи",value:"asc"},
+      ],
+      orderBy:"desc",
+      activeCheckbox:[],
+      search:""
+    }
+  },
+  computed:{
+    getTagId(){
+      let arr = [-1,0];
+      return arr.includes(this.activeClass) == true ? "" : "&tag_id="+this.activeClass
+    },
+    getCheckBoxTags(){
+      return this.activeCheckbox.length > 0 ? "&tag_id=" + JSON.stringify(this.activeCheckbox) : "";
+    }
+  },
+  methods:{
+    //Отметить активную кнопку
+    getActiveCheckBox(index){
+        if(this.activeCheckbox.includes(index) || this.activeCheckbox.length == this.tags.length  + 1){
+          return true;
+        }
+        else{
+          return  false;
+        }
+    },
+      //Переключать
+    toggleActiveCheckBox(index){
+      if(index == 0){
+        if(this.activeCheckbox.includes(index)){
+          this.activeCheckbox = [];
+        }
+        else{
+            this.activeCheckbox = [];
+            this.activeCheckbox.push(0);
+            for(let i = 0; i < this.tags.length; i++){
+              this.activeCheckbox.push(this.tags[i].id);
+            }
+        }
+      }
+      else{
+        let pos = this.activeCheckbox.indexOf(index);
+        if(pos == -1){
+          this.activeCheckbox.push(index);
+        }
+        else{
+          this.activeCheckbox.splice(pos,1)
+        }
+        if(this.activeCheckbox.includes(0)){
+          if(this.activeCheckbox.length <= this.tags.length){
+            this.activeCheckbox.splice(this.activeCheckbox.indexOf(0),1);
+          }
+        }
+        else{
+          this.activeCheckbox.length === this.tags.length ? this.activeCheckbox.push(0) : null;
+        }
+      }
+      this.current_page = 1;
+      this.loadData();
+    },
+    //Поиск
+    onSearch(){
+      this.current_page = 1;
+      this.loadData();
+
+    },
+
+    //Активные табы
+    getActiveClass(index){
+      if(index == this.activeClass){
+        return "news-list__categories-item active"
+      }
+      else{
+        return "news-list__categories-item"
+      }
+    },
+    //Переключение между табами
+    toggleActiveClass(index){
+      this.activeClass = index;
+      this.current_page =1;
+      this.loadData();
+    },
+    //Загружаем новые страницы
+    async loadData(){
+        if(this.activeClass != -1){
+          this.$axios.$get("/blogs?page=" + this.current_page + this.getTagId + "&order=" + this.orderBy).then(e=>{
+            this.current_page == 1 ? (this.blogs = e.data) : (this.blogs.push(...e.data));
+            this.current_page = e.current_page;
+            this.last_page = e.last_page;
+          }).catch(e=>{console.log(e)});
+        }
+        else{
+          this.$axios.$get("/author-blogs?page=" + this.current_page + this.getCheckBoxTags + "&search=" + this.search).then(e=>{
+            this.current_page == 1 ? (this.authors = e.data) : (this.authors.push(...e.data));
+            this.current_page = e.current_page;
+            this.last_page = e.last_page;
+          }).catch(e=>{console.log(e)});
+        }
+
+        },
+
+
+    //Выполняем сортировку с пересбором новых данных
+    sortBySelect(e){
+      this.orderBy = e;
+      this.loadData();
+    },
+    //Пагинация с вызовом загрузки новых данных
+    paginate(){
+      this.current_page +=1;
+      this.loadData();
+    }
+
+
+  },
+  //Асинхронная загрузка
+  async asyncData({$axios}){
+    let blogs,tags = [];
+    let current_page,last_page = 1;
+    await $axios.$get("/tags").then((e)=>{tags = e;}).catch(e=>{console.log(e)})
+    await $axios.$get("/blogs").then((e)=>{blogs = e.data;current_page = e.current_page;last_page = e.last_page;}).catch(e=>{console.log(e)})
+
+    return {tags,blogs,current_page,last_page}
+
+
+  }
+
+
+
+
+
 }
 </script>
 

@@ -49,8 +49,6 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~/assets/css/pace-theme-minimal.css',
-    '~/assets/css/letsee.css',
-    // '~/assets/css/bvi.min.css',
     '~/assets/css/style.min.css',
     '~/assets/frontend.scss'
   ],
@@ -82,7 +80,8 @@ export default {
     'nuxt-i18n',
     '@nuxtjs/auth',
     '@nuxtjs/proxy',
-    '@nuxtjs/toast'
+    '@nuxtjs/toast',
+    '@nuxtjs/moment',
   ],
 
   i18n: {

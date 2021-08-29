@@ -22,9 +22,9 @@
       </div>
       <div class="calendar-page__article-menu">
         <ul class="calendar-page__categories">
-          <li class="active">Ближайшиие</li>
-          <li>Сегодня</li>
-          <li>Завтра</li>
+          <li :class="getActiveClass(0)" @click="toggleActiveClass(0)">Ближайшиие</li>
+          <li :class="getActiveClass(1)" @click="toggleActiveClass(1)">Сегодня</li>
+          <li :class="getActiveClass(2)" @click="toggleActiveClass(2)">Завтра</li>
         </ul>
         <div class="calendar-page__select-inner">
           <div class="calendar-page__select-wrapper select__wrapper">
@@ -45,8 +45,48 @@
             </div>
           </div>
           <div class="calendar__change-date">
-            <input class="calendar-page__date-item" type="text" id="calendar__timing" placeholder="Выбрать дату" readonly>
-            <svg class="calendar__timing-svg calendar-page__timing-svg" xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"/></g></svg>
+            <v-menu
+              ref="menu"
+              v-model="menu"
+              :close-on-content-click="false"
+              :return-value.sync="day"
+              transition="scale-transition"
+              offset-y
+              min-width="auto"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="day"
+                  label="Picker in menu"
+                  prepend-icon="mdi-calendar"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="date"
+                no-title
+                scrollable
+
+              >
+                <v-spacer></v-spacer>
+                <v-btn
+                  text
+                  color="primary"
+                  @click="menu = false"
+                >
+                  Cancel
+                </v-btn>
+                <v-btn
+                  text
+                  color="primary"
+                  @click="$refs.menu.save(date)"
+                >
+                  OK
+                </v-btn>
+              </v-date-picker>
+            </v-menu>
           </div>
         </div>
       </div>
@@ -91,6 +131,24 @@
 <script>
 export default {
   name: "index",
+  data(){
+    return{
+      activeClass:0,
+      day:"",
+      events:[],
+      current_page:1,
+      last_page:1,
+      date: "",
+      menu: false,
+      modal: false,
+    }
+  },
+  watch:{
+    day: function (val) {
+      console.log(val);
+      this.day = this.$moment(val).format("DD/MM/YYYY")
+    },
+  },
   methods:{
     getImages(data){
       console.log(this.$store.state.image.image);
@@ -98,7 +156,24 @@ export default {
     },
     truncate(string, value) {
       return string.substring(0, value) + '…';
-    }
+    },
+    //Активные табы
+    getActiveClass(index){
+      if(index == this.activeClass){
+        return "active"
+      }
+      else{
+        return ""
+      }
+    },
+    //Переключение между табами
+    toggleActiveClass(index){
+      console.log(this.$moment(new Date()).format("DD/MM/YYYY"));
+      console.log(this.$moment(new Date()).add(1,'days').format("DD/MM/YYYY"));
+      this.activeClass = index;
+      this.current_page =1;
+      // this.loadData();
+    },
 
   },
   async asyncData({$axios}) {

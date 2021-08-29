@@ -1,6 +1,6 @@
 import Vue from 'vue'
 const globals = {
-  install(Vue, options) {
+  install(Vue, ) {
     Vue.mixin({
       computed:{
 
@@ -8,6 +8,9 @@ const globals = {
       methods:{
         truncateTitle(text,value) {
           return text.substring(0, value) + '…';
+        },
+        getImage(image) {
+          return this.$store.state.image.image + image ;
         },
       }
       }
