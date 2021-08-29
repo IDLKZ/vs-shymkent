@@ -23,69 +23,49 @@
       <div class="calendar-page__article-menu">
         <ul class="calendar-page__categories">
           <li :class="getActiveClass(0)" @click="toggleActiveClass(0)">Ближайшиие</li>
-          <li :class="getActiveClass(1)" @click="toggleActiveClass(1)">Сегодня</li>
-          <li :class="getActiveClass(2)" @click="toggleActiveClass(2)">Завтра</li>
+          <li :class="getActiveClass(1)" @click="toggleActiveClass(1,$moment(new Date()).format('DD/MM/YYYY'))">Сегодня</li>
+          <li :class="getActiveClass(2)" @click="toggleActiveClass(2,$moment(new Date()).add(1,'days').format('DD/MM/YYYY'))">Завтра</li>
         </ul>
         <div class="calendar-page__select-inner">
-          <div class="calendar-page__select-wrapper select__wrapper">
+          <div class="calendar-page__select-wrapper select__wrapper d-block">
             <div class="calendar-page__select-label select__label">Категория:</div>
             <div class="calendar-page__select select">
-              <div class="calendar-page__select-header select__header">
-                                <span class="calendar-page__select-current select__current">
-                                    Все
-                                </span>
-                <div class="calendar-page__select-icon select__icon"></div>
-              </div>
-              <div class="calendar-page__select-body select__body">
-                <div class="calendar-page__select-item select__item active">Все</div>
-                <div class="calendar-page__select-item select__item">Концерты</div>
-                <div class="calendar-page__select-item select__item">Фильмы</div>
-                <div class="calendar-page__select-item select__item">Спектакли</div>
-              </div>
+              <v-select
+                :items="categories"
+                v-model="category"
+                :item-text="'title_' + $i18n.locale"
+                :item-value="'id'"
+                @change="changeCategory"
+                dense
+              ></v-select>
             </div>
           </div>
           <div class="calendar__change-date">
             <v-menu
-              ref="menu"
+              ref="menu1"
               v-model="menu"
               :close-on-content-click="false"
-              :return-value.sync="day"
               transition="scale-transition"
               offset-y
+              max-width="290px"
               min-width="auto"
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
-                  v-model="day"
-                  label="Picker in menu"
+                  v-model="formatDate"
+                  label="Дата"
+                  persistent-hint
                   prepend-icon="mdi-calendar"
-                  readonly
                   v-bind="attrs"
                   v-on="on"
+
                 ></v-text-field>
               </template>
               <v-date-picker
-                v-model="date"
+                v-model="dateForm"
                 no-title
-                scrollable
-
-              >
-                <v-spacer></v-spacer>
-                <v-btn
-                  text
-                  color="primary"
-                  @click="menu = false"
-                >
-                  Cancel
-                </v-btn>
-                <v-btn
-                  text
-                  color="primary"
-                  @click="$refs.menu.save(date)"
-                >
-                  OK
-                </v-btn>
-              </v-date-picker>
+                @input="menu = false"
+              ></v-date-picker>
             </v-menu>
           </div>
         </div>
@@ -107,7 +87,7 @@
           </div>
           <div class="calendar__item-inner">
             <h4 class="calendar__item-title">
-              {{ item['title_'+$i18n.locale] }}
+              {{ truncateTitle(item['title_'+$i18n.locale],20) }}
             </h4>
             <div class="calendar__item-location">
               {{ item.address }}
@@ -121,8 +101,8 @@
           </div>
         </div>
       </div>
-      <div class="load-more">
-        <a href="#">Загрузить еще...</a>
+      <div class="load-more" v-if="current_page < last_page">
+        <a @click="paginate">Загрузить еще...</a>
       </div>
     </div>
   </section>
@@ -134,7 +114,9 @@ export default {
   data(){
     return{
       activeClass:0,
-      day:"",
+      dateForm:"",
+      categories:[],
+      category:0,
       events:[],
       current_page:1,
       last_page:1,
@@ -143,12 +125,27 @@ export default {
       modal: false,
     }
   },
-  watch:{
-    day: function (val) {
-      console.log(val);
-      this.day = this.$moment(val).format("DD/MM/YYYY")
+
+
+  watch: {
+    dateForm (val) {
+      this.date = this.$moment(val).format("DD/MM/YYYY");
+      this.current_page = 1;
+      this.loadData();
     },
   },
+  computed: {
+    formatDate() {
+      return this.date
+    },
+    dateQuery(){
+      return this.date ? "&date_start=" + this.date : "";
+    },
+    categoryQuery(){
+      return this.category > 0 ? "&category_id="+this.category : ""
+    }
+  },
+
   methods:{
     getImages(data){
       console.log(this.$store.state.image.image);
@@ -167,24 +164,52 @@ export default {
       }
     },
     //Переключение между табами
-    toggleActiveClass(index){
-      console.log(this.$moment(new Date()).format("DD/MM/YYYY"));
-      console.log(this.$moment(new Date()).add(1,'days').format("DD/MM/YYYY"));
+    toggleActiveClass(index,day = null){
+      this.date =  day !== null ? day : null;
       this.activeClass = index;
       this.current_page =1;
-      // this.loadData();
+      this.loadData();
     },
+
+    paginate(){
+      this.current_page +=1
+      this.loadData();
+    },
+    changeCategory(){
+      this.current_page = 1
+      this.loadData();
+    },
+
+    //Загружаем новые страницы
+    async loadData(){
+      try{
+        this.$axios.$get("/all-events?page=" + this.current_page + this.categoryQuery + this.dateQuery).then(e=>{
+          this.current_page == 1 ? (this.events = e.data) : (this.events.push(...e.data));
+          this.current_page = e.current_page;
+          this.last_page = e.last_page;
+        }).catch(e=>{console.log(e)});
+      }
+      catch (e) {
+        this.$toast.error("Произошла ошибка попробуйте позже");
+      }
+
+    },
+
+
 
   },
   async asyncData({$axios}) {
     let events = [];
+    let categories = [{id:0,"title_ru":"Все","title_en":"All","title_kz":"Барлық"}];
+    let current_page,last_page = 1;
     try{
-      await $axios.$get("/events").then((e)=>{e.length > 0 ? events = e : null});
+      await $axios.$get("/all-events").then((e)=>{events = e.data;current_page = e.current_page; last_page = e.last_page });
+      await $axios.$get("/event-category").then((e)=>{e.length > 0 ? categories.push(...e) : null});
     }
     catch (e) {
       console.log(e);
     }
-    return {events}
+    return {events,categories,current_page,last_page}
   }
 }
 </script>
