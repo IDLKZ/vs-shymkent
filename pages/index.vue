@@ -44,14 +44,14 @@
         <div class="top-content">
           <div class="top-content__wrapper top-content__wrapper-1">
             <h2 class="top-content__title">
-              Путеводитель
+              {{ $t("place_title") }}
             </h2>
             <p class="top-content__text">
-              Откройте для себя красивейшие места любимого Шымкента
+              {{ $t("place_subtitle") }}
             </p>
           </div>
           <div class="guide__top-content-text">
-            Более 100 увлекательных статей
+            {{ $t("place_subtitle_2") }}
           </div>
         </div>
         <ul class="guide__content">
@@ -75,10 +75,10 @@
         <div class="top-content calendar__top-content">
           <div class="top-content__wrapper top-content__wrapper-2">
             <h2 class="top-content__title">
-              Календарь событий
+              {{ $t('events_title') }}
             </h2>
             <p class="top-content__text">
-              Следите за событиями любимого города
+              {{ $t('events_subtitle') }}
             </p>
           </div>
           <div class="top-content__line"></div>
@@ -86,17 +86,17 @@
         <div class="calendar__date-wrapper">
           <ul class="calendar__date">
             <li class="calendar__date-item">
-              <button class="calendar__date-btn active" onclick="calendarDateBtn()">Ближайшие</button>
+              <button class="calendar__date-btn active" onclick="calendarDateBtn()">{{ $t('events_time_1') }}</button>
             </li>
             <li class="calendar__date-item">
-              <button class="calendar__date-btn" onclick="calendarDateBtn()">Сегодня</button>
+              <button class="calendar__date-btn" onclick="calendarDateBtn()">{{ $t('events_time_2') }}</button>
             </li>
             <li class="calendar__date-item">
-              <button class="calendar__date-btn" onclick="calendarDateBtn()">Завтра</button>
+              <button class="calendar__date-btn" onclick="calendarDateBtn()">{{ $t('events_time_3') }}</button>
             </li>
           </ul>
           <div class="calendar__change-date">
-            <input type="text" id="calendar__timing" placeholder="Выбрать дату" readonly>
+            <input type="text" id="calendar__timing" :placeholder="$t('events_time_4')" readonly>
             <svg class="calendar__timing-svg" xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"/></g></svg>
           </div>
         </div>
@@ -159,14 +159,14 @@
                   </v-card>
                 </v-dialog>
                 <NuxtLink class="calendar-page__item-link popup-modal" :to="'/events/' + item.alias">
-                  <span>Подробнее</span>
+                  <span>{{ $t('more_info') }}</span>
                 </NuxtLink>
               </div>
             </div>
           </div>
         </div>
         <div class="load-more">
-          <NuxtLink to="#">Загрузить еще</NuxtLink>
+          <NuxtLink to="#">{{ $t('load_more') }}</NuxtLink>
         </div>
       </div>
     </section>
@@ -176,10 +176,10 @@
         <div class="top-content">
           <div class="top-content__wrapper top-content__wrapper-3">
             <h2 class="top-content__title">
-              Запланировать поездку
+              {{ $t('trip_title') }}
             </h2>
             <p class="top-content__text">
-              Билеты и проживание
+              {{ $t('trip_subtitle') }}
             </p>
           </div>
         </div>
@@ -192,16 +192,16 @@
               <form>
                 <div class="form__inner">
                   <div class="trip__input-name grid-1">
-                    <input type="text" placeholder="Откуда" autocomplete="off">
+                    <input type="text" :placeholder="$t('trip_from')" autocomplete="off">
                   </div>
                   <div class="trip__input-name grid-2">
-                    <input type="text" placeholder="Куда" autocomplete="off">
+                    <input type="text" :placeholder="$t('trip_to')" autocomplete="off">
                   </div>
                   <div class="trip__input-date grid-3">
-                    <input id="start-date-1" type="text" placeholder="Дата вылета">
+                    <input id="start-date-1" type="text" :placeholder="$t('trip_date_from')">
                   </div>
                   <div class="trip__input-date grid-4">
-                    <input id="end-date-1" class='trip__calendar' type="text" placeholder="Обратно">
+                    <input id="end-date-1" class='trip__calendar' type="text" :placeholder="$t('trip_date_to')">
                   </div>
                   <div class="trip__form-control grid-5">
                     <div class="trip__form-control-wrapper">
@@ -237,7 +237,7 @@
                       </div>
                     </div>
                   </div>
-                  <button class="trip__form-btn grid-6 popup-modal" href="#modal" type="submit">Найти</button>
+                  <button class="trip__form-btn grid-6 popup-modal" href="#modal" type="submit">{{ $t('btn_search') }}</button>
                 </div>
               </form>
             </div>
@@ -363,10 +363,10 @@
         <div class="top-content">
           <div class="top-content__wrapper top-content__wrapper-4">
             <h2 class="top-content__title">
-              Маршруты
+              {{ $t('routes_title') }}
             </h2>
             <p class="top-content__text">
-              Не знаете, что посетить?
+              {{ $t('routes_subtitle') }}
             </p>
           </div>
           <div class="top-content__line"></div>
@@ -385,13 +385,13 @@
 <!--                <p>3) Посещение</p>-->
               </div>
               <NuxtLink class="routes__item-btn popup-modal" :to="'/routes/'+item.alias">
-                <span>Подробнее</span>
+                <span>{{ $t('more_info') }}</span>
               </NuxtLink>
             </div>
           </div>
         </div>
         <div class="load-more">
-          <NuxtLink to="/routes">Смотреть все маршруты</NuxtLink>
+          <NuxtLink to="/routes">{{ $t('load_routes') }}</NuxtLink>
         </div>
       </div>
     </section>
@@ -401,10 +401,10 @@
         <div class="top-content">
           <div class="top-content__wrapper top-content__wrapper-5">
             <h2 class="top-content__title">
-              Сувениры
+              {{ $t('souvenirs') }}
             </h2>
             <p class="top-content__text">
-              Оставьте себе на память кусочек Шымкента
+              {{ $t('souvenirs_subtitle') }}
             </p>
           </div>
           <div class="top-content__line"></div>
@@ -429,13 +429,13 @@
                       v-bind="attrs"
                       v-on="on"
                     >
-                      Купить
+                      {{ $t('buy') }}
                     </v-btn>
                   </template>
 
                   <v-card>
                     <v-card-text>
-                          <div id="modal-eventumCloseBtn" @click="dialog2 = false"
+                          <div @click="dialog2 = false"
                                style="float: right;height: 10px;width: 15px;cursor: pointer;position: absolute;right: 10px;top: 8px;">
                             <svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" width="100%" height="100%">
                               <rect fill="#000000" x="-1.8" y="6.2"
@@ -462,7 +462,7 @@
           </div>
         </div>
         <div class="load-more">
-          <NuxtLink to="/souvenirs">Перейти в магазин</NuxtLink>
+          <NuxtLink to="/souvenirs">{{ $t('load_souvenirs') }}</NuxtLink>
         </div>
       </div>
     </section>
@@ -472,10 +472,10 @@
         <div class="top-content">
           <div class="top-content__wrapper top-content__wrapper-6">
             <h2 class="top-content__title">
-              Новости
+              {{ $t('news') }}
             </h2>
             <p class="top-content__text">
-              Что происходит
+              {{ $t('news_subtitle') }}
             </p>
           </div>
           <div class="top-content__line"></div>
@@ -492,7 +492,7 @@
           </div>
         </div>
         <div class="load-more">
-          <NuxtLink to="/news">Все новости</NuxtLink>
+          <NuxtLink to="/news">{{ $t('load_news') }}</NuxtLink>
         </div>
       </div>
     </section>
@@ -508,25 +508,25 @@ export default {
       tabs: [
         {
           id: 0,
-          title: 'Авиабилеты',
+          title: this.$t('trip_type_1'),
           svg: '<svg xmlns="http://www.w3.org/2000/svg" width="18.999" height="19" viewBox="0 0 18.999 19"><defs><style>.a{fill:#fff;}</style></defs><g transform="translate(-0.025 0)"><path class="a" d="M18.322.046,16.312.961a1.209,1.209,0,0,0-.349.242L12.687,4.481,1.4,3.128A.67.67,0,0,0,.85,3.32l-.628.628a.671.671,0,0,0,.2,1.087L8.508,8.66,6.186,10.982H2.131a.678.678,0,0,0-.475.2l-.339.341a.671.671,0,0,0,.21,1.091l3.421,1.466L6.414,17.5a.671.671,0,0,0,1.091.21l.341-.341a.67.67,0,0,0,.2-.475V12.836l2.321-2.321L13.988,18.6a.671.671,0,0,0,1.087.2l.628-.628a.673.673,0,0,0,.192-.555L14.541,6.337l3.278-3.278a1.183,1.183,0,0,0,.242-.349L18.976.7A.493.493,0,0,0,18.322.046Z" transform="translate(0 0)"/></g></svg>',
           active: 'active'
         },
         {
           id: 1,
-          title: 'Ж/Д билеты',
+          title: this.$t('trip_type_2'),
           svg: '<svg xmlns="http://www.w3.org/2000/svg" width="17.331" height="21.955" viewBox="0 0 17.331 21.955"><defs><style>.a{fill:#fff;}</style></defs><g transform="translate(-61.359)"><g transform="translate(61.359)"><path class="a" d="M78.576,20.562,75.357,14.7a1.906,1.906,0,0,0,1.585-1.874V4.18A4.183,4.183,0,0,0,72.763,0H67.286a4.234,4.234,0,0,0-4.228,4.228v8.6A1.87,1.87,0,0,0,64.643,14.7l-3.171,5.861a.946.946,0,0,0,.384,1.3.714.714,0,0,0,.432.1.93.93,0,0,0,.817-.48l.288-.48h13.26l.288.48a.892.892,0,0,0,.817.48,1.4,1.4,0,0,0,.432-.1A.946.946,0,0,0,78.576,20.562ZM74.06,16.238H65.989l.817-1.489h6.438Zm-.144-3.219a1.393,1.393,0,1,1,1.393-1.393A1.426,1.426,0,0,1,73.916,13.019ZM64.74,4.756a2.676,2.676,0,0,1,2.642-2.69h5.237a2.717,2.717,0,0,1,2.69,2.69V7.062a.924.924,0,0,1-.961.913H65.7a.912.912,0,0,1-.913-.913L64.74,4.756Zm1.393,5.429a1.393,1.393,0,1,1-1.393,1.393A1.394,1.394,0,0,1,66.133,10.185Zm-1.97,9.368,1.057-1.874h9.608l1.057,1.874Z" transform="translate(-61.359)"/></g></g></svg>',
           active: ''
         },
         {
           id: 2,
-          title: 'Отели',
+          title: this.$t('trip_type_3'),
           svg: '<svg xmlns="http://www.w3.org/2000/svg" width="12.792" height="21.545" viewBox="0 0 12.792 21.545"><defs><style>.a{fill:#fff;}</style></defs><g transform="translate(-104.017 0)"><path class="a" d="M114.789,21.545h-8.752a2.022,2.022,0,0,1-2.02-2.02V6.4a6.4,6.4,0,0,1,12.791-.048,2.02,2.02,0,1,1-4.039.048A2.356,2.356,0,0,0,110.4,4.04a2.455,2.455,0,0,0-1.875,3.926,2.681,2.681,0,0,0,1.253.988l5.3,2.039a2.709,2.709,0,0,1,1.726,2.513v6.018A2.022,2.022,0,0,1,114.789,21.545Zm-4.376-20.2A5.046,5.046,0,0,0,105.363,6.4V19.525a.674.674,0,0,0,.673.673h8.752a.674.674,0,0,0,.673-.673V13.507a1.354,1.354,0,0,0-.863-1.257l-5.3-2.039a4.038,4.038,0,0,1-2.588-3.828,3.7,3.7,0,0,1,7.405.014.673.673,0,0,0,.679.673.7.7,0,0,0,.667-.711A5.047,5.047,0,0,0,110.413,1.348Z" transform="translate(0 0)"/><path class="a" d="M174.707,353.38H168.69a.673.673,0,1,1,0-1.346h6.017a.673.673,0,0,1,0,1.346Z" transform="translate(-61.307 -337.222)"/><path class="a" d="M174.707,417.38H168.69a.673.673,0,1,1,0-1.346h6.017a.673.673,0,1,1,0,1.346Z" transform="translate(-61.307 -398.529)"/></g></svg>',
           active: ''
         },
         {
           id: 3,
-          title: 'Квартиры',
+          title: this.$t('trip_type_4'),
           svg: '<svg xmlns="http://www.w3.org/2000/svg" width="21.4" height="21.526" viewBox="0 0 21.4 21.526"><defs><style>.a{fill:#fff;stroke:#fff;stroke-width:0.4px;}</style></defs><g transform="translate(0.2 0.326)"><g transform="translate(0 8.582)"><path class="a" d="M9.883,214.15a.476.476,0,0,0-.675,0L7.439,215.92H6.2a.477.477,0,0,0-.477.478v.955H4.773a.477.477,0,0,0-.477.478v.955H3.341a.478.478,0,0,0-.477.478V220.5l-.2.2H.955v-1.712L8.928,211a.478.478,0,0,0,0-.675l-.14-.14a.667.667,0,0,1-.2-.476v0a.477.477,0,1,0-.955,0,1.616,1.616,0,0,0,.3.937l-7.793,7.8a.477.477,0,0,0-.14.338v2.388a.477.477,0,0,0,.477.477H2.864a.478.478,0,0,0,.337-.14l.477-.478a.477.477,0,0,0,.14-.337v-.955h.955a.477.477,0,0,0,.477-.478v-.955H6.2a.477.477,0,0,0,.477-.478v-.955h.955a.477.477,0,0,0,.337-.14l1.909-1.911A.477.477,0,0,0,9.883,214.15Z" transform="translate(0 -209.233)"/></g><g transform="translate(12.829 3.284)"><path class="a" d="M317.241,82.405l-1.909-1.911a1.524,1.524,0,0,0-2.107,0,1.493,1.493,0,0,0,0,2.108l1.909,1.911a1.49,1.49,0,0,0,2.107-2.108Zm-.675,1.432a.548.548,0,0,1-.757,0L313.9,81.927a.538.538,0,0,1,0-.757.535.535,0,0,1,.757,0l1.909,1.911A.537.537,0,0,1,316.566,83.837Z" transform="translate(-312.789 -80.072)"/></g><g transform="translate(6.682 0)"><path class="a" d="M176.746,6,171.216.462a1.668,1.668,0,0,0-2.3,0l-4.575,4.578a1.632,1.632,0,0,0,0,2.306l4.575,4.578-.281.281a.668.668,0,0,1-.475.2h0a.67.67,0,0,1-.477-.2l-1.334-1.335a.477.477,0,0,0-.675,0L163.044,13.5a.477.477,0,1,0,.675.675l2.288-2.289,1,1a1.618,1.618,0,0,0,1.152.477h0a1.616,1.616,0,0,0,1.149-.477l.618-.619a.477.477,0,0,0,0-.675l-4.913-4.916a.676.676,0,0,1,0-.955l4.575-4.578a.69.69,0,0,1,.955,0l5.53,5.534a.676.676,0,0,1,0,.955L171.5,12.205a.67.67,0,0,1-.477.2.478.478,0,0,0,0,.955,1.618,1.618,0,0,0,1.152-.478L176.746,8.3a1.632,1.632,0,0,0,0-2.306Z" transform="translate(-162.904 0)"/></g></g></svg>',
           active: ''
         }
