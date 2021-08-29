@@ -38,30 +38,39 @@
                     Продавец
                   </h4>
                   <div class="souvenirs-page__list-categories-item">
-                    <input type="checkbox" id="route-tab2-1"> <label for="route-tab2-1">Все</label>
+                    <input type="checkbox" id="route-tab2-1"
+                    :checked="getActiveCheckBox(0)"
+                    @click="toggleActiveCheckBox(0)"
+
+                    >
+                    <label for="route-tab2-1">Все</label>
                   </div>
-                  <div class="souvenirs-page__list-categories-item">
-                    <input type="checkbox" id="route-tab2-2"> <label for="route-tab2-2">Ремесленники</label>
+                  <div class="souvenirs-page__list-categories-item" v-for="(role,index) in roles">
+                    <input type="checkbox" :id="'route-tab2-'+role.id"
+                           :checked="getActiveCheckBox(role.id)"
+                           @click="toggleActiveCheckBox(role.id)"
+                    >
+                    <label :for="'route-tab2-'+role.id">
+                      {{role["title_" + $i18n.locale]}}
+                  </label>
                   </div>
-                  <div class="souvenirs-page__list-categories-item">
-                    <input type="checkbox" id="route-tab2-3"> <label for="route-tab2-3">Сувенирные магазины</label>
-                  </div>
+
                 </div>
                 <div class="souvenirs-page__list-categories-container">
                   <h4 class="routes-page__list-categories-title">
                     Стоимость
                   </h4>
                   <div class="souvenirs-page__list-categories-item">
-                    <input type="checkbox" id="route-tab2-4"> <label for="route-tab2-4">Все</label>
+                    <input type="radio" value="[0,10000000]" v-model="price" id="route-tab3-4"> <label for="route-tab3-4">Все</label>
                   </div>
                   <div class="souvenirs-page__list-categories-item">
-                    <input type="checkbox" id="route-tab2-5"> <label for="route-tab2-5">До 5 тыс</label>
+                    <input type="radio" value="[0,5000]" v-model="price" id="route-tab3-5"> <label for="route-tab3-5">До 5 тыс</label>
                   </div>
                   <div class="souvenirs-page__list-categories-item">
-                    <input type="checkbox" id="route-tab2-6"> <label for="route-tab2-6">От 5 до 50 тыс</label>
+                    <input type="radio" value="[5000,50000]" v-model="price" id="route-tab3-6"> <label for="route-tab3-6">От 5 до 50 тыс</label>
                   </div>
                   <div class="souvenirs-page__list-categories-item">
-                    <input type="checkbox" id="route-tab2-7"> <label for="route-tab2-7">От 50 тыс и выше</label>
+                    <input type="radio" value="[50000,10000000]" v-model="price" id="route-tab3-7"> <label for="route-tab3-7">От 50 тыс и выше</label>
                   </div>
                 </div>
               </div>
@@ -71,7 +80,7 @@
             </div>
             <div class="souvenirs-page__items-wrapper">
               <div class="souvenirs__items-inner">
-                <div class="souvenirs__item" v-for="(item,i) in souvenirs.data" :key="i">
+                <div class="souvenirs__item" v-for="(item,i) in souvenirs" :key="i">
                   <NuxtLink :to="'/souvenirs/'+item.alias">
                     <div class="souvenirs__item-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
                   </NuxtLink>
@@ -91,8 +100,8 @@
                     </div>
                 </div>
               </div>
-              <div class="load-more">
-                <a href="#">Загрузить еще</a>
+              <div class="load-more" v-if="current_page < last_page">
+                <a @click="paginate">Загрузить еще</a>
               </div>
             </div>
           </div>
@@ -130,10 +139,99 @@ export default {
           active: '',
           color: 'black'
         },
-      ]
+      ],
+      role_id:[],
+      price:[],
+      roles:[],
+      souvenirs:[],
+      current_page:1,
+      last_page:1
+
     }
   },
+  watch:{
+    price(val){
+      this.current_page = 1;
+      this.loadData();
+    },
+  },
+
+
+
+  computed:{
+    getRoleQuery(){
+      if(!this.role_id.includes(0)){
+        if(this.role_id.length > 0){return "&role_id=" + JSON.stringify(this.role_id)} else{return "";}
+      }
+      else{
+        return "";
+      }
+    },
+    getPriceQuery(){
+      return "&price=" + this.price
+    }
+  },
+
+
+
+
   methods:{
+    toggleActiveCheckBox(index){
+      if(index == 0){
+        if(this.role_id.includes(0)){
+          this.role_id = [];
+        }
+        else{
+          this.role_id = [];
+          this.role_id.push(0);
+          for(let item in this.roles){
+            if(this.roles[item] !== undefined){
+              this.role_id.push(this.roles[item].id);
+            }
+          }
+        }
+      }
+      else{
+        if(this.role_id.includes(index)){
+          this.role_id.splice(this.role_id.indexOf(index),1);
+          this.role_id.includes(0) == true ? this.role_id.splice(this.role_id.indexOf(0),1) : null;
+        }
+        else{
+          this.role_id.push(index);
+          if(!this.role_id.includes(0)){
+            this.role_id.length == this.roles.length +1 ? this.role_id.push(0) : null;
+          }
+        }
+      }
+      console.log(this.role_id);
+      this.current_page = 1;
+      this.loadData();
+      },
+
+    getActiveCheckBox(index){
+      return this.role_id.includes(index);
+    },
+
+    paginate(){
+      this.current_page +=1
+      this.loadData();
+    },
+
+//Загружаем новые страницы
+    async loadData(){
+      try{
+        this.$axios.$get("/all-souvenirs?page=" + this.current_page + this.getRoleQuery + this.getPriceQuery).then(e=>{
+          this.current_page == 1 ? (this.souvenirs = e[0].data) : (this.souvenirs.push(...e[0].data));
+          this.current_page = e[0].current_page;
+          this.last_page = e[0].last_page;
+        }).catch(e=>{console.log(e)});
+      }
+      catch (e) {
+        this.$toast.error("Произошла ошибка попробуйте позже");
+      }
+
+    },
+
     getImages(data){
       return this.$store.state.image.image + data ;
     },
@@ -148,16 +246,21 @@ export default {
     }
   },
   async asyncData({$axios}) {
+    let current_page,last_page = 1;
+    let roles = [];
     let souvenirs = [];
     try{
-      await $axios.$get("/souvenirs").then((e)=>{
-        souvenirs = e
+      await $axios.$get("/all-souvenirs").then((e)=>{
+        souvenirs = e[0].data
+        current_page = e[0].current_page;
+        last_page = e[0].last_page;
+        roles = e[1];
       });
     }
     catch (e) {
       console.log(e);
     }
-    return {souvenirs}
+    return {souvenirs,roles,current_page,last_page}
   },
 }
 </script>

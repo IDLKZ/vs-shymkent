@@ -198,18 +198,25 @@ export default {
 
 
   },
-  async asyncData({$axios}) {
+  async asyncData({$axios,query}) {
     let events = [];
+    let date,dateQuery = "";
     let categories = [{id:0,"title_ru":"Все","title_en":"All","title_kz":"Барлық"}];
     let current_page,last_page = 1;
+    if(query.date_start){
+      date = query.date_start;
+      dateQuery = "&date_start=" + date;
+    }
+
+
     try{
-      await $axios.$get("/all-events").then((e)=>{events = e.data;current_page = e.current_page; last_page = e.last_page });
+      await $axios.$get("/all-events?page=1" + dateQuery).then((e)=>{events = e.data;current_page = e.current_page; last_page = e.last_page });
       await $axios.$get("/event-category").then((e)=>{e.length > 0 ? categories.push(...e) : null});
     }
     catch (e) {
       console.log(e);
     }
-    return {events,categories,current_page,last_page}
+    return {events,categories,date,current_page,last_page}
   }
 }
 </script>

@@ -141,7 +141,6 @@ export default {
           this.current_page = e[0].current_page;
           this.last_page = e[0].last_page;
           this.lastNew = e[2];
-          console.log(this.news)
         }).catch((e)=>{
           console.log(e);
         })

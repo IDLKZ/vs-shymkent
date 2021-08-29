@@ -224,13 +224,43 @@ export default {
 
   },
 
-  async asyncData({$axios}) {
-    let activeCheckbox = {0:true};
+  async asyncData({$axios,query}) {
+    let activeCheckbox = {};
     let categories, places = [];
     let current_page,last_page = 1;
+
     try{
       await $axios.$get("/categoriesofthe-places-all").then((e)=>{categories = e});
-      await $axios.$get("/places?page=1" + "&order=" + "desc" + "&search=" + "").then((e)=>{places = e.data; current_page = e.current_page; last_page = e.last_page});
+    }
+    catch (e) {
+     console.log(e)
+    }
+    if(query.place){
+      activeCheckbox[0] = false;
+      if(Object.keys(categories).length > 0){
+        for (let item in categories){
+          if(categories[item].alias == query.place){
+            activeCheckbox[item] = true;
+            if(categories[item].children){
+              for (let child in categories[item].children){
+                activeCheckbox[child] = true
+              }
+            }
+          }
+          else{
+            activeCheckbox[item] = false;
+            if(categories[item].children){
+              for (let child in categories[item].children){
+                activeCheckbox[child] = false
+              }
+            }
+          }
+
+        }
+      }
+    }
+    else{
+      activeCheckbox[0] = true;
       for (let item in categories){
         activeCheckbox[item] = true;
         if(categories[item].children){
@@ -239,6 +269,17 @@ export default {
           }
         }
       }
+    }
+    let category = []
+    for (let i in activeCheckbox){
+      if(activeCheckbox[i]){
+        category.push(i);
+      }
+    }
+    category =  category.length > 0 ? "&categories=" + JSON.stringify(category) : "";
+    try{
+      await $axios.$get("/places?page=1" + category + "&order=" + "desc" + "&search=" + "").then((e)=>{places = e.data; current_page = e.current_page; last_page = e.last_page});
+
     }
     catch (e) {
       console.log(e);

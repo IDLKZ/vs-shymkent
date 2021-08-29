@@ -92,13 +92,13 @@
               Сувениры
             </h2>
             <p class="top-content__text">
-              Вазможно вам понравится
+              Возможно вам понравится
             </p>
           </div>
           <div class="top-content__line"></div>
         </div>
         <div class="souvenirs__items-inner">
-          <div class="souvenirs__item" v-for="(item,i) in souvenirs.data" :key="i">
+          <div class="souvenirs__item" v-for="(item,i) in souvenirs" :key="i">
             <NuxtLink :to="'/souvenirs/'+item.alias">
               <div class="souvenirs__item-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
             </NuxtLink>
@@ -117,9 +117,6 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="load-more">
-          <a href="#">Загрузить еще</a>
         </div>
         <div class="load-more">
           <NuxtLink to="/souvenirs">Перейти ко всем товарам</NuxtLink>
@@ -172,7 +169,8 @@ export default {
       .then(e => {
         if (Object.keys(e).length === 0) throw({ statusCode: 404, message: 'Event not found' })
         else {
-          souvenir = e;
+          souvenir = e[0];
+          souvenirs = e[1];
           form.souvenir_id = souvenir.id
           if (store.$auth.$state.loggedIn){
             form.user_id = store.$auth.$state.user.user.id
@@ -190,14 +188,6 @@ export default {
       }).catch(e => {
         console.log(e)
       })
-    try{
-      await $axios.$get("/souvenirs").then((e)=>{
-        souvenirs = e
-      });
-    }
-    catch (e) {
-      console.log(e);
-    }
     return {souvenir,souvenirs,form,saveColor};
   }
 }

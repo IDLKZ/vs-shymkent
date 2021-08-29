@@ -58,7 +58,7 @@
 
           <li v-for="(item,i) in this.categoryplace" :key="i" class="guide__content-item" :style="'background-image: url('+getImages(item.image)+');'">
             <div class="guide__item-wrapper">
-              <NuxtLink class="guide__link-wrapper popup-modal" to="#">
+              <NuxtLink class="guide__link-wrapper popup-modal" :to="'/places?place='+item.alias">
                 <h5>
                   {{ item['title_'+$i18n.locale] }}
                 </h5>
@@ -86,18 +86,52 @@
         <div class="calendar__date-wrapper">
           <ul class="calendar__date">
             <li class="calendar__date-item">
-              <button class="calendar__date-btn active" onclick="calendarDateBtn()">{{ $t('events_time_1') }}</button>
+              <button class="calendar__date-btn active"
+                      @click="date = ''"
+              >{{ $t('events_time_1') }}</button>
             </li>
             <li class="calendar__date-item">
-              <button class="calendar__date-btn" onclick="calendarDateBtn()">{{ $t('events_time_2') }}</button>
+              <button class="calendar__date-btn"
+                      @click="date=$moment(new Date()).format('DD/MM/YYYY')"
+              >{{ $t('events_time_2') }}</button>
             </li>
             <li class="calendar__date-item">
-              <button class="calendar__date-btn" onclick="calendarDateBtn()">{{ $t('events_time_3') }}</button>
+              <button class="calendar__date-btn"
+                      @click="date=$moment(new Date()).add(1,'days').format('DD/MM/YYYY')"
+              >{{ $t('events_time_3') }}</button>
             </li>
           </ul>
-          <div class="calendar__change-date">
-            <input type="text" id="calendar__timing" :placeholder="$t('events_time_4')" readonly>
-            <svg class="calendar__timing-svg" xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"/></g></svg>
+          <div class="calendar__change-date ">
+            <div class="calendar__change-date">
+              <v-menu
+                ref="menu1"
+                v-model="menu"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                max-width="290px"
+                min-width="auto"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    hide-details="auto"
+                    v-model="formatDate"
+                    :label="$t('events_time_4')"
+                    prepend-icon="mdi-calendar"
+                    v-bind="attrs"
+                    v-on="on"
+                    color="white"
+                    outlined
+                    dark
+
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="dateForm"
+                  no-title
+                  @input="menu = false"
+                ></v-date-picker>
+              </v-menu>
+            </div>
           </div>
         </div>
         <div class="calendar__inner">
@@ -166,7 +200,7 @@
           </div>
         </div>
         <div class="load-more">
-          <NuxtLink to="#">{{ $t('load_more') }}</NuxtLink>
+          <NuxtLink to="events">{{ $t('load_more') }}</NuxtLink>
         </div>
       </div>
     </section>
@@ -410,7 +444,7 @@
           <div class="top-content__line"></div>
         </div>
         <div class="souvenirs__items-inner">
-          <div class="souvenirs__item" v-for="(item,i) in this.souvenirs.data" :key="i">
+          <div class="souvenirs__item" v-for="(item,i) in souvenirs.data" :key="i">
             <div class="souvenirs__item-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
             <div class="souvenirs__item-content">
               <h4 class="souvenirs__item-title">
@@ -530,8 +564,30 @@ export default {
           svg: '<svg xmlns="http://www.w3.org/2000/svg" width="21.4" height="21.526" viewBox="0 0 21.4 21.526"><defs><style>.a{fill:#fff;stroke:#fff;stroke-width:0.4px;}</style></defs><g transform="translate(0.2 0.326)"><g transform="translate(0 8.582)"><path class="a" d="M9.883,214.15a.476.476,0,0,0-.675,0L7.439,215.92H6.2a.477.477,0,0,0-.477.478v.955H4.773a.477.477,0,0,0-.477.478v.955H3.341a.478.478,0,0,0-.477.478V220.5l-.2.2H.955v-1.712L8.928,211a.478.478,0,0,0,0-.675l-.14-.14a.667.667,0,0,1-.2-.476v0a.477.477,0,1,0-.955,0,1.616,1.616,0,0,0,.3.937l-7.793,7.8a.477.477,0,0,0-.14.338v2.388a.477.477,0,0,0,.477.477H2.864a.478.478,0,0,0,.337-.14l.477-.478a.477.477,0,0,0,.14-.337v-.955h.955a.477.477,0,0,0,.477-.478v-.955H6.2a.477.477,0,0,0,.477-.478v-.955h.955a.477.477,0,0,0,.337-.14l1.909-1.911A.477.477,0,0,0,9.883,214.15Z" transform="translate(0 -209.233)"/></g><g transform="translate(12.829 3.284)"><path class="a" d="M317.241,82.405l-1.909-1.911a1.524,1.524,0,0,0-2.107,0,1.493,1.493,0,0,0,0,2.108l1.909,1.911a1.49,1.49,0,0,0,2.107-2.108Zm-.675,1.432a.548.548,0,0,1-.757,0L313.9,81.927a.538.538,0,0,1,0-.757.535.535,0,0,1,.757,0l1.909,1.911A.537.537,0,0,1,316.566,83.837Z" transform="translate(-312.789 -80.072)"/></g><g transform="translate(6.682 0)"><path class="a" d="M176.746,6,171.216.462a1.668,1.668,0,0,0-2.3,0l-4.575,4.578a1.632,1.632,0,0,0,0,2.306l4.575,4.578-.281.281a.668.668,0,0,1-.475.2h0a.67.67,0,0,1-.477-.2l-1.334-1.335a.477.477,0,0,0-.675,0L163.044,13.5a.477.477,0,1,0,.675.675l2.288-2.289,1,1a1.618,1.618,0,0,0,1.152.477h0a1.616,1.616,0,0,0,1.149-.477l.618-.619a.477.477,0,0,0,0-.675l-4.913-4.916a.676.676,0,0,1,0-.955l4.575-4.578a.69.69,0,0,1,.955,0l5.53,5.534a.676.676,0,0,1,0,.955L171.5,12.205a.67.67,0,0,1-.477.2.478.478,0,0,0,0,.955,1.618,1.618,0,0,0,1.152-.478L176.746,8.3a1.632,1.632,0,0,0,0-2.306Z" transform="translate(-162.904 0)"/></g></g></svg>',
           active: ''
         }
-      ]
+      ],
+      dateForm:"",
+      date: "",
+      menu: false,
+      modal: false,
     }
+  },
+  watch: {
+    dateForm (val) {
+      this.date = this.$moment(val).format("DD/MM/YYYY");
+    },
+    date(val){
+      if(this.date){
+        this.$router.push({path: 'events' , query: {date_start: this.date}});
+      }
+      else{
+        this.$router.push({path: 'events'});
+      }
+    }
+  },
+  computed:{
+    formatDate() {
+      return this.date
+    },
   },
   methods:{
     getImages(data){
@@ -551,6 +607,7 @@ export default {
       })
       this.tabs[i].active = 'active'
     },
+
   },
   async asyncData({$axios}) {
     let sliders,categoryplace,events,routes,souvenirs,blogs = [];
