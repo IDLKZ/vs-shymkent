@@ -170,10 +170,6 @@
                 </button>
               </form>
               <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
-<!--              <button class="post__btn">-->
-<!--                <svg xmlns="http://www.w3.org/2000/svg" width="11.052" height="11.056" viewBox="0 0 11.052 11.056"><path d="M11.052,5.525,6.014,0V3.31H5.428A5.428,5.428,0,0,0,0,8.738v2.318L.967,10A6.939,6.939,0,0,1,6.014,7.741V11.05ZM.648,9.39V8.738a4.78,4.78,0,0,1,4.78-4.781H6.661V1.672l3.514,3.853L6.661,9.378V7.093H6.08A7.588,7.588,0,0,0,.648,9.39Zm0,0"/></svg>-->
-<!--                Поделиться-->
-<!--              </button>-->
             </div>
             <div class="guide-item__sameplace">
               <h4 class="guide-item__sameplace-title">
@@ -181,41 +177,22 @@
               </h4>
               <div class="guide-item__sameplace-slider">
                 <div class="guide-item__sameplace-slider-item">
-                  <div class="guide-list__item">
-                    <div class="guide-list__item-img" style="background-image: url('/images/guide-list-2.jpg');">
+                  <div class="guide-list__item" v-for="(item,i) in places" :key="i">
+                    <div class="guide-list__item-img" :style="'background-image: url('+getImages(item.image)+');'">
+                      <NuxtLink :to="'/places/'+item.alias"></NuxtLink>
                     </div>
                     <div class="guide-list__item-info">
-                      <div class="guide-list__item-category">
-                        Гастрономический туризм / Кафе
-                      </div>
-                      <div class="guide-list__item-rating">
-                        <div class="guide-list__item-rating-star active">
-                          <svg height="511pt" viewBox="0 -10 511.98685 511" width="511pt" xmlns="http://www.w3.org/2000/svg"><path d="m510.652344 185.902344c-3.351563-10.367188-12.546875-17.730469-23.425782-18.710938l-147.773437-13.417968-58.433594-136.769532c-4.308593-10.023437-14.121093-16.511718-25.023437-16.511718s-20.714844 6.488281-25.023438 16.535156l-58.433594 136.746094-147.796874 13.417968c-10.859376 1.003906-20.03125 8.34375-23.402344 18.710938-3.371094 10.367187-.257813 21.738281 7.957031 28.90625l111.699219 97.960937-32.9375 145.089844c-2.410156 10.667969 1.730468 21.695313 10.582031 28.09375 4.757813 3.4375 10.324219 5.1875 15.9375 5.1875 4.839844 0 9.640625-1.304687 13.949219-3.882813l127.46875-76.183593 127.421875 76.183593c9.324219 5.609376 21.078125 5.097657 29.910156-1.304687 8.855469-6.417969 12.992187-17.449219 10.582031-28.09375l-32.9375-145.089844 111.699219-97.941406c8.214844-7.1875 11.351563-18.539063 7.980469-28.925781zm0 0"/></svg>
-                        </div>
-                        <div class="guide-list__item-rating-star active">
-                          <svg height="511pt" viewBox="0 -10 511.98685 511" width="511pt" xmlns="http://www.w3.org/2000/svg"><path d="m510.652344 185.902344c-3.351563-10.367188-12.546875-17.730469-23.425782-18.710938l-147.773437-13.417968-58.433594-136.769532c-4.308593-10.023437-14.121093-16.511718-25.023437-16.511718s-20.714844 6.488281-25.023438 16.535156l-58.433594 136.746094-147.796874 13.417968c-10.859376 1.003906-20.03125 8.34375-23.402344 18.710938-3.371094 10.367187-.257813 21.738281 7.957031 28.90625l111.699219 97.960937-32.9375 145.089844c-2.410156 10.667969 1.730468 21.695313 10.582031 28.09375 4.757813 3.4375 10.324219 5.1875 15.9375 5.1875 4.839844 0 9.640625-1.304687 13.949219-3.882813l127.46875-76.183593 127.421875 76.183593c9.324219 5.609376 21.078125 5.097657 29.910156-1.304687 8.855469-6.417969 12.992187-17.449219 10.582031-28.09375l-32.9375-145.089844 111.699219-97.941406c8.214844-7.1875 11.351563-18.539063 7.980469-28.925781zm0 0"/></svg>
-                        </div>
-                        <div class="guide-list__item-rating-star active">
-                          <svg height="511pt" viewBox="0 -10 511.98685 511" width="511pt" xmlns="http://www.w3.org/2000/svg"><path d="m510.652344 185.902344c-3.351563-10.367188-12.546875-17.730469-23.425782-18.710938l-147.773437-13.417968-58.433594-136.769532c-4.308593-10.023437-14.121093-16.511718-25.023437-16.511718s-20.714844 6.488281-25.023438 16.535156l-58.433594 136.746094-147.796874 13.417968c-10.859376 1.003906-20.03125 8.34375-23.402344 18.710938-3.371094 10.367187-.257813 21.738281 7.957031 28.90625l111.699219 97.960937-32.9375 145.089844c-2.410156 10.667969 1.730468 21.695313 10.582031 28.09375 4.757813 3.4375 10.324219 5.1875 15.9375 5.1875 4.839844 0 9.640625-1.304687 13.949219-3.882813l127.46875-76.183593 127.421875 76.183593c9.324219 5.609376 21.078125 5.097657 29.910156-1.304687 8.855469-6.417969 12.992187-17.449219 10.582031-28.09375l-32.9375-145.089844 111.699219-97.941406c8.214844-7.1875 11.351563-18.539063 7.980469-28.925781zm0 0"/></svg>
-                        </div>
-                        <div class="guide-list__item-rating-star active">
-                          <svg height="511pt" viewBox="0 -10 511.98685 511" width="511pt" xmlns="http://www.w3.org/2000/svg"><path d="m510.652344 185.902344c-3.351563-10.367188-12.546875-17.730469-23.425782-18.710938l-147.773437-13.417968-58.433594-136.769532c-4.308593-10.023437-14.121093-16.511718-25.023437-16.511718s-20.714844 6.488281-25.023438 16.535156l-58.433594 136.746094-147.796874 13.417968c-10.859376 1.003906-20.03125 8.34375-23.402344 18.710938-3.371094 10.367187-.257813 21.738281 7.957031 28.90625l111.699219 97.960937-32.9375 145.089844c-2.410156 10.667969 1.730468 21.695313 10.582031 28.09375 4.757813 3.4375 10.324219 5.1875 15.9375 5.1875 4.839844 0 9.640625-1.304687 13.949219-3.882813l127.46875-76.183593 127.421875 76.183593c9.324219 5.609376 21.078125 5.097657 29.910156-1.304687 8.855469-6.417969 12.992187-17.449219 10.582031-28.09375l-32.9375-145.089844 111.699219-97.941406c8.214844-7.1875 11.351563-18.539063 7.980469-28.925781zm0 0"/></svg>
-                        </div>
-                        <div class="guide-list__item-rating-star">
-                          <svg height="511pt" viewBox="0 -10 511.98685 511" width="511pt" xmlns="http://www.w3.org/2000/svg"><path d="m510.652344 185.902344c-3.351563-10.367188-12.546875-17.730469-23.425782-18.710938l-147.773437-13.417968-58.433594-136.769532c-4.308593-10.023437-14.121093-16.511718-25.023437-16.511718s-20.714844 6.488281-25.023438 16.535156l-58.433594 136.746094-147.796874 13.417968c-10.859376 1.003906-20.03125 8.34375-23.402344 18.710938-3.371094 10.367187-.257813 21.738281 7.957031 28.90625l111.699219 97.960937-32.9375 145.089844c-2.410156 10.667969 1.730468 21.695313 10.582031 28.09375 4.757813 3.4375 10.324219 5.1875 15.9375 5.1875 4.839844 0 9.640625-1.304687 13.949219-3.882813l127.46875-76.183593 127.421875 76.183593c9.324219 5.609376 21.078125 5.097657 29.910156-1.304687 8.855469-6.417969 12.992187-17.449219 10.582031-28.09375l-32.9375-145.089844 111.699219-97.941406c8.214844-7.1875 11.351563-18.539063 7.980469-28.925781zm0 0"/></svg>
-                        </div>
+                      <div class="guide-list__item-category" v-for="(item,i) in item.category" :key="i">
+                        {{item['title_'+$i18n.locale]}} /
                       </div>
                     </div>
                     <div class="guide-list__item-content">
-                      <h4 class="guide-list__item-title">
-                        Областной Краеведческий музей Шымкент
-                      </h4>
-                      <p class="guide-list__item-text">
-                        Областной краеведческий музей основан в 1920 году. Музей в Шымкенте занимает третье место в стране по количеству антикварных изделий и памятников, а также по историко-культурной значимости, уступая только государственным республиканским музеям новой и
-                        старой столицам...
-                      </p>
+                      <NuxtLink :to="'/places/'+item.alias" class="guide-list__item-title">
+                        {{item['title_'+$i18n.locale]}}
+                      </NuxtLink>
+                      <p class="guide-list__item-text" v-html="truncate(item['description_'+$i18n.locale],100)"></p>
                       <div class="guide-list__item-about">
-                        <a href="#" class="guide-list__about-link">Подробнее</a>
+                        <NuxtLink :to="'/places/'+item.alias" class="guide-list__about-link">Подробнее</NuxtLink>
                       </div>
                     </div>
                   </div>
@@ -243,18 +220,52 @@
         <div class="calendar__date-wrapper">
           <ul class="calendar__date">
             <li class="calendar__date-item">
-              <button class="calendar__date-btn active">Ближайшие</button>
+              <button class="calendar__date-btn active"
+                      @click="date = ''"
+              >{{ $t('events_time_1') }}</button>
             </li>
             <li class="calendar__date-item">
-              <button class="calendar__date-btn">Сегодня</button>
+              <button class="calendar__date-btn"
+                      @click="date=$moment(new Date()).format('DD/MM/YYYY')"
+              >{{ $t('events_time_2') }}</button>
             </li>
             <li class="calendar__date-item">
-              <button class="calendar__date-btn">Завтра</button>
+              <button class="calendar__date-btn"
+                      @click="date=$moment(new Date()).add(1,'days').format('DD/MM/YYYY')"
+              >{{ $t('events_time_3') }}</button>
             </li>
           </ul>
-          <div class="calendar__change-date">
-            <input type="text" id="calendar__timing" placeholder="Выбрать дату" readonly>
-            <svg class="calendar__timing-svg" xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"/></g></svg>
+          <div class="calendar__change-date ">
+            <div class="calendar__change-date">
+              <v-menu
+                ref="menu1"
+                v-model="menu"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                max-width="290px"
+                min-width="auto"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    hide-details="auto"
+                    v-model="formatDate"
+                    :label="$t('events_time_4')"
+                    prepend-icon="mdi-calendar"
+                    v-bind="attrs"
+                    v-on="on"
+                    color="white"
+                    outlined
+                    dark
+
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="dateForm"
+                  no-title
+                  @input="menu = false"
+                ></v-date-picker>
+              </v-menu>
+            </div>
           </div>
         </div>
         <div class="calendar__inner" v-if="place.events.length>0">
@@ -325,8 +336,30 @@ export default {
       galleries: [],
       currentId:null,
       coords: [42.340782,69.596329],
-      placemarks: []
+      placemarks: [],
+      dateForm:"",
+      date: "",
+      menu: false,
+      modal: false,
     }
+  },
+  watch: {
+    dateForm (val) {
+      this.date = this.$moment(val).format("DD/MM/YYYY");
+    },
+    date(val){
+      if(this.date){
+        this.$router.push({path: '/events' , query: {date_start: this.date}});
+      }
+      else{
+        this.$router.push({path: '/events'});
+      }
+    }
+  },
+  computed:{
+    formatDate() {
+      return this.date
+    },
   },
   async asyncData({params, $axios, store}) {
     let galleries = [];
@@ -334,6 +367,7 @@ export default {
     let saveColor = '';
     const alias = params.alias
     const place = await $axios.$get('/single-place/'+alias);
+    const places = await $axios.$get('/getPlace?count=2');
     form.place_id = place.id
     if (store.$auth.$state.loggedIn){
       form.user_id = store.$auth.$state.user.user.id
@@ -347,6 +381,7 @@ export default {
         })
       }
     }
+
     let TIMA = JSON.parse(place.address_link)
     let placemarks = []
     TIMA.forEach((item, i) => {
@@ -363,7 +398,7 @@ export default {
     galleries.push({
       id:100, src:store.state.image.image +place.image, thumbnail:store.state.image.image +place.image
     })
-    return {place,galleries,placemarks, form, saveColor}
+    return {place,galleries,placemarks, form, saveColor,places}
   },
   methods:{
     getImages(data){
@@ -395,7 +430,7 @@ export default {
 
   },
   mounted() {
-    console.log(this.place)
+
   }
 }
 </script>

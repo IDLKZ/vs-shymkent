@@ -12,6 +12,15 @@ const globals = {
         getImage(image) {
           return this.$store.state.image.image + image ;
         },
+        getStarClass(item,max){
+          let className =  'guide-list__item-rating-star';
+          for (let i = 1; i <= max; i++){
+            if(item <= max){
+              className = 'guide-list__item-rating-star active';
+            }
+          }
+          return className;
+        },
       }
       }
     )

@@ -28,7 +28,7 @@
         </ul>
         <div class="souvenirs-page__tabs-content active">
           <div class="souvenirs-page__craft-inner">
-            <NuxtLink :to="'/craft/'+item.alias" class="souvenirs-page__craft-item" v-for="(item,i) in shops.data" :key="i">
+            <NuxtLink :to="'/craft/'+item.alias" class="souvenirs-page__craft-item" v-for="(item,i) in shops" :key="i">
               <div class="souvenirs-page__craft-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
               <div class="souvenirs-page__craft-content">
                 <h5 class="souvenirs-page__craft-name">
@@ -40,14 +40,12 @@
                 <div class="souvenirs-page__craft-count" v-if="item.souvenirs.length>0">
                   Товаров: <span>{{item.souvenirs.length}}</span>
                 </div>
-                <div class="souvenirs-page__craft-count" v-else>
-                  Товаров: <span>0</span>
-                </div>
+
               </div>
             </NuxtLink>
           </div>
-          <div class="load-more">
-            <a href="#">Загрузить еще</a>
+          <div class="load-more" v-if="current_page<last_page">
+            <a @click="paginate">Загрузить еще</a>
           </div>
         </div>
       </div>
@@ -83,7 +81,11 @@ export default {
           active: 'active',
           color: 'white!important'
         },
-      ]
+      ],
+      current_page:1,
+      last_page:1,
+      shops:[],
+
     }
   },
   methods:{
@@ -98,17 +100,38 @@ export default {
         item.active = ''
       })
       this.tabs[i].active = 'active'
-    }
+    },
+    paginate(){
+      this.current_page +=1
+      this.loadData();
+    },
+    //Загружаем новые страницы
+    async loadData(){
+      try{
+        this.$axios.$get("/shops?page=" + this.current_page ).then(e=>{
+          this.current_page == 1 ? (this.shops = e.data) : (this.shops.push(...e.data));
+          this.current_page = e.current_page;
+          this.last_page = e.last_page;
+        }).catch(e=>{console.log(e)});
+      }
+      catch (e) {
+        this.$toast.error("Произошла ошибка попробуйте позже");
+      }
+
+    },
   },
   async asyncData({$axios}) {
+    let current_page,last_page = 1;
     let shops = [];
     try{
       await $axios.$get("/shops").then((e)=>{
-        shops = e
+        shops = e.data;
+        current_page = e.current_page;
+        last_page = e.last_page;
       });
     }
     catch (e) {
-      console.log(e);
+      console.log(e,current_page,last_page);
     }
     return {shops}
   },

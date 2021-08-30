@@ -46,8 +46,12 @@
                     <div class="tour-agency__contact-title">
                       Время работы:
                     </div>
-                    <div class="tour-agency__contact-text">
-                      10:00 - 19:00
+                    <div class="calendar-item__contact-text">
+                      <div v-if="craft.workdays.length>0">
+                        <div v-for="(item,i) in craft.workdays" :key="i">
+                          {{ item.date_start }} - {{ item.date_end }} / {{ item.time_start }} - {{ item.time_end }}
+                        </div>
+                      </div>
                     </div>
                   </li>
                   <li>
@@ -77,37 +81,22 @@
                   </button>
                 </form>
                 <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
-<!--                <button class="post__btn">-->
-<!--                  <svg xmlns="http://www.w3.org/2000/svg" width="11.052" height="11.056" viewBox="0 0 11.052 11.056"><path d="M11.052,5.525,6.014,0V3.31H5.428A5.428,5.428,0,0,0,0,8.738v2.318L.967,10A6.939,6.939,0,0,1,6.014,7.741V11.05ZM.648,9.39V8.738a4.78,4.78,0,0,1,4.78-4.781H6.661V1.672l3.514,3.853L6.661,9.378V7.093H6.08A7.588,7.588,0,0,0,.648,9.39Zm0,0"/></svg>-->
-<!--                  Поделиться-->
-<!--                </button>-->
+
               </div>
             </div>
             <div class="souvenirs-item__content-aside souvenirs-item__content-aside--move">
-              <div class="souvenirs-item__aside-item souvenirs-item__aside-item--move">
-                <h4 class="souvenirs-item__content-feedback-title">
-                  Оценка в 2gis
+              <div class="souvenirs-item__aside-item souvenirs-item__aside-item--move" v-for="rating in craft.ratings">
+                <h4 class="souvenirs-item__content-feedback-title" >
+                  Оценка в {{rating.title}}
                 </h4>
                 <div class="guide-item__rating-inner">
                   <div class="guide-list__item-rating">
-                    <div class="guide-list__item-rating-star active">
-                      <svg height="511pt" viewBox="0 -10 511.98685 511" width="511pt" xmlns="http://www.w3.org/2000/svg"><path d="m510.652344 185.902344c-3.351563-10.367188-12.546875-17.730469-23.425782-18.710938l-147.773437-13.417968-58.433594-136.769532c-4.308593-10.023437-14.121093-16.511718-25.023437-16.511718s-20.714844 6.488281-25.023438 16.535156l-58.433594 136.746094-147.796874 13.417968c-10.859376 1.003906-20.03125 8.34375-23.402344 18.710938-3.371094 10.367187-.257813 21.738281 7.957031 28.90625l111.699219 97.960937-32.9375 145.089844c-2.410156 10.667969 1.730468 21.695313 10.582031 28.09375 4.757813 3.4375 10.324219 5.1875 15.9375 5.1875 4.839844 0 9.640625-1.304687 13.949219-3.882813l127.46875-76.183593 127.421875 76.183593c9.324219 5.609376 21.078125 5.097657 29.910156-1.304687 8.855469-6.417969 12.992187-17.449219 10.582031-28.09375l-32.9375-145.089844 111.699219-97.941406c8.214844-7.1875 11.351563-18.539063 7.980469-28.925781zm0 0"/></svg>
-                    </div>
-                    <div class="guide-list__item-rating-star active">
-                      <svg height="511pt" viewBox="0 -10 511.98685 511" width="511pt" xmlns="http://www.w3.org/2000/svg"><path d="m510.652344 185.902344c-3.351563-10.367188-12.546875-17.730469-23.425782-18.710938l-147.773437-13.417968-58.433594-136.769532c-4.308593-10.023437-14.121093-16.511718-25.023437-16.511718s-20.714844 6.488281-25.023438 16.535156l-58.433594 136.746094-147.796874 13.417968c-10.859376 1.003906-20.03125 8.34375-23.402344 18.710938-3.371094 10.367187-.257813 21.738281 7.957031 28.90625l111.699219 97.960937-32.9375 145.089844c-2.410156 10.667969 1.730468 21.695313 10.582031 28.09375 4.757813 3.4375 10.324219 5.1875 15.9375 5.1875 4.839844 0 9.640625-1.304687 13.949219-3.882813l127.46875-76.183593 127.421875 76.183593c9.324219 5.609376 21.078125 5.097657 29.910156-1.304687 8.855469-6.417969 12.992187-17.449219 10.582031-28.09375l-32.9375-145.089844 111.699219-97.941406c8.214844-7.1875 11.351563-18.539063 7.980469-28.925781zm0 0"/></svg>
-                    </div>
-                    <div class="guide-list__item-rating-star active">
-                      <svg height="511pt" viewBox="0 -10 511.98685 511" width="511pt" xmlns="http://www.w3.org/2000/svg"><path d="m510.652344 185.902344c-3.351563-10.367188-12.546875-17.730469-23.425782-18.710938l-147.773437-13.417968-58.433594-136.769532c-4.308593-10.023437-14.121093-16.511718-25.023437-16.511718s-20.714844 6.488281-25.023438 16.535156l-58.433594 136.746094-147.796874 13.417968c-10.859376 1.003906-20.03125 8.34375-23.402344 18.710938-3.371094 10.367187-.257813 21.738281 7.957031 28.90625l111.699219 97.960937-32.9375 145.089844c-2.410156 10.667969 1.730468 21.695313 10.582031 28.09375 4.757813 3.4375 10.324219 5.1875 15.9375 5.1875 4.839844 0 9.640625-1.304687 13.949219-3.882813l127.46875-76.183593 127.421875 76.183593c9.324219 5.609376 21.078125 5.097657 29.910156-1.304687 8.855469-6.417969 12.992187-17.449219 10.582031-28.09375l-32.9375-145.089844 111.699219-97.941406c8.214844-7.1875 11.351563-18.539063 7.980469-28.925781zm0 0"/></svg>
-                    </div>
-                    <div class="guide-list__item-rating-star active">
-                      <svg height="511pt" viewBox="0 -10 511.98685 511" width="511pt" xmlns="http://www.w3.org/2000/svg"><path d="m510.652344 185.902344c-3.351563-10.367188-12.546875-17.730469-23.425782-18.710938l-147.773437-13.417968-58.433594-136.769532c-4.308593-10.023437-14.121093-16.511718-25.023437-16.511718s-20.714844 6.488281-25.023438 16.535156l-58.433594 136.746094-147.796874 13.417968c-10.859376 1.003906-20.03125 8.34375-23.402344 18.710938-3.371094 10.367187-.257813 21.738281 7.957031 28.90625l111.699219 97.960937-32.9375 145.089844c-2.410156 10.667969 1.730468 21.695313 10.582031 28.09375 4.757813 3.4375 10.324219 5.1875 15.9375 5.1875 4.839844 0 9.640625-1.304687 13.949219-3.882813l127.46875-76.183593 127.421875 76.183593c9.324219 5.609376 21.078125 5.097657 29.910156-1.304687 8.855469-6.417969 12.992187-17.449219 10.582031-28.09375l-32.9375-145.089844 111.699219-97.941406c8.214844-7.1875 11.351563-18.539063 7.980469-28.925781zm0 0"/></svg>
-                    </div>
-                    <div class="guide-list__item-rating-star">
+                    <div v-for="i in 5" :class="getStarClass(i,rating['rating'])">
                       <svg height="511pt" viewBox="0 -10 511.98685 511" width="511pt" xmlns="http://www.w3.org/2000/svg"><path d="m510.652344 185.902344c-3.351563-10.367188-12.546875-17.730469-23.425782-18.710938l-147.773437-13.417968-58.433594-136.769532c-4.308593-10.023437-14.121093-16.511718-25.023437-16.511718s-20.714844 6.488281-25.023438 16.535156l-58.433594 136.746094-147.796874 13.417968c-10.859376 1.003906-20.03125 8.34375-23.402344 18.710938-3.371094 10.367187-.257813 21.738281 7.957031 28.90625l111.699219 97.960937-32.9375 145.089844c-2.410156 10.667969 1.730468 21.695313 10.582031 28.09375 4.757813 3.4375 10.324219 5.1875 15.9375 5.1875 4.839844 0 9.640625-1.304687 13.949219-3.882813l127.46875-76.183593 127.421875 76.183593c9.324219 5.609376 21.078125 5.097657 29.910156-1.304687 8.855469-6.417969 12.992187-17.449219 10.582031-28.09375l-32.9375-145.089844 111.699219-97.941406c8.214844-7.1875 11.351563-18.539063 7.980469-28.925781zm0 0"/></svg>
                     </div>
                   </div>
                   <div class="guide-item__contact-count">
-                    (4)
+                    {{rating.rating}}
                   </div>
                 </div>
               </div>
@@ -115,34 +104,23 @@
                 Также смотрите
               </h5>
               <div class="souvenirs-item__aside-items">
-                <div class="souvenirs-item__aside-item">
-                  <div class="souvenirs-item__aside-img" style="background-image: url('/images/blog-item-1.jpg');"></div>
-                  <a href="#" class="souvenirs-item__aside-item-title">
-                    Лавка чудес «Librarius»
-                  </a>
-                  <div class="souvenirs-item__aside-item-info">
-                    <div class="souvenirs-item__aside-item-loc">
-                      ул.Иляева, 25
-                    </div>
-                    <div class="souvenirs-item__aside-count">
-                      Товаров: <span>5</span>
-                    </div>
+                <div class="souvenirs-item__aside-item" v-for="craftman in craftmans" :key="craftman.id">
+                  <div class="souvenirs-item__aside-img"
+                       :style="'background-image: url('+getImages(craftman.image)+');'"
+                  ></div>
+                  <NuxtLink v-if="craftman.role_id == 7"  :to="'/craftman/' + craftman.alias" class="souvenirs-item__aside-item-title">
+                    {{ craftman["title_" + $i18n.locale] }}
+                  </NuxtLink>
+                  <NuxtLink v-else :to="'/craft/' + craftman.alias" class="souvenirs-item__aside-item-title">
+                    {{ craftman["title_" + $i18n.locale] }}
+                  </NuxtLink>
+                  <div class="souvenirs-item__aside-count">
+                    Товаров: <span>
+                    {{craftman.souvenirs_count}}
+                  </span>
                   </div>
                 </div>
-                <div class="souvenirs-item__aside-item">
-                  <div class="souvenirs-item__aside-img" style="background-image: url('/images/blog-item-2.jpg');"></div>
-                  <a href="#" class="souvenirs-item__aside-item-title">
-                    Лавка чудес «Librarius»
-                  </a>
-                  <div class="souvenirs-item__aside-item-info">
-                    <div class="souvenirs-item__aside-item-loc">
-                      ул.Иляева, 25
-                    </div>
-                    <div class="souvenirs-item__aside-count">
-                      Товаров: <span>5</span>
-                    </div>
-                  </div>
-                </div>
+
               </div>
             </div>
           </div>
@@ -158,7 +136,7 @@
               Товары магазина
             </h2>
             <p class="top-content__text">
-              Вазможно вам понравится
+              Возможно вам понравится
             </p>
           </div>
           <div class="top-content__line"></div>
@@ -184,9 +162,6 @@
             </div>
           </div>
         </div>
-        <div class="load-more">
-          <a href="#">Загрузить еще</a>
-        </div>
       </div>
     </section>
   </div>
@@ -205,6 +180,15 @@ export default {
     },
     truncate(string, value) {
       return string.substring(0, value) + '…';
+    },
+    getStarClass(item,max){
+      let className =  'guide-list__item-rating-star';
+      for (let i = 1; i <= max; i++){
+        if(item <= max){
+          className = 'guide-list__item-rating-star active';
+        }
+      }
+      return className;
     },
     async addSave(){
       // console.log(this.form)
@@ -229,6 +213,7 @@ export default {
   async asyncData({$axios,route,redirect,store}) {
     let craft;
     let souvenirs = [];
+    let craftmans = [];
     let form = {};
     let saveColor = '';
     await $axios.$get("/shop/"+route.params.alias)
@@ -255,8 +240,9 @@ export default {
       }).catch(e => {
         console.log(e)
       })
+    await $axios.$get("/getRandomCraftmans?count=2").then(e=>{craftmans = e})
 
-    return {craft,souvenirs,form,saveColor};
+    return {craft,souvenirs,form,saveColor,craftmans};
   }
 }
 </script>

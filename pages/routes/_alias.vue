@@ -35,14 +35,11 @@
           </div>
           <p class="routes-item__text" v-html="Route['description_'+$i18n.locale]"></p>
           <div class="routes-points" v-if="Route.places.length>0" id="pointNav">
-            <div class="routes-points__item" v-for="(item,i) in Route.places" :key="i" :id="'point'+item.id">
+            <div class="routes-points__item" v-for="(item,i) in Route.places" :key="i" :id="'pointId' + item.id">
               <div class="routes-points__item-content">
                 <h4 class="routes-points__item-name">
                   {{ item['title_'+$i18n.locale] }}
                 </h4>
-<!--                <a href="#" class="routes-points__item-link">-->
-<!--                  Обзорное место-->
-<!--                </a>-->
                 <lingallery :iid.sync="currentId" :width="400" :height="300" :items=galleries[item.id] />
                 <div class="routes-points__item-text" v-html="item['description_'+$i18n.locale]"></div>
                 <div class="routes-points__item-info">
@@ -68,10 +65,7 @@
               </button>
             </form>
             <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
-<!--            <button class="post__btn">-->
-<!--              <svg xmlns="http://www.w3.org/2000/svg" width="11.052" height="11.056" viewBox="0 0 11.052 11.056"><path d="M11.052,5.525,6.014,0V3.31H5.428A5.428,5.428,0,0,0,0,8.738v2.318L.967,10A6.939,6.939,0,0,1,6.014,7.741V11.05ZM.648,9.39V8.738a4.78,4.78,0,0,1,4.78-4.781H6.661V1.672l3.514,3.853L6.661,9.378V7.093H6.08A7.588,7.588,0,0,0,.648,9.39Zm0,0"/></svg>-->
-<!--              Поделиться-->
-<!--            </button>-->
+
           </div>
           <div class="load-more">
             <NuxtLink to="/routes">Перейти ко всем маршрутам</NuxtLink>
@@ -102,8 +96,8 @@
             </yandex-map>
           </div>
           <ul class="routes-item__map-points">
-            <li :class="'routes-item__map-point '+point.active" v-for="(point,i) in points" :key="i" @click="activeTab(i)">
-              <NuxtLink :to="{path: '/', hash: 'point'+point.id}"><span>{{point.val['title_'+$i18n.locale]}}</span></NuxtLink>
+            <li :class="'text-center routes-item__map-point '+point.active" v-for="(point,i) in points" :key="i" @click="activeTab(i)">
+              <a :href="'#pointId' + point['val'].id"><span>{{point.val['title_'+$i18n.locale]}}</span></a>
             </li>
           </ul>
         </div>
@@ -204,7 +198,7 @@ export default {
             })
           }
 
-          console.log(points)
+
         }
       }).catch(e => {
         console.log(e)
@@ -235,5 +229,7 @@ export default {
 </script>
 
 <style scoped>
-
+html {
+  scroll-behavior: smooth;
+}
 </style>

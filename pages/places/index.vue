@@ -81,17 +81,12 @@
                     @change="sortBySelect"
                     dense
                   ></v-select>
-                <div class="guide-list__select-body select__body">
-                  <div class="guide-list__select-item select__item active">популряности</div>
-                  <div class="guide-list__select-item select__item">Концерты</div>
-                  <div class="guide-list__select-item select__item">Фильмы</div>
-                  <div class="guide-list__select-item select__item">Спектакли</div>
-                </div>
+
               </div>
             </div>
           </div>
           <div class="guide-list__items">
-            <div class="guide-list__item" v-for="(item,i) in this.places" :key="i">
+            <div class="guide-list__item" v-for="(item,i) in places" :key="i">
               <div class="guide-list__item-img" :style="'background-image: url('+getImages(item.image)+');'">
                 <NuxtLink :to="'/places/'+item.alias"></NuxtLink>
               </div>
