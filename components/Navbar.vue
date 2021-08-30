@@ -33,7 +33,7 @@
             <NuxtLink to="/login">{{ $t('cabinet') }}</NuxtLink>
           </li>
         </ul>
-        <a class="footer-nav__map-link popup-modal" href="#modal">{{ $t('map_shym') }}</a>
+        <a class="footer-nav__map-link popup-modal" href="https://www.3Dshymkent.kz">{{ $t('map_shym') }}</a>
         <div class="footer-nav__contact-social">
           <NuxtLink to="/" class="footer-nav__contact-social-item" style="background-image: url('/images/instagramLogo.svg');"></NuxtLink>
           <NuxtLink to="/" class="footer-nav__contact-social-item" style="background-image: url('/images/facebookLogo.svg');"></NuxtLink>
@@ -129,13 +129,13 @@
                  class="header__map"
                  :class="{ active: map }">
               <button class="header__map-btn"></button>
-              <a class="header__map-link popup-modal" href="#modal">{{ $t('map_shym') }}</a>
+              <a class="header__map-link popup-modal" href="https://www.3Dshymkent.kz">{{ $t('map_shym') }}</a>
             </div>
             <div @mouseover="hoverEffect(null,true,null)"
                  class="header__search"
                  :class="{active: search}">
-              <button class="header__search-btn"></button>
-              <input class="header__search-input" type="search" :placeholder="$t('search')">
+              <button class="header__search-btn" @click="onSearch"></button>
+              <input class="header__search-input" @keyup.enter="onSearch" v-model="getSearch" type="search" :placeholder="$t('search')">
             </div>
             <div @mouseover="hoverEffect(null, null, true)"
                  class="header__personal-account"
@@ -171,6 +171,7 @@ export default {
       map: true,
       search: false,
       login: false,
+      getSearch: '',
       languages: [
         {
           link: 'kz',
@@ -211,8 +212,20 @@ export default {
         this.map = false
         this.search = false
       }
+    },
+    onSearch(){
+      if (this.$route.path == '/search'){
+        window.location.assign('/search?q='+this.getSearch)
+      } else {
+        this.$router.push({path: this.localePath('search'), query: {q: this.getSearch}});
+      }
+      // this.$router.push({path: this.localePath('search'), query: {q: this.getSearch}});
     }
+  },
+  mounted() {
+    // console.log(this.$route)
   }
+
 }
 </script>
 

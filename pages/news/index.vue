@@ -151,7 +151,7 @@ export default {
     },
     async paginate(){
       this.current_page +=1;
-      this.loadData();
+      await this.loadData();
     }
   },
   async asyncData({$axios}) {
