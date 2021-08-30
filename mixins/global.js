@@ -13,6 +13,7 @@ const globals = {
           return this.$store.state.image.image + image ;
         },
         getStarClass(item,max){
+          max = Math.round(max);
           let className =  'guide-list__item-rating-star';
           for (let i = 1; i <= max; i++){
             if(item <= max){

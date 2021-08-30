@@ -63,7 +63,11 @@
                 Автор
               </h5>
               <div class="souvenirs-item__aside-text">
-                {{ souvenir.shop.user.name }}
+                <v-avatar>
+                  <v-img :src="getImage(souvenir.shop.user.image)"></v-img>
+                </v-avatar>
+                <NuxtLink v-if="souvenir.shop.role_id == 6" :to="'/craft/' + souvenir.shop.alias">{{ souvenir.shop.user.name }}</NuxtLink>
+                <NuxtLink v-if="souvenir.shop.role_id == 7" :to="'/craftman/' + souvenir.shop.alias">{{ souvenir.shop.user.name }}</NuxtLink>
               </div>
               <div class="post__btns">
                 <form @submit.prevent="addSave">
