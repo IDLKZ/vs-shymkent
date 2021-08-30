@@ -50,7 +50,7 @@
                 {{$t('place_title')}}
               </h5>
               <li class="footer__nav-list-item" v-for="(category,key) in fts.categories" :key="key">
-                <a href="#">{{category['title_'+$i18n.locale]}}</a>
+                <NuxtLink  :to="'/places?place='+category.alias">{{category['title_'+$i18n.locale]}}</NuxtLink>
               </li>
             </ul>
             <ul class="footer__nav-list">
