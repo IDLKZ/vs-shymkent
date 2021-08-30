@@ -41,6 +41,8 @@
   "more_info": "Подробнее",
   "footer_tourist_map": "Памятка туриста",
   "btn_search": "Найти",
+  "searchable_title": "Результаты поиска по запросу",
+  "searchable_result": "результатов",
 
   "routes_subtitle": "Не знаете, что посетить?",
   "load_routes": "Смотреть все маршруты",
