@@ -31,7 +31,7 @@
               </div>
               <p class="search-page__result-text" v-html="truncateTitle(value['description_'+$i18n.locale], 300)"></p>
               <NuxtLink :to="value.link" class="search-page__result-btn">
-                Подробнее...
+                {{$t('more_info')}}...
               </NuxtLink>
             </div>
           </div>
