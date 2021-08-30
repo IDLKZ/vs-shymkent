@@ -3,39 +3,45 @@
     <div class="container">
       <ul class="crumbs">
         <li class="crumbs__item">
-          <NuxtLink to="/">Главная</NuxtLink>
+          <NuxtLink to="/">{{ $t('main') }}</NuxtLink>
         </li>
         <li class="crumbs__item current">
-          <NuxtLink to="#">Сувениры</NuxtLink>
+          <NuxtLink to="#">{{ $t('souvenirs') }}</NuxtLink>
         </li>
       </ul>
       <div class="top-content">
         <div class="top-content__wrapper top-content__wrapper-5">
           <h2 class="top-content__title">
-            Сувениры
+            {{ $t('souvenirs') }}
           </h2>
           <p class="top-content__text">
-            Оставьте себе на память кусочек Шымкента
+            {{ $t('souvenirs_subtitle') }}
           </p>
         </div>
         <div class="top-content__line"></div>
       </div>
       <div class="souvenirs-page__tabs">
         <ul class="souvenirs-page__tabs-caption">
-          <li v-for="tab in tabs" :key="tab.id" :class="tab.active">
-            <NuxtLink :style="'color:'+tab.color" :to="tab.link">{{tab.title}}</NuxtLink>
+          <li class="active">
+            <NuxtLink style="color:white!important;" to="/souvenirs">{{$t('souvenirs')}}</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/craft">{{$t('craft')}}</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/craftman">{{$t('craftman')}}</NuxtLink>
           </li>
         </ul>
         <div class="souvenirs-page__tabs-content active">
           <div class="souvenirs-page__wrapper">
             <div class="souvenirs-page__categories-inner">
-              <button class="open-filter">
-                <span>Фильтр</span>
-              </button>
+<!--              <button class="open-filter">-->
+<!--                <span>Фильтр</span>-->
+<!--              </button>-->
               <div class="souvenirs-page__list-categories">
                 <div class="souvenirs-page__list-categories-container">
                   <h4 class="souvenirs-page__list-categories-title">
-                    Продавец
+                    {{ $t('souvenirs_seller') }}
                   </h4>
                   <div class="souvenirs-page__list-categories-item">
                     <input type="checkbox" id="route-tab2-1"
@@ -43,7 +49,7 @@
                     @click="toggleActiveCheckBox(0)"
 
                     >
-                    <label for="route-tab2-1">Все</label>
+                    <label for="route-tab2-1">{{ $t('all') }}</label>
                   </div>
                   <div class="souvenirs-page__list-categories-item" v-for="(role,index) in roles">
                     <input type="checkbox" :id="'route-tab2-'+role.id"
@@ -58,25 +64,25 @@
                 </div>
                 <div class="souvenirs-page__list-categories-container">
                   <h4 class="routes-page__list-categories-title">
-                    Стоимость
+                    {{ $t('souvenirs_cost') }}
                   </h4>
                   <div class="souvenirs-page__list-categories-item">
-                    <input type="radio" value="[0,10000000]" v-model="price" id="route-tab3-4"> <label for="route-tab3-4">Все</label>
+                    <input type="radio" value="[0,10000000]" v-model="price" id="route-tab3-4"> <label for="route-tab3-4">{{ $t('all') }}</label>
                   </div>
                   <div class="souvenirs-page__list-categories-item">
-                    <input type="radio" value="[0,5000]" v-model="price" id="route-tab3-5"> <label for="route-tab3-5">До 5 тыс</label>
+                    <input type="radio" value="[0,5000]" v-model="price" id="route-tab3-5"> <label for="route-tab3-5">{{ $t('filter_price_1') }}</label>
                   </div>
                   <div class="souvenirs-page__list-categories-item">
-                    <input type="radio" value="[5000,50000]" v-model="price" id="route-tab3-6"> <label for="route-tab3-6">От 5 до 50 тыс</label>
+                    <input type="radio" value="[5000,50000]" v-model="price" id="route-tab3-6"> <label for="route-tab3-6">{{ $t('filter_price_2') }}</label>
                   </div>
                   <div class="souvenirs-page__list-categories-item">
-                    <input type="radio" value="[50000,10000000]" v-model="price" id="route-tab3-7"> <label for="route-tab3-7">От 50 тыс и выше</label>
+                    <input type="radio" value="[50000,10000000]" v-model="price" id="route-tab3-7"> <label for="route-tab3-7">{{ $t('filter_price_3') }}</label>
                   </div>
                 </div>
               </div>
-              <button class="do-filter">
-                Применить фильтр
-              </button>
+<!--              <button class="do-filter">-->
+<!--                Применить фильтр-->
+<!--              </button>-->
             </div>
             <div class="souvenirs-page__items-wrapper">
               <div class="souvenirs__items-inner">
@@ -91,7 +97,7 @@
                       <p class="souvenirs__item-text" v-html="truncate(item['description_'+$i18n.locale],50)"></p>
                       <div class="souvenirs__item-price-wrapper">
                         <button class="souvenirs__item-btn popup-modal" v-if="item.eventum">
-                          <span>Купить</span>
+                          <span>{{ $t('buy') }}</span>
                         </button>
                         <div class="souvenirs__item-price">
                           {{ item.price }} ТГ
@@ -101,7 +107,7 @@
                 </div>
               </div>
               <div class="load-more" v-if="current_page < last_page">
-                <a @click="paginate">Загрузить еще</a>
+                <a @click="paginate">{{ $t('load_more') }}</a>
               </div>
             </div>
           </div>
@@ -117,29 +123,6 @@ export default {
   name: "index",
   data(){
     return {
-      tabs: [
-        {
-          id: 0,
-          title: 'Сувениры',
-          link: '/souvenirs',
-          active: 'active',
-          color: 'white!important'
-        },
-        {
-          id: 1,
-          title: 'Ремесленники',
-          link: '/craftman',
-          active: '',
-          color: 'black'
-        },
-        {
-          id: 2,
-          title: 'Сувенирные магазины',
-          link: '/craft',
-          active: '',
-          color: 'black'
-        },
-      ],
       role_id:[],
       price:[],
       roles:[],

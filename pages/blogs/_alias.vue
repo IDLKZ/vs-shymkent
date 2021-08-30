@@ -3,10 +3,10 @@
     <div class="container">
       <ul class="crumbs">
         <li class="crumbs__item">
-          <a href="/">Главная</a>
+          <a href="/">{{ $t('main') }}</a>
         </li>
         <li class="crumbs__item">
-          <NuxtLink to="/blogs">Блог</NuxtLink>
+          <NuxtLink to="/blogs">{{ $t('blog') }}</NuxtLink>
         </li>
         <li class="crumbs__item current">
           <a href="#">{{blog["title_" + $i18n.locale]}}</a>
@@ -17,7 +17,7 @@
       </h3>
       <div class="blog-item__info">
         <div class="blog-item__date">
-          Опубликовано: {{blog.created_at}}
+          {{ $t('published') }}: {{blog.created_at}}
         </div>
         <div class="blog-item__author">
           <a href="#">
@@ -38,17 +38,17 @@
 
           </div>
           <div class="post__btns">
-            <button class="post__btn">
-              <?xml version="1.0" ?><svg data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
-              Сохранить
-            </button>
-            <button class="post__btn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="11.052" height="11.056" viewBox="0 0 11.052 11.056"><path d="M11.052,5.525,6.014,0V3.31H5.428A5.428,5.428,0,0,0,0,8.738v2.318L.967,10A6.939,6.939,0,0,1,6.014,7.741V11.05ZM.648,9.39V8.738a4.78,4.78,0,0,1,4.78-4.781H6.661V1.672l3.514,3.853L6.661,9.378V7.093H6.08A7.588,7.588,0,0,0,.648,9.39Zm0,0"/></svg>
-              Поделиться
-            </button>
+            <form @submit.prevent="addSave">
+              <input v-model="form.blog_id" type="hidden">
+              <button type="submit" class="post__btn">
+                <svg :class="this.saveColor" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
+                {{ $t('save') }}
+              </button>
+            </form>
+            <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
           </div>
           <NuxtLink to="/blogs" class="blog-item__link">
-            Перейти ко всем записям
+            {{ $t('load_news') }}
           </NuxtLink>
           <div class="tour-agency__content-feedback-item">
             <div class="touragencye__feedback-reviews">
@@ -73,14 +73,14 @@
                   </div>
                 </div>
                 <div class="load-more" v-if="current_page < last_page">
-                  <a  @click.prevent="loadMore"  href="#">Загрузить еще...</a>
+                  <a  @click.prevent="loadMore"  href="#">{{ $t('load_more') }}...</a>
                 </div>
               </div>
             </div>
           </div>
           <div class="blog-item__disqus" v-if="this.$auth.loggedIn">
             <h3 class="blog-item__disqus-title">
-              Оставить Отзыв
+              {{ $t('leave_a_review') }}
             </h3>
             <div class="blog-item__disqus-inner">
               <div class="blog-item__disqus-inner">
@@ -113,7 +113,7 @@
                 </v-textarea>
                 <div class="text-right">
                   <v-btn @click="sendForm" v-if="forms.review && forms.review.length && forms.review.length < 1000" class="my-btn " style="height: 50px!important; width: 150px!important;">
-                    Отправить
+                    {{ $t('send') }}
                   </v-btn>
                 </div>
 
@@ -125,7 +125,7 @@
         </div>
         <aside class="blog-item__aside">
           <h5 class="blog-item__aside-title">
-            Читайте также
+            {{ $t('see_also') }}
           </h5>
           <div class="blog-item__aside-items">
             <div class="blog-list__item" v-for="item in blogs" :key="blog.created_at">
@@ -133,7 +133,7 @@
               <div class="blog-list__item-content">
                 <div class="blog-list__info">
                   <div class="blog-list__date">
-                    Дата публикации: <span>
+                    {{ $t('published') }}: <span>
                     {{item.created_at}}
                   </span>
                   </div>
@@ -197,7 +197,25 @@ export default {
       this.forms.review = "";
       this.forms.rating = 0;
     },
-
+    async addSave(){
+      // console.log(this.form)
+      try {
+        this.$toast.show('Updating in...')
+        await this.$axios.$post("/cabinet/add-save", this.form).then((response) => {
+          this.$toast.success('Успешно добавлен')
+          this.saveColor = response
+          // window.location.reload()
+        }).catch(({response}) => {
+          if (response.status === 401){
+            window.location.assign('/login')
+          }
+          // this.errors = response.data.errors
+        })
+      } catch (e) {
+        this.$toast.error('Error')
+        console.log(e)
+      }
+    },
     //Пагинация отзывов
     async loadMore(){
       this.current_page++
@@ -235,10 +253,12 @@ export default {
     },
   },
   //Первоначальная нагрузка
-  async asyncData({$axios,params}){
+  async asyncData({$axios,params,store}){
     let current_page,last_page = 1;
     let alias = params.alias
     let blog = null;
+    let form = {}
+    let saveColor = '';
     let blogs,reviews = [];
     await $axios.$get("/singleBlog/" + alias).then((e)=>{
       blog = e[0];
@@ -249,7 +269,20 @@ export default {
     }).catch(e=>{
       console.log(e)
     })
-    return {blog,blogs,reviews,current_page,last_page}
+    form.blog_id = blog.id
+    if (store.$auth.$state.loggedIn){
+      form.user_id = store.$auth.$state.user.user.id
+      if (blog.savings.length>0){
+        blog.savings.forEach((item,i) => {
+          if (item.user_id == store.$auth.$state.user.user.id){
+            saveColor = 'color--red'
+          } else {
+            saveColor = ''
+          }
+        })
+      }
+    }
+    return {blog,blogs,reviews,current_page,last_page,form,saveColor}
   }
 
 

@@ -4,13 +4,13 @@
       <div class="container">
         <ul class="crumbs">
           <li class="crumbs__item">
-            <NuxtLink to="/">Главная</NuxtLink>
+            <NuxtLink to="/">{{ $t('main') }}</NuxtLink>
           </li>
           <li class="crumbs__item">
-            <NuxtLink to="/routes">Маршруты</NuxtLink>
+            <NuxtLink to="/routes">{{ $t('routes_title') }}</NuxtLink>
           </li>
           <li class="crumbs__item">
-            <NuxtLink to="/agencies">Тур. агентства</NuxtLink>
+            <NuxtLink to="/agencies">{{ $t('agencies') }}</NuxtLink>
           </li>
           <li class="crumbs__item current">
             <NuxtLink to="#">{{ agent['title_'+$i18n.locale] }}</NuxtLink>
@@ -25,18 +25,18 @@
             <div class="tour-agency__content-info">
               <div class="tour-agency__content-info-item">
                 <h4 class="tour-agency__content-info-title">
-                  О компании
+                  {{ $t('about_company') }}
                 </h4>
                 <div class="tour-agency__content-info-text" v-html="agent['description_'+$i18n.locale]"></div>
               </div>
               <div class="tour-agency__content-info-item">
                 <h4 class="tour-agency__content-info-title">
-                  Предоставление отдельных видов услуг
+                  {{ $t('about_company_subtitle') }}
                 </h4>
                 <ul class="tour-agency__contact">
                   <li>
                     <div class="tour-agency__contact-title">
-                      Веб-сайт:
+                      {{ $t('website') }}:
                     </div>
                     <div class="tour-agency__contact-text">
                       <a :href="site" target="_blank" v-for="(site,i) in agent.sites" :key="i">{{site}} .,</a>
@@ -44,7 +44,7 @@
                   </li>
                   <li>
                     <div class="tour-agency__contact-title">
-                      Электронная почта:
+                      {{ $t('emails') }}:
                     </div>
                     <div class="tour-agency__contact-text">
                       <a :href="'mailto:'+agent.user.email">{{agent.user.email}}</a>
@@ -52,7 +52,7 @@
                   </li>
                   <li>
                     <div class="tour-agency__contact-title">
-                      Телефон:
+                      {{ $t('phones_for_contact') }}:
                     </div>
                     <div class="tour-agency__contact-text">
                       <span v-for="(phone,i) in agent.phone" :key="i">{{ phone }}</span>
@@ -60,10 +60,10 @@
                   </li>
                   <li>
                     <div class="tour-agency__contact-title">
-                      Адрес:
+                      {{ $t('address') }}:
                     </div>
                     <div class="tour-agency__contact-text">
-                      мкр. Нурсат, пр. Н. Назарбаева 6
+                      {{ agent.address }}
                     </div>
                   </li>
                 </ul>
@@ -73,7 +73,7 @@
                   <input v-model="form.organizator_id" type="hidden">
                   <button type="submit" class="post__btn">
                     <svg :class="this.saveColor" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
-                    Сохранить
+                    {{ $t('save') }}
                   </button>
                 </form>
                 <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
@@ -98,7 +98,7 @@
               </div>
               <div class="tour-agency__content-feedback-item">
                 <h4 class="tour-agency__content-feedback-title">
-                  Отзывы
+                  {{ $t('reviews') }}
                 </h4>
                 <div class="touragencye__feedback-reviews">
                   <div class="tour-agency__reviews-inner">
@@ -129,7 +129,7 @@
         </div>
         <div class="blog-item__disqus" v-if="this.$auth.loggedIn">
           <h3 class="blog-item__disqus-title">
-            Оставить отзыв
+            {{ $t('leave_a_review') }}
           </h3>
           <div class="blog-item__disqus-inner">
             <div class="d-flex">
@@ -161,7 +161,7 @@
             </v-textarea>
             <div class="text-right">
               <v-btn @click="sendForm" v-if="forms.review && forms.review.length && forms.review.length < 1000" class="my-btn " style="height: 50px!important; width: 150px!important;">
-                Отправить
+                {{ $t('send') }}
               </v-btn>
             </div>
 
@@ -177,10 +177,10 @@
         <div class="top-content">
           <div class="top-content__wrapper top-content__wrapper-1">
             <h2 class="top-content__title">
-              Маршруты гида
+              {{ $t('agencies_title') }}
             </h2>
             <p class="top-content__text">
-              Куда водит гид?
+              {{ $t('agencies_subtitle') }}
             </p>
           </div>
           <div class="top-content__line"></div>
@@ -201,13 +201,13 @@
                 <div class="routes-page__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></div>
                 <div class="routes-page__item-about">
                   <div class="routes-page__item-time">
-                    Длительность: <span>{{ item.time }}.</span>
+                    {{ $t('duration') }}: <span>{{ item.time }}.</span>
                   </div>
                   <div class="routes-page__item-distance">
-                    Протяженность: <span>{{ item.distance }}.</span>
+                    {{ $t('distance') }}: <span>{{ item.distance }}.</span>
                   </div>
                   <div class="routes-page__item-points" v-if="item.places.length>0">
-                    Количество точек: <span>{{item.places.length}}</span>
+                    {{ $t('count_of_points') }}: <span>{{item.places.length}}</span>
                   </div>
                 </div>
               </div>
@@ -215,7 +215,7 @@
           </div>
         </div>
         <div class="load-more">
-          <NuxtLink to="/agencies">Перейти ко всем тур.агенствам</NuxtLink>
+          <NuxtLink to="/agencies">{{ $t('load_agencies') }}</NuxtLink>
         </div>
       </div>
     </section>

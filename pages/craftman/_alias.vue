@@ -4,13 +4,13 @@
       <div class="container">
         <ul class="crumbs">
           <li class="crumbs__item">
-            <NuxtLink to="/">Главная</NuxtLink>
+            <NuxtLink to="/">{{ $t('main') }}</NuxtLink>
           </li>
           <li class="crumbs__item">
-            <NuxtLink to="/souvenirs">Сувениры</NuxtLink>
+            <NuxtLink to="/souvenirs">{{ $t('souvenirs') }}</NuxtLink>
           </li>
           <li class="crumbs__item">
-            <NuxtLink to="/craftman">Ремесленники</NuxtLink>
+            <NuxtLink to="/craftman">{{ $t('craftman') }}</NuxtLink>
           </li>
           <li class="crumbs__item current">
             <NuxtLink to="#">{{ craftman.user.name }}</NuxtLink>
@@ -25,18 +25,18 @@
             <div class="souvenirs-item__content-info souvenirs-item__content-info--move">
               <div class="souvenirs-item__content-info-item">
                 <h4 class="souvenirs-item__content-info-title">
-                  Персональная информация
+                  {{ $t('personal_info') }}
                 </h4>
                 <div class="souvenirs-item__content-info-text" v-html="craftman['description_'+$i18n.locale]"></div>
               </div>
               <div class="tour-agency__content-info-item">
                 <h4 class="tour-agency__content-info-title">
-                  Контакты
+                  {{ $t('phones_for_contact') }}
                 </h4>
                 <ul class="tour-agency__contact">
                   <li>
                     <div class="tour-agency__contact-title">
-                      Адрес:
+                      {{ $t('address') }}:
                     </div>
                     <div class="tour-agency__contact-text">
                       {{ craftman.address }}
@@ -44,7 +44,7 @@
                   </li>
                   <li>
                     <div class="tour-agency__contact-title">
-                      Время работы:
+                      {{ $t('operating_mode') }}:
                     </div>
                     <div class="calendar-item__contact-text">
                       <div v-if="craftman.workdays.length>0">
@@ -56,7 +56,7 @@
                   </li>
                   <li>
                     <div class="tour-agency__contact-title">
-                      Электронная почта:
+                      {{ $t('emails') }}:
                     </div>
                     <div class="tour-agency__contact-text">
                                         <span>
@@ -66,7 +66,7 @@
                   </li>
                   <li>
                     <div class="tour-agency__contact-title">
-                      Телефон:
+                      {{ $t('phone') }}:
                     </div>
                     <div class="tour-agency__contact-text" v-for="(phone,i) in craftman.phone" :key="i">
                       {{phone}} .,
@@ -79,7 +79,7 @@
                   <input v-model="form.shop_id" type="hidden">
                   <button type="submit" class="post__btn">
                     <svg :class="this.saveColor" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
-                    Сохранить
+                    {{ $t('save') }}
                   </button>
                 </form>
                 <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
@@ -107,7 +107,7 @@
               </div>
 
               <h5 class="souvenirs-item__aside-title">
-                Также смотрите
+                {{ $t('see_also') }}
               </h5>
               <div class="souvenirs-item__aside-items">
                 <div class="souvenirs-item__aside-item" v-for="craftman in craftmans" :key="craftman.id">
@@ -121,7 +121,7 @@
                     {{ craftman["title_" + $i18n.locale] }}
                   </NuxtLink>
                   <div class="souvenirs-item__aside-count">
-                    Товаров: <span>
+                    {{ $t('products') }}: <span>
                     {{craftman.souvenirs_count}}
                   </span>
                   </div>
@@ -139,10 +139,10 @@
         <div class="top-content">
           <div class="top-content__wrapper top-content__wrapper-5">
             <h2 class="top-content__title">
-              Товары ремесленника
+              {{ $t('craftman_title') }}
             </h2>
             <p class="top-content__text">
-              Возможно вам понравится
+              {{$t('craftman_subtitle')}}
             </p>
           </div>
           <div class="top-content__line"></div>
@@ -159,7 +159,7 @@
               <p class="souvenirs__item-text" v-html="truncate(item['description_'+$i18n.locale],50)"></p>
               <div class="souvenirs__item-price-wrapper">
                 <button class="souvenirs__item-btn popup-modal" v-if="item.eventum">
-                  <span>Купить</span>
+                  <span>{{ $t('buy') }}</span>
                 </button>
                 <div class="souvenirs__item-price">
                   {{ item.price }} ТГ
@@ -169,7 +169,7 @@
           </div>
         </div>
         <div class="load-more">
-          <NuxtLink to="/craftman">Перейти ко всем ремеслиникам</NuxtLink>
+          <NuxtLink to="/craftman">{{ $t('load_craftman') }}</NuxtLink>
         </div>
       </div>
     </section>

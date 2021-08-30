@@ -4,13 +4,13 @@
       <div class="container">
         <ul class="crumbs">
           <li class="crumbs__item">
-            <NuxtLink to="/">Главная</NuxtLink>
+            <NuxtLink to="/">{{ $t('main') }}</NuxtLink>
           </li>
           <li class="crumbs__item">
-            <NuxtLink to="/routes">Маршруты</NuxtLink>
+            <NuxtLink to="/routes">{{ $t('routes_title') }}</NuxtLink>
           </li>
           <li class="crumbs__item">
-            <NuxtLink to="/guides">Гиды</NuxtLink>
+            <NuxtLink to="/guides">{{ $t('guides') }}</NuxtLink>
           </li>
           <li class="crumbs__item current">
             <NuxtLink to="#">{{ guide['title_'+$i18n.locale] }}</NuxtLink>
@@ -26,13 +26,13 @@
               <div class="tour-guide__content-info-item" v-html="guide['description_'+$i18n.locale]"></div>
               <div class="tour-guide__content-info-item">
                 <h4 class="tour-guide__content-info-title">
-                  Персональная информация
+                  {{ $t('personal_info') }}
                 </h4>
                 <div class="tour-guide__content-info-text" v-html="guide['education_'+$i18n.locale]"></div>
               </div>
               <div class="tour-guide__content-info-item">
                 <h4 class="tour-guide__content-info-title">
-                  Владение языками
+                  {{ $t('languages') }}
                 </h4>
                 <ul class="tour-guide__content-info-langs">
                   <li class="tour-guide__langs-item" v-for="(language,i) in guide.languages" :key="i">
@@ -53,7 +53,7 @@
                   <input v-model="form.organizator_id" type="hidden">
                   <button type="submit" class="post__btn">
                     <svg :class="this.saveColor" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
-                    Сохранить
+                    {{ $t('save') }}
                   </button>
                 </form>
                 <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
@@ -81,7 +81,7 @@
               </div>
               <div class="tour-guide__content-feedback-item">
                 <h4 class="tour-guide__content-feedback-title">
-                  Отзывы
+                  {{ $t('reviews') }}
                 </h4>
                 <div class="tour-guide__feedback-reviews">
                   <div class="tour-guide__reviews-inner">
@@ -112,7 +112,7 @@
         </div>
         <div class="blog-item__disqus" v-if="this.$auth.loggedIn">
           <h3 class="blog-item__disqus-title">
-            Оставить отзыв
+            {{$t('leave_a_review')}}
           </h3>
           <div class="blog-item__disqus-inner">
             <div class="d-flex">
@@ -144,7 +144,7 @@
             </v-textarea>
             <div class="text-right">
               <v-btn @click="sendForm" v-if="forms.review && forms.review.length && forms.review.length < 1000" class="my-btn " style="height: 50px!important; width: 150px!important;">
-                Отправить
+                {{ $t('send') }}
               </v-btn>
             </div>
 
@@ -160,10 +160,10 @@
         <div class="top-content">
           <div class="top-content__wrapper top-content__wrapper-1">
             <h2 class="top-content__title">
-              Маршруты гида
+              {{ $t('guides_title') }}
             </h2>
             <p class="top-content__text">
-              Куда водит гид?
+              {{ $t('guides_subtitle') }}
             </p>
           </div>
           <div class="top-content__line"></div>
@@ -184,13 +184,13 @@
                 <div class="routes-page__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></div>
                 <div class="routes-page__item-about">
                   <div class="routes-page__item-time">
-                    Длительность: <span>{{ item.time }}.</span>
+                    {{ $t('duration') }}: <span>{{ item.time }}.</span>
                   </div>
                   <div class="routes-page__item-distance">
-                    Протяженность: <span>{{ item.distance }}.</span>
+                    {{ $t('distance') }}: <span>{{ item.distance }}.</span>
                   </div>
                   <div class="routes-page__item-points" v-if="item.places.length>0">
-                    Количество точек: <span>{{item.places.length}}</span>
+                    {{ $t('count_of_points') }}: <span>{{item.places.length}}</span>
                   </div>
                 </div>
               </div>
@@ -198,7 +198,7 @@
           </div>
         </div>
         <div class="load-more">
-          <a href="#">Перейти ко всем гидам</a>
+          <a href="#">{{ $t('load_guides') }}</a>
         </div>
       </div>
     </section>

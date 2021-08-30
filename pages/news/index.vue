@@ -3,19 +3,19 @@
     <div class="container">
       <ul class="crumbs">
         <li class="crumbs__item">
-          <NuxtLink to="/">Главная</NuxtLink>
+          <NuxtLink to="/">{{$t('main')}}</NuxtLink>
         </li>
         <li class="crumbs__item current">
-          <NuxtLink to="#">Новости</NuxtLink>
+          <NuxtLink to="#">{{$t('news')}}</NuxtLink>
         </li>
       </ul>
       <div class="top-content">
         <div class="top-content__wrapper top-content__wrapper-6">
           <h2 class="top-content__title">
-            Новости
+            {{$t('news')}}
           </h2>
           <p class="top-content__text">
-            Что происходит в Шымкенте?
+            {{$t('news_subtitle')}}
           </p>
         </div>
         <div class="top-content__line"></div>
@@ -23,7 +23,7 @@
       <ul class="news-list__categories">
         <li :class="getActiveClass(0)"
             @click="toggleActiveClass(0)">
-          Все
+          {{$t('all')}}
         </li>
         <template v-if="categories">
           <li v-for="category in categories" :key="category.id" :class="getActiveClass(category.id)"
@@ -52,7 +52,7 @@
         </div>
         <div class="news-list__last-news">
           <h5 class="news-list__last-news-title">
-            Последние новости
+            {{ $t('last_news') }}
           </h5>
           <ul class="news-list__last-news-inner" v-if="hotNews.length">
             <li class="news-list__last-news-item" v-for="(hot,index) in hotNews" :key="hot.created_at + index">
@@ -62,7 +62,7 @@
                 ></NuxtLink>
               </h6>
               <div class="news-list__last-news-item-date">
-                Опубликовано: {{hot.created_at}}
+                {{ $t('published') }}: {{hot.created_at}}
               </div>
             </li>
             <a  class="news-list__last-news-link">
@@ -77,7 +77,7 @@
             <NuxtLink class="popup-modal" :to="'/news/'+New.alias">
               <img class="news-list__item-img" :src="getImages(New.image)" alt="">
               <div class="news-list__item-date">
-                Опубликовано: <span>{{ New.created_at }}</span>
+                {{ $t('published') }}: <span>{{ New.created_at }}</span>
               </div>
               <p class="news-list__item-text" v-html="truncate(New['description_'+$i18n.locale],50)"></p>
             </NuxtLink>
@@ -86,7 +86,7 @@
       </template>
 
       <div class="load-more" v-if="current_page < last_page">
-        <a @click.prevent="paginate"  href="#">Загрузить еще...</a>
+        <a @click.prevent="paginate"  href="#">{{$t('load_more')}}...</a>
       </div>
     </div>
   </section>

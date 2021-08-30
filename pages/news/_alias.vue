@@ -3,10 +3,10 @@
     <div class="container">
       <ul class="crumbs">
         <li class="crumbs__item">
-          <NuxtLink to="/">Главная</NuxtLink>
+          <NuxtLink to="/">{{ $t('main') }}</NuxtLink>
         </li>
         <li class="crumbs__item">
-          <NuxtLink to="/news">Новости</NuxtLink>
+          <NuxtLink to="/news">{{ $t('news') }}</NuxtLink>
         </li>
         <li class="crumbs__item current">
           <NuxtLink to="#">{{ New['title_'+$i18n.locale] }}</NuxtLink>
@@ -17,7 +17,7 @@
       </h3>
       <div class="news-item__info">
         <div class="news-item__date">
-          Опубликовано: {{ New.created_at }}
+          {{ $t('published') }}: {{ New.created_at }}
         </div>
         <div class="news-item__author">
           <NuxtLink to="#">{{New.user.name}}</NuxtLink>
@@ -32,7 +32,7 @@
               <input v-model="form.news_id" type="hidden">
               <button type="submit" class="post__btn">
                 <svg :class="this.saveColor" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
-                Сохранить
+                {{ $t('save') }}
               </button>
             </form>
             <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
@@ -42,12 +42,12 @@
 <!--            </button>-->
           </div>
           <NuxtLink to="/news" class="news-item__link">
-            Перейти ко всем новостям
+            {{ $t('load_news') }}
           </NuxtLink>
           <div class="tour-agency__content-feedback-item">
             <div class="touragencye__feedback-reviews">
               <div class="tour-agency__reviews-inner" v-if="reviews.length">
-                <h1>ОТЗЫВ</h1>
+                <h1>{{ $t('reviews') }}</h1>
                 <div class="tour-agency__reviews-item" v-for="(review,index) in reviews">
                   <div class="tour-agency__reviews-item-top">
                     <div class="tour-agency__reviews-item-img" v-bind:style="{ backgroundImage: 'url(' + getImages(review.user.image) + ')' }"></div>
@@ -67,14 +67,14 @@
                   </div>
                 </div>
                 <div class="load-more" v-if="current_page < last_page">
-                  <a  @click.prevent="loadMore"  href="#">Загрузить еще...</a>
+                  <a  @click.prevent="loadMore"  href="#">{{ $t('load_more') }}...</a>
                 </div>
               </div>
             </div>
           </div>
           <div class="blog-item__disqus" v-if="this.$auth.loggedIn">
             <h3 class="blog-item__disqus-title">
-              Оставить отзыв
+              {{ $t('leave_a_review') }}
             </h3>
             <div class="blog-item__disqus-inner">
               <div class="d-flex">
@@ -106,7 +106,7 @@
               </v-textarea>
               <div class="text-right">
                 <v-btn @click="sendForm" v-if="forms.review && forms.review.length && forms.review.length < 1000" class="my-btn " style="height: 50px!important; width: 150px!important;">
-                  Отправить
+                  {{ $t('send') }}
                 </v-btn>
               </div>
 
@@ -117,14 +117,14 @@
         </div>
         <aside class="news-item__aside">
           <h5 class="news-item__aside-title">
-            Читайте также
+            {{ $t('see_also') }}
           </h5>
           <div class="news-item__aside-items" v-if="addNews.length">
             <div class="news-list__item" v-for="(item,index) in addNews">
               <a class="popup-modal" href="#modal">
                 <img class="news-list__item-img" :src="getImages(item.image)" alt="">
                 <div class="news-list__item-date">
-                  Опубликовано: <span>{{item.created_at}}</span>
+                  {{ $t('published') }}: <span>{{item.created_at}}</span>
                 </div>
                 <NuxtLink :to="'/news/' + item.alias" class="news-list__item-text" v-text="truncateTitle(item['title_' + $i18n.locale],50)">
                 </NuxtLink>

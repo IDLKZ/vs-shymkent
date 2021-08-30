@@ -3,10 +3,10 @@
     <div class="container">
       <ul class="crumbs">
         <li class="crumbs__item">
-          <NuxtLink to="/">Главная</NuxtLink>
+          <NuxtLink to="/">{{ $t('main') }}</NuxtLink>
         </li>
         <li class="crumbs__item">
-          <NuxtLink to="/routes">Маршруты</NuxtLink>
+          <NuxtLink to="/routes">{{ $t('routes_title') }}</NuxtLink>
         </li>
         <li class="crumbs__item current">
           <NuxtLink to="#">{{ Route['title_'+$i18n.locale] }}</NuxtLink>
@@ -17,20 +17,20 @@
       </h3>
       <div class="routes-item__about">
         <div class="routes-item__time">
-          Длительность: <span>{{ Route.time }}</span>
+          {{ $t('duration') }}: <span>{{ Route.time }}</span>
         </div>
         <div class="routes-item__distance">
-          Протяженность: <span>{{ Route.distance }}</span>
+          {{ $t('distance') }}: <span>{{ Route.distance }}</span>
         </div>
         <div class="routes-item__points" v-if="Route.places.length>0">
-          Количество точек: <span>{{Route.places.length}}</span>
+          {{ $t('count_of_points') }}: <span>{{Route.places.length}}</span>
         </div>
       </div>
       <div class="routes-item__wrapper">
         <div class="routes-item__info-content">
           <div class="routes-item__img" :style="'background-image: url('+getImages(Route.image)+');'"></div>
           <div class="routes-item__guide" v-if="Route.organizators.length>0">
-            Гиды:
+            {{ $t('guides') }}:
             <NuxtLink :to="'/guides/'+organizator.alias" v-for="(organizator,i) in Route.organizators" :key="i">{{organizator['title_'+$i18n.locale]}}</NuxtLink>
           </div>
           <p class="routes-item__text" v-html="Route['description_'+$i18n.locale]"></p>
@@ -43,10 +43,10 @@
                 <lingallery :iid.sync="currentId" :width="400" :height="300" :items=galleries[item.id] />
                 <div class="routes-points__item-text" v-html="item['description_'+$i18n.locale]"></div>
                 <div class="routes-points__item-info">
-                  <p><span>Адрес: </span>{{item.address}}</p>
-                  <p><span>Режим работы: </span>с понедельника по суботу с 9:00 до 18:00.</p>
+                  <p><span>{{ $t('address') }}: </span>{{item.address}}</p>
+                  <p><span>{{ $t('operating_mode') }}: </span>с понедельника по суботу с 9:00 до 18:00.</p>
                   <p>
-                    <span>Телефоны для связи: </span>
+                    <span>{{ $t('phones_for_contact') }}: </span>
                     <span>
                       <a :href="'tel:'+phone" v-for="(phone,i) in item.phone" :key="i">{{phone}} .,  </a>
                     </span>
@@ -61,14 +61,14 @@
               <input v-model="form.route_id" type="hidden">
               <button type="submit" class="post__btn">
                 <svg :class="this.saveColor" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
-                Сохранить
+                {{ $t('save') }}
               </button>
             </form>
             <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
 
           </div>
           <div class="load-more">
-            <NuxtLink to="/routes">Перейти ко всем маршрутам</NuxtLink>
+            <NuxtLink to="/routes">{{ $t('load_routes') }}</NuxtLink>
           </div>
         </div>
         <div class="routes-item__map-inner">

@@ -3,48 +3,54 @@
     <div class="container">
       <ul class="crumbs">
         <li class="crumbs__item">
-          <a href="/">Главная</a>
+          <a href="/">{{ $t('main') }}</a>
         </li>
         <li class="crumbs__item">
-          <a href="#">Маршруты</a>
+          <a href="#">{{ $t('routes_title') }}</a>
         </li>
         <li class="crumbs__item current">
-          <a href="#">Готовые маршруты</a>
+          <a href="#">{{ $t('ready_routes') }}</a>
         </li>
       </ul>
       <div class="top-content">
         <div class="top-content__wrapper top-content__wrapper-4">
           <h2 class="top-content__title">
-            Маршруты
+            {{ $t('routes_title') }}
           </h2>
           <p class="top-content__text">
-            Что посетить?
+            {{ $t('routes_subtitle') }}
           </p>
         </div>
         <div class="top-content__line"></div>
       </div>
       <div class="routes-page__tabs">
         <ul class="routes-page__tabs-caption">
-          <li v-for="tab in tabs" :key="tab.id" :class="tab.active">
-            <NuxtLink :style="'color:'+tab.color" :to="tab.link">{{tab.title}}</NuxtLink>
+          <li class="active">
+            <NuxtLink style="color:white!important;" to="/routes">{{$t('ready_routes')}}</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/guides">{{$t('guides')}}</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/agencies">{{$t('agencies')}}</NuxtLink>
           </li>
         </ul>
         <div class="routes-page__tabs-content active">
           <div class="routes-page__tabs-content-inner">
             <div class="routes-page__list-categories-wrapper">
-              <button class="open-filter">
-                <span>Фильтр</span>
-              </button>
+<!--              <button class="open-filter">-->
+<!--                <span>Фильтр</span>-->
+<!--              </button>-->
               <div class="routes-page__list-categories">
                 <div class="routes-page__list-categories-container">
                   <h4 class="routes-page__list-categories-title">
-                    Тип маршрута
+                    {{ $t('type_of_routes') }}
                   </h4>
                   <div class="routes-page__list-categories-item">
                     <input type="checkbox" id="cb1"
                            @click="toggleActiveCheckBox(0,'type')"
                            :checked="getActiveCheckBox(0,'type')"
-                    > <label for="cb1">Все</label>
+                    > <label for="cb1">{{ $t('all') }}</label>
                   </div>
                   <div class="routes-page__list-categories-item" v-for="(item,index) in types" :key="item.created_at + index">
                     <input type="checkbox" :id="'type' + item.id"
@@ -59,13 +65,13 @@
 
                 <div class="routes-page__list-categories-container">
                   <h4 class="routes-page__list-categories-title">
-                    Категория маршрута
+                    {{ $t('categories') }}
                   </h4>
                   <div class="routes-page__list-categories-item">
                     <input type="checkbox" id="cb5"
                       @click="toggleActiveCheckBox(0,'category')"
                       :checked="getActiveCheckBox(0,'category')"
-                    > <label for="cb5">Все</label>
+                    > <label for="cb5">{{ $t('all') }}</label>
                   </div>
                   <div class="routes-page__list-categories-item" v-for="(item,index) in categories">
                     <input type="checkbox" :id="'category' + item.id"
@@ -80,43 +86,43 @@
 
                 <div class="routes-page__list-categories-container">
                   <h4 class="routes-page__list-categories-title">
-                    Продолжительность маршрута
+                    {{ $t('duration') }}
                   </h4>
                   <div class="routes-page__list-categories-item">
                     <input type="checkbox" id="cb9"
                            @click="toggleActiveCheckBox([0],'time')"
                            :checked="getActiveCheckBox([0],'time')"
-                    > <label for="cb9">Все</label>
+                    > <label for="cb9">{{ $t('all') }}</label>
                   </div>
                   <div class="routes-page__list-categories-item">
                     <input type="radio" name="distance" id="cb10"
                            @click="toggleActiveCheckBox([0,3],'time')"
                            :checked="getActiveCheckBox([0,3],'time')"
-                    > <label for="cb10">До 3 часов</label>
+                    > <label for="cb10">{{ $t('filter_time_1') }}</label>
                   </div>
                   <div class="routes-page__list-categories-item">
                     <input type="radio" name="distance" id="cb11"
                            @click="toggleActiveCheckBox([3,9],'time')"
                            :checked="getActiveCheckBox([3,9],'time')"
-                    > <label for="cb11">От 3 до 8 часов</label>
+                    > <label for="cb11">{{ $t('filter_time_2') }}</label>
                   </div>
                   <div class="routes-page__list-categories-item">
                     <input type="radio" name="distance" id="cb12"> <label for="cb12"
                          @click="toggleActiveCheckBox([9,24],'time')"
                          :checked="getActiveCheckBox([9,24],'time')"
-                  >От 8 часов до 1 дня</label>
+                  >{{ $t('filter_time_3') }}</label>
                   </div>
                   <div class="routes-page__list-categories-item">
                     <input type="radio" name="distance" id="cb13"
                            @click="toggleActiveCheckBox([24,1000],'time')"
                            :checked="getActiveCheckBox([24,1000],'time')"
-                    > <label for="cb13">Больше дня</label>
+                    > <label for="cb13">{{ $t('filter_time_4') }}</label>
                   </div>
                 </div>
               </div>
-              <button class="do-filter">
-                Применить фильтр
-              </button>
+<!--              <button class="do-filter">-->
+<!--                Применить фильтр-->
+<!--              </button>-->
             </div>
             <div class="routes-page__list">
               <NuxtLink class="routes-page__link" :to="'/routes/'+item.alias" v-for="(item,i) in routes" :key="i">
@@ -130,20 +136,23 @@
                     <div class="routes-page__item-text" v-html="truncate(item['description_'+$i18n.locale], 120)"></div>
                     <div class="routes-page__item-about">
                       <div class="routes-page__item-time">
-                        Длительность: <span>{{ item.time }}</span>
+                        {{ $t('length') }}: <span>{{ item.time }}</span>
                       </div>
                       <div class="routes-page__item-distance">
-                        Протяженность: <span>{{ item.distance }}</span>
+                        {{ $t('distance') }}: <span>{{ item.distance }}</span>
                       </div>
-                      <div class="routes-page__item-points">
-                        Количество точек: <span>5</span>
+                      <div class="routes-page__item-points" v-if="item.places.length>0">
+                        {{ $t('count_of_points') }}: <span>{{item.places.length}}</span>
+                      </div>
+                      <div class="routes-page__item-points" v-else>
+                        {{ $t('count_of_points') }}: <span>0</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </NuxtLink>
               <div class="load-more" v-if="current_page < last_page">
-                <a @click="paginate">Загрузить еще</a>
+                <a @click="paginate">{{ $t('load_more') }}</a>
               </div>
             </div>
           </div>
@@ -158,29 +167,7 @@ export default {
   name: "index",
   data(){
     return {
-      tabs: [
-        {
-          id: 0,
-          title: 'Готовые маршруты',
-          link: '/routes',
-          active: 'active',
-          color: 'white!important'
-        },
-        {
-          id: 1,
-          title: 'Гиды',
-          link: '/guides',
-          active: '',
-          color: ''
-        },
-        {
-          id: 2,
-          title: 'Тур. агентства',
-          link: '/agencies',
-          active: '',
-          color: ''
-        },
-      ],
+      title: this.$t('guides'),
       routeTypes:[],
       categoryTypes:[],
       time:[],
@@ -189,7 +176,6 @@ export default {
       routes:[],
       current_page:1,
       last_page:1,
-
     }
   },
   computed:{
@@ -230,11 +216,7 @@ export default {
         return "";
       }
     }
-
   },
-
-
-
   methods:{
     toggleActiveCheckBox(index,type){
       if(type == "category"){if(index == 0){

@@ -3,10 +3,10 @@
     <div class="container">
       <ul class="crumbs">
         <li class="crumbs__item">
-          <NuxtLink to="/">Главная</NuxtLink>
+          <NuxtLink to="/">{{ $t('main') }}</NuxtLink>
         </li>
         <li class="crumbs__item">
-          <NuxtLink to="/events">Aфиша</NuxtLink>
+          <NuxtLink to="/events">{{ $t('events') }}</NuxtLink>
         </li>
         <li class="crumbs__item current">
           <NuxtLink to="#">{{ event['title_'+$i18n.locale] }}</NuxtLink>
@@ -24,24 +24,24 @@
         <div class="calendar-item__left-content">
           <lingallery :iid.sync="currentId" :width="400" :height="'auto'" :items=galleries class="mr-md-6"/>
           <button class="calendar-item__btn" v-if="event.eventum">
-            Купить билеты
+            {{ $t('buy') }}
           </button>
         </div>
         <div class="calendar-item__content">
           <div class="calendar-item__content-item">
             <h4 class="calendar-item__content-title">
-              О мероприятии
+              {{ $t('about_events') }}
             </h4>
             <div class="calendar-item__content-text" v-html="event['description_' + $i18n.locale]"></div>
           </div>
           <div class="calendar-item__content-item">
             <h4 class="calendar-item__content-title">
-              Информация о мероприятии
+              {{ $t('info_events') }}
             </h4>
             <ul class="calendar-item__contact">
               <li>
                 <div class="calendar-item__contact-title">
-                  Место проведения:
+                  {{ $t('address') }}
                 </div>
                 <div class="calendar-item__contact-text">
                   {{ event.address }}
@@ -49,7 +49,7 @@
               </li>
               <li>
                 <div class="calendar-item__contact-title">
-                  Дата и время:
+                  {{ $t('date') }} / {{ $t('time') }}:
                 </div>
                 <div class="calendar-item__contact-text">
                   <div v-if="event.workdays.length>0">
@@ -61,7 +61,7 @@
               </li>
               <li>
                 <div class="calendar-item__contact-title">
-                  Телефон:
+                  {{ $t('phones_for_contact') }}:
                 </div>
                 <div class="calendar-item__contact-text" v-for="(item,i) in event.phone" :key="i">
                   <span>{{item}} .,</span>
@@ -98,7 +98,7 @@
                 <input v-model="form.event_id" type="hidden" name="event_id">
                 <button type="submit" class="post__btn">
                   <svg :class="this.saveColor" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
-                  Сохранить
+                  {{ $t('save') }}
                 </button>
               </form>
               <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />

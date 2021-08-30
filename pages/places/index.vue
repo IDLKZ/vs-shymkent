@@ -3,37 +3,37 @@
     <div class="container">
       <ul class="crumbs">
         <li class="crumbs__item">
-          <a href="/">Главная</a>
+          <a href="/">{{ $t('main') }}</a>
         </li>
         <li class="crumbs__item current">
-          <a href="#">Путеводитель</a>
+          <a href="#">{{ $t('place_title') }}</a>
         </li>
       </ul>
       <div class="top-content">
         <div class="top-content__wrapper top-content__wrapper-1">
           <h2 class="top-content__title">
-            Путеводитель
+            {{ $t('place_title') }}
           </h2>
           <p class="top-content__text">
-            Откройте для себя красивейшие места любимого Шымкента
+            {{ $t('place_subtitle') }}
           </p>
         </div>
-        <a href="#" class="guide-list__top-link">Показать на карте</a>
+<!--        <a href="#" class="guide-list__top-link">Показать на карте</a>-->
         <div class="top-content__line"></div>
       </div>
       <div class="guide-list__content">
         <div class="guide-list__header-wrapper">
-          <button class="open-filter">
-            <span>Фильтр</span>
-          </button>
+<!--          <button class="open-filter">-->
+<!--            <span>Фильтр</span>-->
+<!--          </button>-->
           <div class="guide-list__header">
             <h4 class="guide-list__header-title">
-              Категории
+              {{ $t('categories') }}
             </h4>
             <div class="guide-list__accordion">
               <div class="guide-list__accordion-item">
                 <div class="guide-list__accordion-trigger">
-                  <input :checked="activeCheckbox[0]" @click="toggleActiveCheckBox(0)"  ref="check" type="checkbox" id="cb0"><label for="cb0">Все</label>
+                  <input :checked="activeCheckbox[0]" @click="toggleActiveCheckBox(0)"  ref="check" type="checkbox" id="cb0"><label for="cb0">{{ $t('all') }}</label>
                 </div>
               </div>
               <div class="guide-list__accordion-item" v-for="(item,i) in this.categories" :key="i">
@@ -55,14 +55,14 @@
               </div>
             </div>
           </div>
-          <button class="do-filter">
-            Применить фильтр
-          </button>
+<!--          <button class="do-filter">-->
+<!--            Применить фильтр-->
+<!--          </button>-->
         </div>
         <div class="guide-list__wrapper">
           <div class="guide-list__sort-wrapper">
             <div class="guide-list__search-wrapper">
-              <input type="search" v-model="search" @keyup.enter="onSearch" class="guide-list__header-search" placeholder="Введите название места">
+              <input type="search" v-model="search" @keyup.enter="onSearch" class="guide-list__header-search" :placeholder="$t('search')">
               <button @click="onSearch">
                 <svg xmlns="http://www.w3.org/2000/svg" height="136pt" version="1.1" viewBox="-1 0 136 136.21852" width="136pt">
                   <g id="surface1">
@@ -72,7 +72,7 @@
               </button>
             </div>
             <div class="guide-list__select-wrapper select__wrapper d-block">
-              <div class="guide-list__select-label select__label">Показывать по:</div>
+              <div class="guide-list__select-label select__label">{{ $t('show_to') }}:</div>
               <div class="guide-list__select select">
                   <v-select
                     :items="sorts"
@@ -101,13 +101,13 @@
                 </NuxtLink>
                 <p class="guide-list__item-text" v-html="truncate(item['description_'+$i18n.locale],100)"></p>
                 <div class="guide-list__item-about">
-                  <NuxtLink :to="'/places/'+item.alias" class="guide-list__about-link">Подробнее</NuxtLink>
+                  <NuxtLink :to="'/places/'+item.alias" class="guide-list__about-link">{{ $t('more_info') }}</NuxtLink>
                 </div>
               </div>
             </div>
           </div>
           <div class="load-more" v-if="current_page < last_page">
-            <a @click.prevent="paginate">Загрузить еще</a>
+            <a @click.prevent="paginate">{{ $t('load_more') }}</a>
           </div>
         </div>
       </div>
@@ -127,8 +127,8 @@ export default {
       activeCheckbox:{0:false},
       orderBy:"desc",
       sorts:[
-        {title:"Новые записи",value:"desc"},
-        {title:"Старые записи",value:"asc"},
+        {title:this.$t('new_records'),value:"desc"},
+        {title:this.$t('old_records'),value:"asc"},
       ],
       search:""
     }

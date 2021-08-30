@@ -9,25 +9,33 @@
           <a href="#">{{ $t('routes_title') }}</a>
         </li>
         <li class="crumbs__item current">
-          <a href="#">Готовые маршруты</a>
+          <a href="#">{{ $t('agencies') }}</a>
         </li>
       </ul>
       <div class="top-content">
         <div class="top-content__wrapper top-content__wrapper-4">
           <h2 class="top-content__title">
-            Маршруты
+            {{ $t('routes_title') }}
           </h2>
           <p class="top-content__text">
-            Что посетить?
+            {{ $t('routes_subtitle') }}
           </p>
         </div>
         <div class="top-content__line"></div>
       </div>
       <div class="routes-page__tabs">
         <ul class="routes-page__tabs-caption">
-          <li v-for="tab in tabs" :key="tab.id" :class="tab.active">
-            <NuxtLink :style="'color:'+tab.color" :to="tab.link">{{tab.title}}</NuxtLink>
-          </li>
+          <ul class="routes-page__tabs-caption">
+            <li>
+              <NuxtLink to="/routes">{{$t('ready_routes')}}</NuxtLink>
+            </li>
+            <li>
+              <NuxtLink to="/guides">{{$t('guides')}}</NuxtLink>
+            </li>
+            <li class="active">
+              <NuxtLink style="color:white!important;" to="/agencies">{{$t('agencies')}}</NuxtLink>
+            </li>
+          </ul>
         </ul>
         <div class="routes-page__tabs-content active">
           <div class="routes-page__travel-agency">
@@ -49,20 +57,20 @@
                 </div>
                 <div class="routes-page__employees-info">
                   <div class="routes-page__employees-info-item" v-if="agent.routes.length>0">
-                    Маршрутов: <span>{{ agent.routes.length }}</span>
+                    {{ $t('count_of_points') }}: <span>{{ agent.routes.length }}</span>
                   </div>
                   <div class="routes-page__employees-info-item" v-else>
-                    Маршрутов: <span>{{agent.routes_count}}</span>
+                    {{ $t('count_of_points') }}: <span>{{agent.routes_count}}</span>
                   </div>
                   <div class="routes-page__employees-info-item">
-                    Отзывов: <span>{{agent.reviews_count}}</span>
+                    {{ $t('reviews') }}: <span>{{agent.reviews_count}}</span>
                   </div>
                 </div>
               </div>
             </NuxtLink>
           </div>
           <div class="load-more" v-if="current_page<last_page">
-            <a @click="paginate">Загрузить еще</a>
+            <a @click="paginate">{{ $t('load_more') }}</a>
           </div>
         </div>
       </div>
@@ -75,29 +83,6 @@ export default {
   name: "index",
   data(){
     return {
-      tabs: [
-        {
-          id: 0,
-          title: 'Готовые маршруты',
-          link: '/routes',
-          active: '',
-          color: ''
-        },
-        {
-          id: 1,
-          title: 'Гиды',
-          link: '/guides',
-          active: '',
-          color: ''
-        },
-        {
-          id: 2,
-          title: 'Тур. агентства',
-          link: '/agencies',
-          active: 'active',
-          color: 'white!important'
-        },
-      ],
       agents:[],
       current_page:1,
       last_page:1

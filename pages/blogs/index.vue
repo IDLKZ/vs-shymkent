@@ -3,19 +3,19 @@
     <div class="container">
       <ul class="crumbs">
         <li class="crumbs__item">
-          <a href="/">Главная</a>
+          <a href="/">{{ $t('main') }}</a>
         </li>
         <li class="crumbs__item current">
-          <a href="#">Блог</a>
+          <a href="#">{{ $t('blog') }}</a>
         </li>
       </ul>
       <div class="top-content">
         <div class="top-content__wrapper top-content__wrapper-6">
           <h2 class="top-content__title">
-            Блоги
+            {{$t('blog')}}
           </h2>
           <p class="top-content__text">
-            Турим и не только
+            {{$t('blogs_subtitle')}}
           </p>
         </div>
         <div class="top-content__line"></div>
@@ -23,21 +23,21 @@
       <div class="blog-list__tabs active">
         <ul class="blog-list__tabs-caption">
           <li :class="getActiveClass(0)"  @click="toggleActiveClass(0)">
-            Все
+            {{$t('all')}}
           </li>
           <template v-if="tags.length">
           <li  v-for="(item) in tags" :key="item.created_at + item.id" :class="getActiveClass(item.id)" @click="toggleActiveClass(item.id)">
             {{item['title_'+$i18n.locale]}}
           </li>
             <li :class="getActiveClass(-1)" @click="toggleActiveClass(-1)">
-              Авторы
+              {{$t('author')}}
             </li>
           </template>
         </ul>
         <div class="blog-list__select-inner">
           <div class="blog-list__select-wrapper select__wrapper">
             <div class="blog-list__select select d-flex">
-              <div class="blog-list__select-label select__label">Сортировка:</div>
+              <div class="blog-list__select-label select__label">{{$t('show_to')}}:</div>
               <div class="blog-list__select-header select__header mx-2">
                 <v-select
                   :items="sorts"
@@ -56,12 +56,12 @@
         <div class="blog-list__authors">
           <div class="blog-list__authors-categories">
             <h3 class="blog-list__categories-title">
-              Категории
+              {{$t('categories')}}
             </h3>
             <ul class="blog-list__authors-categories-list">
               <li>
                 <input type="checkbox" id="0" :checked="getActiveCheckBox(0)" @click="toggleActiveCheckBox(0)">
-                <label :for="0">Все</label>
+                <label :for="0">{{$t('all')}}</label>
               </li>
               <li v-for="item in tags">
                 <input type="checkbox" :id="item.id" :checked="getActiveCheckBox(item.id)" @click="toggleActiveCheckBox(item.id)">
@@ -72,7 +72,7 @@
           </div>
           <div class="blog-list__authors-content">
             <div class="blog-list__authors-search-inner">
-              <input id="blog-list__authors-search" type="search" placeholder="Введите имя автора" v-model="search" @keyup.enter="onSearch">
+              <input id="blog-list__authors-search" type="search" :placeholder="$t('author')" v-model="search" @keyup.enter="onSearch">
               <label for="blog-list__authors-search"></label>
             </div>
             <div class="blog-list__authors-list" v-if="authors.length">
@@ -88,7 +88,7 @@
                   {{author.blogs.length}}
                 </span></p>
                 <div class="blog-list__author-categories-wrapper">
-                  <span>Категории:</span>
+                  <span>{{$t('categories')}}:</span>
                   <ul class="blog-list__author-categories" v-if="author.blogs.length">
                     <li v-for="(blog,index) in author.blogs" :key="blog.created_at + index">
                       <a href="#">#{{blog.tag["title_" + $i18n.locale]}}</a>
@@ -100,7 +100,7 @@
 
             </div>
             <div class="load-more" v-if="current_page < last_page">
-              <a @click.prevent="paginate">Загрузить еще</a>
+              <a @click.prevent="paginate">{{$t('load_more')}}</a>
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@
             <div class="blog-list__item-content">
               <div class="blog-list__info">
                 <div class="blog-list__date">
-                  Дата публикации: <span>{{blog.created_at}}</span>
+                  {{$t('published')}}: <span>{{blog.created_at}}</span>
                 </div>
                 <div class="blog-list__tag">
                   #{{blog.tag["title_" + $i18n.locale]}}
@@ -131,7 +131,7 @@
 
         </div>
         <div class="load-more" v-if="current_page < last_page">
-          <a @click.prevent="paginate">Загрузить еще</a>
+          <a @click.prevent="paginate">{{$t('load_more')}}</a>
         </div>
       </template>
 
@@ -151,8 +151,8 @@ export default {
       current_page:1,
       last_page:1,
       sorts:[
-        {title:"Новые записи",value:"desc"},
-        {title:"Старые записи",value:"asc"},
+        {title:this.$t('new_records'),value:"desc"},
+        {title:this.$t('old_records'),value:"asc"},
       ],
       orderBy:"desc",
       activeCheckbox:[],

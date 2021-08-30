@@ -4,10 +4,10 @@
       <div class="container">
         <ul class="crumbs">
           <li class="crumbs__item">
-            <NuxtLink to="/">Главная</NuxtLink>
+            <NuxtLink to="/">{{$t('main')}}</NuxtLink>
           </li>
           <li class="crumbs__item">
-            <NuxtLink to="/souvenirs">Сувениры</NuxtLink>
+            <NuxtLink to="/souvenirs">{{$t('souvenirs')}}</NuxtLink>
           </li>
           <li class="crumbs__item current">
             <NuxtLink to="#">{{souvenir['title_'+$i18n.locale]}}</NuxtLink>
@@ -31,36 +31,11 @@
                   {{ souvenir.price }} тг.
                 </div>
               </div>
-              <div class="souvenirs-item__content-info-item souvenirs-item__content-info-item--move">
-                <h4 class="souvenirs-item__content-info-title">
-                  Оформление заказа
-                </h4>
-                <form action="" class="souvenirs-item__content-info-form">
-                  <div class="souvenirs-item__form-inner">
-                    <input type="text" class="souvenirs-item__form-input" placeholder="Имя">
-                    <input type="text" class="souvenirs-item__form-input" placeholder="Фамилия">
-                    <input type="email" class="souvenirs-item__form-input" placeholder="Электронный адрес">
-                    <input type="number" class="souvenirs-item__form-input" placeholder="Телефон">
-                    <textarea class="souvenirs-item__form-textarea" placeholder="Адрес доставки"></textarea>
-                  </div>
-                  <div class="souvenirs-item__form-payment">
-                    <h5 class="souvenirs-item__form-payment-title">
-                      Способ оплаты:
-                    </h5>
-                    <div class="souvenirs-item__form-radio">
-                      <input type="radio" id="r1" name="souvenirs-item__form-radio"><label for="r1">Visa/Mastercard</label>
-                      <input type="radio" id="r2" name="souvenirs-item__form-radio"><label for="r2">Visa/Mastercard</label>
-                    </div>
-                  </div>
-                  <button class="souvenirs-item__form-btn" type="submit">
-                    Заказать
-                  </button>
-                </form>
-              </div>
+
             </div>
             <div class="souvenirs-item__content-aside">
               <h5 class="souvenirs-item__aside-title">
-                Автор
+                {{ $t('author') }}
               </h5>
               <div class="souvenirs-item__aside-text">
                 <v-avatar>
@@ -74,7 +49,7 @@
                   <input v-model="form.souvenir_id" type="hidden">
                   <button type="submit" class="post__btn">
                     <svg :class="this.saveColor" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
-                    Сохранить
+                    {{$t('save')}}
                   </button>
                 </form>
                 <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
@@ -93,10 +68,10 @@
         <div class="top-content">
           <div class="top-content__wrapper top-content__wrapper-5">
             <h2 class="top-content__title">
-              Сувениры
+              {{$t('souvenirs')}}
             </h2>
             <p class="top-content__text">
-              Возможно вам понравится
+              {{$t('craft_subtitle')}}
             </p>
           </div>
           <div class="top-content__line"></div>
@@ -113,7 +88,7 @@
               <p class="souvenirs__item-text" v-html="truncate(item['description_'+$i18n.locale],50)"></p>
               <div class="souvenirs__item-price-wrapper">
                 <button class="souvenirs__item-btn popup-modal" v-if="item.eventum">
-                  <span>Купить</span>
+                  <span>{{$t('buy')}}</span>
                 </button>
                 <div class="souvenirs__item-price">
                   {{ item.price }} ТГ
@@ -123,7 +98,7 @@
           </div>
         </div>
         <div class="load-more">
-          <NuxtLink to="/souvenirs">Перейти ко всем товарам</NuxtLink>
+          <NuxtLink to="/souvenirs">{{$t('load_souvenirs')}}</NuxtLink>
         </div>
       </div>
     </section>

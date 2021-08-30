@@ -3,27 +3,33 @@
     <div class="container">
       <ul class="crumbs">
         <li class="crumbs__item">
-          <NuxtLink to="/">Главная</NuxtLink>
+          <NuxtLink to="/">{{ $t('main') }}</NuxtLink>
         </li>
         <li class="crumbs__item current">
-          <NuxtLink to="#">Сувениры</NuxtLink>
+          <NuxtLink to="#">{{ $t('craft') }}</NuxtLink>
         </li>
       </ul>
       <div class="top-content">
         <div class="top-content__wrapper top-content__wrapper-5">
           <h2 class="top-content__title">
-            Сувениры
+            {{ $t('craft') }}
           </h2>
           <p class="top-content__text">
-            Оставьте себе на память кусочек Шымкента
+            {{ $t('souvenirs_title') }}
           </p>
         </div>
         <div class="top-content__line"></div>
       </div>
       <div class="souvenirs-page__tabs">
         <ul class="souvenirs-page__tabs-caption">
-          <li v-for="tab in tabs" :key="tab.id" :class="tab.active">
-            <NuxtLink :style="'color:'+tab.color" :to="tab.link">{{tab.title}}</NuxtLink>
+          <li>
+            <NuxtLink to="/souvenirs">{{$t('souvenirs')}}</NuxtLink>
+          </li>
+          <li class="active">
+            <NuxtLink style="color:white!important;" to="/craft">{{$t('craft')}}</NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/craftman">{{$t('craftman')}}</NuxtLink>
           </li>
         </ul>
         <div class="souvenirs-page__tabs-content active">
@@ -38,14 +44,14 @@
                   {{ item.address }}
                 </div>
                 <div class="souvenirs-page__craft-count" v-if="item.souvenirs.length>0">
-                  Товаров: <span>{{item.souvenirs.length}}</span>
+                  {{ $t('products') }}: <span>{{item.souvenirs.length}}</span>
                 </div>
 
               </div>
             </NuxtLink>
           </div>
           <div class="load-more" v-if="current_page<last_page">
-            <a @click="paginate">Загрузить еще</a>
+            <a @click="paginate">{{ $t('load_more') }}</a>
           </div>
         </div>
       </div>
@@ -59,33 +65,9 @@ export default {
   name: "index",
   data(){
     return {
-      tabs: [
-        {
-          id: 0,
-          title: 'Сувениры',
-          link: '/souvenirs',
-          active: '',
-          color: 'black'
-        },
-        {
-          id: 1,
-          title: 'Ремесленники',
-          link: '/craftman',
-          active: '',
-          color: 'black'
-        },
-        {
-          id: 2,
-          title: 'Сувенирные магазины',
-          link: '/craft',
-          active: 'active',
-          color: 'white!important'
-        },
-      ],
       current_page:1,
       last_page:1,
       shops:[],
-
     }
   },
   methods:{

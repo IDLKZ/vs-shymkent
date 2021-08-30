@@ -4,10 +4,10 @@
       <div class="container">
         <ul class="crumbs">
           <li class="crumbs__item">
-            <NuxtLink to="/">Главная</NuxtLink>
+            <NuxtLink to="/">{{ $t('main') }}</NuxtLink>
           </li>
           <li class="crumbs__item">
-            <NuxtLink to="/places">Путеводитель</NuxtLink>
+            <NuxtLink to="/places">{{ $t('place_title') }}</NuxtLink>
           </li>
           <li class="crumbs__item current">
             <NuxtLink to="#">{{ place['title_'+$i18n.locale] }}</NuxtLink>
@@ -52,7 +52,7 @@
             <ul class="guide-item__contact">
               <li class="guide-item__contact-item">
                             <span class="guide-item__contact-span">
-                                Адрес: ​
+                                {{ $t('address') }}: ​
                             </span>
                 <div class="guide-item__contact-text">
                   {{place.address}}
@@ -60,7 +60,7 @@
               </li>
               <li class="guide-item__contact-item">
                             <span class="guide-item__contact-span">
-                                Режим работы:
+                                {{ $t('operating_mode') }}:
                             </span>
                 <div class="guide-item__contact-text">
                   <div v-if="place.workdays">
@@ -74,7 +74,7 @@
               </li>
               <li class="guide-item__contact-item">
                             <span class="guide-item__contact-span">
-                                Телефоны для связи:
+                                {{ $t('phones_for_contact') }}:
                             </span>
                 <div class="guide-item__contact-text">
                   <div v-if="place.phone">
@@ -84,23 +84,23 @@
               </li>
               <li class="guide-item__contact-item">
                             <span class="guide-item__contact-span">
-                                Средний чек:
+                                {{ $t('price') }}:
                             </span>
                 <div class="guide-item__contact-text">
                   <div v-if="place.price">
-                    {{place.price}} тенге на человека
+                    {{place.price}} тенге
                   </div>
                 </div>
               </li>
               <li class="guide-item__contact-item">
                             <span class="guide-item__contact-span">
-                                Описание:
+                                {{ $t('description') }}:
                             </span>
                 <div class="guide-item__contact-text" v-html="place['description_'+$i18n.locale]"></div>
               </li>
               <li class="guide-item__contact-item">
                             <span class="guide-item__contact-span">
-                                Веб-сайт:
+                                {{ $t('website') }}:
                             </span>
                 <div class="guide-item__contact-text">
                   <div v-if="place.social_networks">
@@ -113,7 +113,7 @@
               </li>
               <li class="guide-item__contact-item">
                             <span class="guide-item__contact-span">
-                                Электронная почта:
+                                {{ $t('emails') }}:
                             </span>
                 <div class="guide-item__contact-text">
                   <div v-if="place.user">
@@ -123,7 +123,7 @@
               </li>
               <li class="guide-item__contact-item">
                             <span class="guide-item__contact-span">
-                                Средний рейтинг:
+                                {{ $t('rating') }}:
                             </span>
                 <div class="guide-item__contact-text">
                   <div class="guide-item__rating-items" v-if="place.ratings.length>0">
@@ -166,14 +166,14 @@
                 <input v-model="form.place_id" type="hidden" name="place_id">
                 <button type="submit" class="post__btn">
                   <svg :class="this.saveColor" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
-                  Сохранить
+                  {{ $t('save') }}
                 </button>
               </form>
               <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
             </div>
             <div class="guide-item__sameplace">
               <h4 class="guide-item__sameplace-title">
-                Похожие места
+                {{ $t('place__p') }}
               </h4>
               <div class="guide-item__sameplace-slider">
                 <div class="guide-item__sameplace-slider-item">
@@ -209,10 +209,10 @@
         <div class="top-content">
           <div class="top-content__wrapper top-content__wrapper-2">
             <h2 class="top-content__title">
-              Cобытия на месте
+              {{ $t('events_title_place') }}
             </h2>
             <p class="top-content__text">
-              Купить билеты онлайн
+              {{ $t('buy') }}
             </p>
           </div>
           <div class="top-content__line"></div>
@@ -273,13 +273,13 @@
             <div class="calendar__item-img" :style="'background-image: url('+getImages(item.image)+');'">
               <div class="calendar__item-day" v-if="item.workdays.length>0">
                 <div v-for="(day,index) in item.workdays" :key="index">
-                  <span>Дата </span>{{day.date_start}} - {{day.date_end}}
+                  <span>{{ $t('date') }} </span>{{day.date_start}} - {{day.date_end}}
                 </div>
 
               </div>
               <div class="calendar__item-time">
                 <div v-for="(day,index) in item.workdays" :key="index">
-                  <span>Время </span>{{day.time_start}} - {{day.time_end}}
+                  <span>{{ $t('time') }} </span>{{day.time_start}} - {{day.time_end}}
                 </div>
               </div>
             </div>
@@ -293,7 +293,7 @@
               <p class="calendar__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></p>
               <div class="calendar__btn-wrapper">
                 <NuxtLink class="calendar__item-btn popup-modal" to="#">
-                  <span>Подробнее</span>
+                  <span>{{ $t('more_info') }}</span>
                 </NuxtLink>
               </div>
             </div>
@@ -301,24 +301,9 @@
         </div>
         <div class="calendar-page__item-not-found" v-else>
           <h4 class="calendar-page__not-found-title">
-            В данный момент тут ничего не происходит.
-            <b>Не расстраивайтесь, возможно скоро тут появятся события!</b>
+            {{ $t('null_message_1') }}
+            <b>{{ $t('null_message_2') }}</b>
           </h4>
-          <form id="calendar-page__form">
-            <div class="calendar-page__not-found-form">
-              <p class="calendar-page__not-found-text">
-                <b>Подпишитесь на обновления </b> в данном месте
-                и узнавайте о новых событиях самыми первыми!
-              </p>
-              <input class="calendar-page__not-found-input" type="email" placeholder="E-mail">
-              <button class="calendar-page__not-found-btn" type="submit">
-                Подписаться
-              </button>
-              <div class="calendar-page__not-found-success">
-                Готово! Не забывайте проверять почту!
-              </div>
-            </div>
-          </form>
         </div>
       </div>
     </section>

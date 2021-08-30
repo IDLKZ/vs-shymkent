@@ -42,7 +42,7 @@
                   </NuxtLink>
                   <p class="guide-list__item-text" v-html="truncate(item['description_'+$i18n.locale],100)"></p>
                   <div class="guide-list__item-about">
-                    <NuxtLink :to="'/places/'+item.alias" class="guide-list__about-link">Подробнее</NuxtLink>
+                    <NuxtLink :to="'/places/'+item.alias" class="guide-list__about-link">{{ $t('more_info') }}</NuxtLink>
                   </div>
                 </div>
               </div>
@@ -50,15 +50,15 @@
             <div class="account__not-found" v-else>
               <svg xmlns="http://www.w3.org/2000/svg" width="50.922" height="42.435" viewBox="0 0 50.922 42.435"><g transform="translate(0 -2)"><path d="M45.618,44.435H5.3a5.31,5.31,0,0,1-5.3-5.3V24.278a1.062,1.062,0,0,1,.093-.435L8.515,5.13A5.318,5.318,0,0,1,13.352,2H37.57a5.318,5.318,0,0,1,4.838,3.13l8.421,18.714a1.062,1.062,0,0,1,.093.435V39.131a5.31,5.31,0,0,1-5.3,5.3Zm-43.5-19.93V39.131A3.187,3.187,0,0,0,5.3,42.313H45.618A3.187,3.187,0,0,0,48.8,39.131V24.505L40.472,6a3.192,3.192,0,0,0-2.9-1.876H13.352A3.191,3.191,0,0,0,10.45,6Z"/><path d="M35.38,22.609h-20.4A3.2,3.2,0,0,1,12,20.544L9.851,14.809a1.061,1.061,0,0,0-.993-.687H1.311a1.061,1.061,0,1,1,0-2.122H8.858a3.2,3.2,0,0,1,2.981,2.064L13.988,19.8a1.066,1.066,0,0,0,.993.687h20.4a1.061,1.061,0,0,0,.993-.687l2.149-5.735A3.2,3.2,0,0,1,41.5,12h8.077a1.061,1.061,0,0,1,0,2.122H41.5a1.061,1.061,0,0,0-.993.687l-2.149,5.735A3.2,3.2,0,0,1,35.38,22.609Z" transform="translate(0.28 11.217)"/></g></svg>
               <h4 class="account__not-found-text">
-                <p>Вы еще ничего не сохраняли.</p>
+                <p>{{$t('cabinet_not_saving')}}.</p>
               </h4>
               <div class="load-more">
-                <NuxtLink to="/places">Перейти к мероприятиям</NuxtLink>
+                <NuxtLink to="/places">{{ $t('load_routes') }}</NuxtLink>
               </div>
             </div>
-            <div class="load-more">
-              <a href="#">Загрузить еще</a>
-            </div>
+<!--            <div class="load-more">-->
+<!--              <a href="#">Загрузить еще</a>-->
+<!--            </div>-->
           </div>
         </div>
         <div :class="'account__save-tabs-content '+this.tabs[1].active">
@@ -67,13 +67,13 @@
               <div class="calendar__item-img" :style="'background-image: url('+getImages(item.image)+');'">
                 <div class="calendar__item-day" v-if="item.workdays.length>0">
                   <div v-for="(day,index) in item.workdays" :key="index">
-                    <span>Дата </span>{{day.date_start}} - {{day.date_end}}
+                    <span>{{ $t('date') }} </span>{{day.date_start}} - {{day.date_end}}
                   </div>
 
                 </div>
                 <div class="calendar__item-time">
                   <div v-for="(day,index) in item.workdays" :key="index">
-                    <span>Время </span>{{day.time_start}} - {{day.time_end}}
+                    <span>{{ $t('time') }} </span>{{day.time_start}} - {{day.time_end}}
                   </div>
                 </div>
               </div>
@@ -87,7 +87,7 @@
                 <p class="calendar__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></p>
                 <div class="calendar__btn-wrapper">
                   <NuxtLink class="calendar__item-btn popup-modal" :to="'/events/' + item.alias">
-                    <span>Подробнее</span>
+                    <span>{{ $t('more_info') }}</span>
                   </NuxtLink>
                 </div>
               </div>
@@ -96,10 +96,10 @@
           <div class="account__not-found" v-else>
             <svg xmlns="http://www.w3.org/2000/svg" width="50.922" height="42.435" viewBox="0 0 50.922 42.435"><g transform="translate(0 -2)"><path d="M45.618,44.435H5.3a5.31,5.31,0,0,1-5.3-5.3V24.278a1.062,1.062,0,0,1,.093-.435L8.515,5.13A5.318,5.318,0,0,1,13.352,2H37.57a5.318,5.318,0,0,1,4.838,3.13l8.421,18.714a1.062,1.062,0,0,1,.093.435V39.131a5.31,5.31,0,0,1-5.3,5.3Zm-43.5-19.93V39.131A3.187,3.187,0,0,0,5.3,42.313H45.618A3.187,3.187,0,0,0,48.8,39.131V24.505L40.472,6a3.192,3.192,0,0,0-2.9-1.876H13.352A3.191,3.191,0,0,0,10.45,6Z"/><path d="M35.38,22.609h-20.4A3.2,3.2,0,0,1,12,20.544L9.851,14.809a1.061,1.061,0,0,0-.993-.687H1.311a1.061,1.061,0,1,1,0-2.122H8.858a3.2,3.2,0,0,1,2.981,2.064L13.988,19.8a1.066,1.066,0,0,0,.993.687h20.4a1.061,1.061,0,0,0,.993-.687l2.149-5.735A3.2,3.2,0,0,1,41.5,12h8.077a1.061,1.061,0,0,1,0,2.122H41.5a1.061,1.061,0,0,0-.993.687l-2.149,5.735A3.2,3.2,0,0,1,35.38,22.609Z" transform="translate(0.28 11.217)"/></g></svg>
             <h4 class="account__not-found-text">
-              <p>Вы еще ничего не сохраняли.</p>
+              <p>{{ $t('cabinet_not_saving') }}.</p>
             </h4>
             <div class="load-more">
-              <NuxtLink to="/events">Перейти к мероприятиям</NuxtLink>
+              <NuxtLink to="/events">{{ $t('load_events') }}</NuxtLink>
             </div>
           </div>
         </div>
@@ -123,29 +123,32 @@
                   <div class="routes-page__item-text" v-html="truncate(item['description_'+$i18n.locale], 120)"></div>
                   <div class="routes-page__item-about">
                     <div class="routes-page__item-time">
-                      Длительность: <span>{{ item.time }}</span>
+                      {{ $t('duration') }}: <span>{{ item.time }}</span>
                     </div>
                     <div class="routes-page__item-distance">
-                      Протяженность: <span>{{ item.distance }}</span>
+                      {{ $t('distance') }}: <span>{{ item.distance }}</span>
                     </div>
-                    <div class="routes-page__item-points">
-                      Количество точек: <span>5</span>
+                    <div class="routes-page__item-points" v-if="item.places.length>0">
+                      {{ $t('count_of_points') }}: <span>{{item.places.length}}</span>
+                    </div>
+                    <div class="routes-page__item-points" v-else>
+                      {{ $t('count_of_points') }}: <span>0</span>
                     </div>
                   </div>
                 </div>
               </div>
             </NuxtLink>
-            <div class="load-more">
-              <a href="#">Загрузить еще</a>
-            </div>
+<!--            <div class="load-more">-->
+<!--              <a href="#">Загрузить еще</a>-->
+<!--            </div>-->
           </div>
           <div class="account__not-found" v-else>
             <svg xmlns="http://www.w3.org/2000/svg" width="50.922" height="42.435" viewBox="0 0 50.922 42.435"><g transform="translate(0 -2)"><path d="M45.618,44.435H5.3a5.31,5.31,0,0,1-5.3-5.3V24.278a1.062,1.062,0,0,1,.093-.435L8.515,5.13A5.318,5.318,0,0,1,13.352,2H37.57a5.318,5.318,0,0,1,4.838,3.13l8.421,18.714a1.062,1.062,0,0,1,.093.435V39.131a5.31,5.31,0,0,1-5.3,5.3Zm-43.5-19.93V39.131A3.187,3.187,0,0,0,5.3,42.313H45.618A3.187,3.187,0,0,0,48.8,39.131V24.505L40.472,6a3.192,3.192,0,0,0-2.9-1.876H13.352A3.191,3.191,0,0,0,10.45,6Z"/><path d="M35.38,22.609h-20.4A3.2,3.2,0,0,1,12,20.544L9.851,14.809a1.061,1.061,0,0,0-.993-.687H1.311a1.061,1.061,0,1,1,0-2.122H8.858a3.2,3.2,0,0,1,2.981,2.064L13.988,19.8a1.066,1.066,0,0,0,.993.687h20.4a1.061,1.061,0,0,0,.993-.687l2.149-5.735A3.2,3.2,0,0,1,41.5,12h8.077a1.061,1.061,0,0,1,0,2.122H41.5a1.061,1.061,0,0,0-.993.687l-2.149,5.735A3.2,3.2,0,0,1,35.38,22.609Z" transform="translate(0.28 11.217)"/></g></svg>
             <h4 class="account__not-found-text">
-              <p>Вы еще ничего не сохраняли.</p>
+              <p>{{ $t('cabinet_not_saving') }}.</p>
             </h4>
             <div class="load-more">
-              <NuxtLink to="/routes">Перейти к мероприятиям</NuxtLink>
+              <NuxtLink to="/routes">{{ $t('load_routes') }}</NuxtLink>
             </div>
           </div>
         </div>
@@ -153,10 +156,10 @@
           <div class="account__not-found">
             <svg xmlns="http://www.w3.org/2000/svg" width="50.922" height="42.435" viewBox="0 0 50.922 42.435"><g transform="translate(0 -2)"><path d="M45.618,44.435H5.3a5.31,5.31,0,0,1-5.3-5.3V24.278a1.062,1.062,0,0,1,.093-.435L8.515,5.13A5.318,5.318,0,0,1,13.352,2H37.57a5.318,5.318,0,0,1,4.838,3.13l8.421,18.714a1.062,1.062,0,0,1,.093.435V39.131a5.31,5.31,0,0,1-5.3,5.3Zm-43.5-19.93V39.131A3.187,3.187,0,0,0,5.3,42.313H45.618A3.187,3.187,0,0,0,48.8,39.131V24.505L40.472,6a3.192,3.192,0,0,0-2.9-1.876H13.352A3.191,3.191,0,0,0,10.45,6Z"/><path d="M35.38,22.609h-20.4A3.2,3.2,0,0,1,12,20.544L9.851,14.809a1.061,1.061,0,0,0-.993-.687H1.311a1.061,1.061,0,1,1,0-2.122H8.858a3.2,3.2,0,0,1,2.981,2.064L13.988,19.8a1.066,1.066,0,0,0,.993.687h20.4a1.061,1.061,0,0,0,.993-.687l2.149-5.735A3.2,3.2,0,0,1,41.5,12h8.077a1.061,1.061,0,0,1,0,2.122H41.5a1.061,1.061,0,0,0-.993.687l-2.149,5.735A3.2,3.2,0,0,1,35.38,22.609Z" transform="translate(0.28 11.217)"/></g></svg>
             <h4 class="account__not-found-text">
-              <p>Вы еще ничего не сохраняли.</p>
+              <p>{{ $t('cabinet_not_saving') }}.</p>
             </h4>
             <div class="load-more">
-              <NuxtLink to="/guides">Перейти к мероприятиям</NuxtLink>
+              <NuxtLink to="/blogs">{{ $t('load_news') }}</NuxtLink>
             </div>
           </div>
         </div>
@@ -193,7 +196,7 @@
                   </div>
                   <div class="routes-page__employees-lang">
                     <div class="routes-page__employees-lang-item">
-                      Языки:
+                      {{ $t('languages') }}:
                     </div>
                     <div class="routes-page__employees-lang-item">
                       <span v-for="(lang,i) in guide.languages" :key="i">{{lang}} , </span>
@@ -201,26 +204,26 @@
                   </div>
                   <div class="routes-page__employees-info">
                     <div class="routes-page__employees-info-item">
-                      Экскурсий: <span>5</span>
+                      {{ $t('excursions') }}: <span>5</span>
                     </div>
                     <div class="routes-page__employees-info-item">
-                      Отзывов: <span>20</span>
+                      {{ $t('reviews') }}: <span>20</span>
                     </div>
                   </div>
                 </div>
               </NuxtLink>
             </div>
-            <div class="load-more">
-              <a href="#">Загрузить еще</a>
-            </div>
+<!--            <div class="load-more">-->
+<!--              <a href="#">Загрузить еще</a>-->
+<!--            </div>-->
           </div>
           <div class="account__not-found" v-else>
             <svg xmlns="http://www.w3.org/2000/svg" width="50.922" height="42.435" viewBox="0 0 50.922 42.435"><g transform="translate(0 -2)"><path d="M45.618,44.435H5.3a5.31,5.31,0,0,1-5.3-5.3V24.278a1.062,1.062,0,0,1,.093-.435L8.515,5.13A5.318,5.318,0,0,1,13.352,2H37.57a5.318,5.318,0,0,1,4.838,3.13l8.421,18.714a1.062,1.062,0,0,1,.093.435V39.131a5.31,5.31,0,0,1-5.3,5.3Zm-43.5-19.93V39.131A3.187,3.187,0,0,0,5.3,42.313H45.618A3.187,3.187,0,0,0,48.8,39.131V24.505L40.472,6a3.192,3.192,0,0,0-2.9-1.876H13.352A3.191,3.191,0,0,0,10.45,6Z"/><path d="M35.38,22.609h-20.4A3.2,3.2,0,0,1,12,20.544L9.851,14.809a1.061,1.061,0,0,0-.993-.687H1.311a1.061,1.061,0,1,1,0-2.122H8.858a3.2,3.2,0,0,1,2.981,2.064L13.988,19.8a1.066,1.066,0,0,0,.993.687h20.4a1.061,1.061,0,0,0,.993-.687l2.149-5.735A3.2,3.2,0,0,1,41.5,12h8.077a1.061,1.061,0,0,1,0,2.122H41.5a1.061,1.061,0,0,0-.993.687l-2.149,5.735A3.2,3.2,0,0,1,35.38,22.609Z" transform="translate(0.28 11.217)"/></g></svg>
             <h4 class="account__not-found-text">
-              <p>Вы еще ничего не сохраняли.</p>
+              <p>{{ $t('cabinet_not_saving') }}.</p>
             </h4>
             <div class="load-more">
-              <NuxtLink to="/guides">Перейти к мероприятиям</NuxtLink>
+              <NuxtLink to="/guides">{{ $t('load_guides') }}</NuxtLink>
             </div>
           </div>
         </div>
@@ -257,29 +260,29 @@
                   </div>
                   <div class="routes-page__employees-info">
                     <div class="routes-page__employees-info-item" v-if="agent.routes.length>0">
-                      Маршрутов: <span>{{ agent.routes.length }}</span>
+                      {{ $t('routes_title') }}: <span>{{ agent.routes.length }}</span>
                     </div>
                     <div class="routes-page__employees-info-item" v-else>
-                      Маршрутов: <span>0</span>
+                      {{ $t('routes_title') }}: <span>0</span>
                     </div>
                     <div class="routes-page__employees-info-item">
-                      Отзывов: <span>20</span>
+                      {{ $t('reviews') }}: <span>20</span>
                     </div>
                   </div>
                 </div>
               </NuxtLink>
             </div>
-            <div class="load-more">
-              <a href="#">Загрузить еще</a>
-            </div>
+<!--            <div class="load-more">-->
+<!--              <a href="#">Загрузить еще</a>-->
+<!--            </div>-->
           </div>
           <div class="account__not-found" v-else>
             <svg xmlns="http://www.w3.org/2000/svg" width="50.922" height="42.435" viewBox="0 0 50.922 42.435"><g transform="translate(0 -2)"><path d="M45.618,44.435H5.3a5.31,5.31,0,0,1-5.3-5.3V24.278a1.062,1.062,0,0,1,.093-.435L8.515,5.13A5.318,5.318,0,0,1,13.352,2H37.57a5.318,5.318,0,0,1,4.838,3.13l8.421,18.714a1.062,1.062,0,0,1,.093.435V39.131a5.31,5.31,0,0,1-5.3,5.3Zm-43.5-19.93V39.131A3.187,3.187,0,0,0,5.3,42.313H45.618A3.187,3.187,0,0,0,48.8,39.131V24.505L40.472,6a3.192,3.192,0,0,0-2.9-1.876H13.352A3.191,3.191,0,0,0,10.45,6Z"/><path d="M35.38,22.609h-20.4A3.2,3.2,0,0,1,12,20.544L9.851,14.809a1.061,1.061,0,0,0-.993-.687H1.311a1.061,1.061,0,1,1,0-2.122H8.858a3.2,3.2,0,0,1,2.981,2.064L13.988,19.8a1.066,1.066,0,0,0,.993.687h20.4a1.061,1.061,0,0,0,.993-.687l2.149-5.735A3.2,3.2,0,0,1,41.5,12h8.077a1.061,1.061,0,0,1,0,2.122H41.5a1.061,1.061,0,0,0-.993.687l-2.149,5.735A3.2,3.2,0,0,1,35.38,22.609Z" transform="translate(0.28 11.217)"/></g></svg>
             <h4 class="account__not-found-text">
-              <p>Вы еще ничего не сохраняли.</p>
+              <p>{{ $t('cabinet_not_saving') }}.</p>
             </h4>
             <div class="load-more">
-              <NuxtLink to="/agencies">Перейти к мероприятиям</NuxtLink>
+              <NuxtLink to="/agencies">{{ $t('load_agencies') }}</NuxtLink>
             </div>
           </div>
         </div>
@@ -296,25 +299,25 @@
                     {{ item.address }}
                   </div>
                   <div class="souvenirs-page__craft-count" v-if="item.souvenirs.length>0">
-                    Товаров: <span>{{item.souvenirs.length}}</span>
+                    {{ $t('products') }}: <span>{{item.souvenirs.length}}</span>
                   </div>
                   <div class="souvenirs-page__craft-count" v-else>
-                    Товаров: <span>0</span>
+                    {{ $t('products') }}: <span>0</span>
                   </div>
                 </div>
               </NuxtLink>
             </div>
-            <div class="load-more">
-              <a href="#">Загрузить еще</a>
-            </div>
+<!--            <div class="load-more">-->
+<!--              <a href="#">Загрузить еще</a>-->
+<!--            </div>-->
           </div>
           <div class="account__not-found" v-else>
             <svg xmlns="http://www.w3.org/2000/svg" width="50.922" height="42.435" viewBox="0 0 50.922 42.435"><g transform="translate(0 -2)"><path d="M45.618,44.435H5.3a5.31,5.31,0,0,1-5.3-5.3V24.278a1.062,1.062,0,0,1,.093-.435L8.515,5.13A5.318,5.318,0,0,1,13.352,2H37.57a5.318,5.318,0,0,1,4.838,3.13l8.421,18.714a1.062,1.062,0,0,1,.093.435V39.131a5.31,5.31,0,0,1-5.3,5.3Zm-43.5-19.93V39.131A3.187,3.187,0,0,0,5.3,42.313H45.618A3.187,3.187,0,0,0,48.8,39.131V24.505L40.472,6a3.192,3.192,0,0,0-2.9-1.876H13.352A3.191,3.191,0,0,0,10.45,6Z"/><path d="M35.38,22.609h-20.4A3.2,3.2,0,0,1,12,20.544L9.851,14.809a1.061,1.061,0,0,0-.993-.687H1.311a1.061,1.061,0,1,1,0-2.122H8.858a3.2,3.2,0,0,1,2.981,2.064L13.988,19.8a1.066,1.066,0,0,0,.993.687h20.4a1.061,1.061,0,0,0,.993-.687l2.149-5.735A3.2,3.2,0,0,1,41.5,12h8.077a1.061,1.061,0,0,1,0,2.122H41.5a1.061,1.061,0,0,0-.993.687l-2.149,5.735A3.2,3.2,0,0,1,35.38,22.609Z" transform="translate(0.28 11.217)"/></g></svg>
             <h4 class="account__not-found-text">
-              <p>Вы еще ничего не сохраняли.</p>
+              <p>{{ $t('cabinet_not_saving') }}.</p>
             </h4>
             <div class="load-more">
-              <NuxtLink to="/craft">Перейти к мероприятиям</NuxtLink>
+              <NuxtLink to="/craft">{{ $t('load_craft') }}</NuxtLink>
             </div>
           </div>
         </div>
@@ -328,25 +331,25 @@
                     {{ item['title_'+$i18n.locale] }}
                   </h5>
                   <div class="souvenirs-page__craft-count" v-if="item.souvenirs.length>0">
-                    Товаров: <span>{{item.souvenirs.length}}</span>
+                    {{ $t('products') }}: <span>{{item.souvenirs.length}}</span>
                   </div>
                   <div class="souvenirs-page__craft-count" v-else>
-                    Товаров: <span>0</span>
+                    {{ $t('products') }}: <span>0</span>
                   </div>
                 </div>
               </NuxtLink>
             </div>
-            <div class="load-more">
-              <a href="#">Загрузить еще</a>
-            </div>
+<!--            <div class="load-more">-->
+<!--              <a href="#">Загрузить еще</a>-->
+<!--            </div>-->
           </div>
           <div class="account__not-found" v-else>
             <svg xmlns="http://www.w3.org/2000/svg" width="50.922" height="42.435" viewBox="0 0 50.922 42.435"><g transform="translate(0 -2)"><path d="M45.618,44.435H5.3a5.31,5.31,0,0,1-5.3-5.3V24.278a1.062,1.062,0,0,1,.093-.435L8.515,5.13A5.318,5.318,0,0,1,13.352,2H37.57a5.318,5.318,0,0,1,4.838,3.13l8.421,18.714a1.062,1.062,0,0,1,.093.435V39.131a5.31,5.31,0,0,1-5.3,5.3Zm-43.5-19.93V39.131A3.187,3.187,0,0,0,5.3,42.313H45.618A3.187,3.187,0,0,0,48.8,39.131V24.505L40.472,6a3.192,3.192,0,0,0-2.9-1.876H13.352A3.191,3.191,0,0,0,10.45,6Z"/><path d="M35.38,22.609h-20.4A3.2,3.2,0,0,1,12,20.544L9.851,14.809a1.061,1.061,0,0,0-.993-.687H1.311a1.061,1.061,0,1,1,0-2.122H8.858a3.2,3.2,0,0,1,2.981,2.064L13.988,19.8a1.066,1.066,0,0,0,.993.687h20.4a1.061,1.061,0,0,0,.993-.687l2.149-5.735A3.2,3.2,0,0,1,41.5,12h8.077a1.061,1.061,0,0,1,0,2.122H41.5a1.061,1.061,0,0,0-.993.687l-2.149,5.735A3.2,3.2,0,0,1,35.38,22.609Z" transform="translate(0.28 11.217)"/></g></svg>
             <h4 class="account__not-found-text">
-              <p>Вы еще ничего не сохраняли.</p>
+              <p>{{ $t('cabinet_not_saving') }}.</p>
             </h4>
             <div class="load-more">
-              <NuxtLink to="/craftman">Перейти к мероприятиям</NuxtLink>
+              <NuxtLink to="/craftman">{{ $t('load_craftman') }}</NuxtLink>
             </div>
           </div>
         </div>
@@ -364,7 +367,7 @@
                   <p class="souvenirs__item-text" v-html="truncate(item['description_'+$i18n.locale],50)"></p>
                   <div class="souvenirs__item-price-wrapper">
                     <button class="souvenirs__item-btn popup-modal" v-if="item.eventum">
-                      <span>Купить</span>
+                      <span>{{ $t('buy') }}</span>
                     </button>
                     <div class="souvenirs__item-price">
                       {{ item.price }} ТГ
@@ -373,17 +376,17 @@
                 </div>
               </div>
             </div>
-            <div class="load-more">
-              <a href="#">Загрузить еще</a>
-            </div>
+<!--            <div class="load-more">-->
+<!--              <a href="#">Загрузить еще</a>-->
+<!--            </div>-->
           </div>
           <div class="account__not-found" v-else>
             <svg xmlns="http://www.w3.org/2000/svg" width="50.922" height="42.435" viewBox="0 0 50.922 42.435"><g transform="translate(0 -2)"><path d="M45.618,44.435H5.3a5.31,5.31,0,0,1-5.3-5.3V24.278a1.062,1.062,0,0,1,.093-.435L8.515,5.13A5.318,5.318,0,0,1,13.352,2H37.57a5.318,5.318,0,0,1,4.838,3.13l8.421,18.714a1.062,1.062,0,0,1,.093.435V39.131a5.31,5.31,0,0,1-5.3,5.3Zm-43.5-19.93V39.131A3.187,3.187,0,0,0,5.3,42.313H45.618A3.187,3.187,0,0,0,48.8,39.131V24.505L40.472,6a3.192,3.192,0,0,0-2.9-1.876H13.352A3.191,3.191,0,0,0,10.45,6Z"/><path d="M35.38,22.609h-20.4A3.2,3.2,0,0,1,12,20.544L9.851,14.809a1.061,1.061,0,0,0-.993-.687H1.311a1.061,1.061,0,1,1,0-2.122H8.858a3.2,3.2,0,0,1,2.981,2.064L13.988,19.8a1.066,1.066,0,0,0,.993.687h20.4a1.061,1.061,0,0,0,.993-.687l2.149-5.735A3.2,3.2,0,0,1,41.5,12h8.077a1.061,1.061,0,0,1,0,2.122H41.5a1.061,1.061,0,0,0-.993.687l-2.149,5.735A3.2,3.2,0,0,1,35.38,22.609Z" transform="translate(0.28 11.217)"/></g></svg>
             <h4 class="account__not-found-text">
-              <p>Вы еще ничего не сохраняли.</p>
+              <p>{{ $t('cabinet_not_saving') }}.</p>
             </h4>
             <div class="load-more">
-              <NuxtLink to="/souvenirs">Перейти к мероприятиям</NuxtLink>
+              <NuxtLink to="/souvenirs">{{ $t('load_souvenirs') }}</NuxtLink>
             </div>
           </div>
         </div>

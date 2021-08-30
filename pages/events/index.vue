@@ -3,32 +3,32 @@
     <div class="container">
       <ul class="crumbs">
         <li class="crumbs__item">
-          <NuxtLink to="/">Главная</NuxtLink>
+          <NuxtLink to="/">{{ $t('main') }}</NuxtLink>
         </li>
         <li class="crumbs__item current">
-          <NuxtLink to="#">Aфиша</NuxtLink>
+          <NuxtLink to="#">{{ $t('events') }}</NuxtLink>
         </li>
       </ul>
       <div class="top-content calendar__top-content">
         <div class="top-content__wrapper top-content__wrapper-2">
           <h2 class="top-content__title">
-            Календарь событий
+            {{ $t('events_title') }}
           </h2>
           <p class="top-content__text">
-            События в Шымкенте
+            {{ $t('events_subtitle') }}
           </p>
         </div>
         <div class="top-content__line"></div>
       </div>
       <div class="calendar-page__article-menu">
         <ul class="calendar-page__categories">
-          <li :class="getActiveClass(0)" @click="toggleActiveClass(0)">Ближайшиие</li>
-          <li :class="getActiveClass(1)" @click="toggleActiveClass(1,$moment(new Date()).format('DD/MM/YYYY'))">Сегодня</li>
-          <li :class="getActiveClass(2)" @click="toggleActiveClass(2,$moment(new Date()).add(1,'days').format('DD/MM/YYYY'))">Завтра</li>
+          <li :class="getActiveClass(0)" @click="toggleActiveClass(0)">{{ $t('events_time_1') }}</li>
+          <li :class="getActiveClass(1)" @click="toggleActiveClass(1,$moment(new Date()).format('DD/MM/YYYY'))">{{ $t('events_time_2') }}</li>
+          <li :class="getActiveClass(2)" @click="toggleActiveClass(2,$moment(new Date()).add(1,'days').format('DD/MM/YYYY'))">{{ $t('events_time_3') }}</li>
         </ul>
         <div class="calendar-page__select-inner">
           <div class="calendar-page__select-wrapper select__wrapper d-block">
-            <div class="calendar-page__select-label select__label">Категория:</div>
+            <div class="calendar-page__select-label select__label">{{ $t('categories') }}:</div>
             <div class="calendar-page__select select">
               <v-select
                 :items="categories"
@@ -53,7 +53,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-text-field
                   v-model="formatDate"
-                  label="Дата"
+                  :label="$t('date')"
                   persistent-hint
                   prepend-icon="mdi-calendar"
                   v-bind="attrs"
@@ -75,13 +75,13 @@
           <div class="calendar__item-img" :style="'background-image: url('+getImages(item.image)+');'">
             <div class="calendar__item-day" v-if="item.workdays.length>0">
               <div v-for="(day,index) in item.workdays" :key="index">
-                <span>Дата </span>{{day.date_start}} - {{day.date_end}}
+                <span>{{ $t('date') }} </span>{{day.date_start}} - {{day.date_end}}
               </div>
 
             </div>
             <div class="calendar__item-time">
               <div v-for="(day,index) in item.workdays" :key="index">
-                <span>Время </span>{{day.time_start}} - {{day.time_end}}
+                <span>{{ $t('time') }} </span>{{day.time_start}} - {{day.time_end}}
               </div>
             </div>
           </div>
@@ -95,14 +95,14 @@
             <p class="calendar__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></p>
             <div class="calendar__btn-wrapper">
               <NuxtLink class="calendar__item-btn popup-modal" :to="'/events/' + item.alias">
-                <span>Подробнее</span>
+                <span>{{ $t('more_info') }}</span>
               </NuxtLink>
             </div>
           </div>
         </div>
       </div>
       <div class="load-more" v-if="current_page < last_page">
-        <a @click="paginate">Загрузить еще...</a>
+        <a @click="paginate">{{ $t('load_more') }}...</a>
       </div>
     </div>
   </section>
