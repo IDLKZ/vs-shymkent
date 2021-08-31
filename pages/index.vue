@@ -223,57 +223,168 @@
           </div>
           <div class="trip__tabs-content">
             <div :class="'trip__tab tab-1 '+this.tabs[0].active">
-              <form>
                 <div class="form__inner">
                   <div class="trip__input-name grid-1">
-                    <input type="text" :placeholder="$t('trip_from')" autocomplete="off">
+<!--                    <input type="text" :placeholder="$t('trip_from')" autocomplete="off">-->
+
+                    <v-autocomplete
+                      hide-details
+                      filled
+                      solo-inverted
+                      class="pt-0"
+                      :items="data"
+                      item-text="name_ru"
+                      outlined
+                      item-value="code"
+                      v-model="fromAvia"
+                      autocomplete="off"
+                      :placeholder="$t('trip_from')"
+                    ></v-autocomplete>
                   </div>
                   <div class="trip__input-name grid-2">
-                    <input type="text" :placeholder="$t('trip_to')" autocomplete="off">
+                    <v-autocomplete
+                      hide-details
+                      filled
+                      solo-inverted
+                      class="pt-0"
+                      :items="data"
+                      item-value="code"
+                      v-model="toAvia"
+                      item-text="name_ru"
+                      outlined
+                      autocomplete="off"
+                      :placeholder="$t('trip_to')"
+                    ></v-autocomplete>
                   </div>
                   <div class="trip__input-date grid-3">
-                    <input id="start-date-1" type="text" :placeholder="$t('trip_date_from')">
+<!--                    <input id="start-date-1" type="text" :placeholder="$t('trip_date_from')">-->
+                    <v-menu
+                      ref="menu1"
+                      v-model="fromMenu"
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      max-width="290px"
+                      min-width="auto"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          hide-details="auto"
+                          v-model="fromDataComputed"
+                          :label="$t('trip_date_from')"
+                          v-bind="attrs"
+                          v-on="on"
+                          outlined
+                          autocomplete="off"
+                          filled
+                          solo-inverted
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        v-model="fD"
+                        no-title
+                        @input="fromMenu = false"
+                      ></v-date-picker>
+                    </v-menu>
                   </div>
                   <div class="trip__input-date grid-4">
-                    <input id="end-date-1" class='trip__calendar' type="text" :placeholder="$t('trip_date_to')">
+<!--                    <input id="end-date-1" class='trip__calendar' type="text" :placeholder="$t('trip_date_to')">-->
+                    <v-menu
+                      ref="menu1"
+                      v-model="toMenu"
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      max-width="290px"
+                      min-width="auto"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          hide-details="auto"
+                          v-model="toDataComputed"
+                          :label="$t('trip_date_to')"
+                          v-bind="attrs"
+                          background-color="white"
+                          v-on="on"
+                          outlined
+                          autocomplete="off"
+                          filled
+                          solo-inverted
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        v-model="tD"
+                        no-title
+                        @input="toMenu = false"
+                      ></v-date-picker>
+                    </v-menu>
                   </div>
                   <div class="trip__form-control grid-5">
                     <div class="trip__form-control-wrapper">
-                      <div class="trip__form-count">
-                        <span class="summ" data-count="1">1</span> пассажир, <span class="trip-class">любой</span> класс
-                      </div>
-                      <div class="trip__dropdown">
-                        <div class="trip__custom-radio">
-                          <div class="trip__radio-item" data-class="любой">Любой</div>
-                          <div class="trip__radio-item" data-class="бизнес">Бизнес</div>
-                          <div class="trip__radio-item" data-class="эконом">Эконом</div>
-                        </div>
-                        <ul class="trip__form-dropdown">
-                          <li class="trip__form-item">
-                            Взрослые (от 13 лет)
-                            <div class="quantity">
-                              <input class="adults" type="number" min="0" max="9" step="1" value="1">
-                            </div>
-                          </li>
-                          <li class="trip__form-item">
-                            Дети (от 2 до 12 лет)
-                            <div class="quantity">
-                              <input class="children" type="number" min="0" max="9" step="1" value="0">
-                            </div>
-                          </li>
-                          <li class="trip__form-item">
-                            Младенцы (до 2 лет)
-                            <div class="quantity">
-                              <input class="babies" type="number" min="0" max="9" step="1" value="0">
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
+                      <v-menu
+                        v-model="menuTraveler"
+                        :close-on-content-click="false"
+                        :nudge-width="200"
+                        offset-x
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                            color="white"
+                            v-bind="attrs"
+                            v-on="on"
+                            elevation="0"
+                          >
+                            Пассажиры
+                          </v-btn>
+                        </template>
+
+                        <v-card>
+                          <v-list>
+                            <v-list-item>
+                              <v-text-field v-model="adult" type="number" label="Взрослые(старше 12 лет)" append-outer-icon="fas fa-plus" @click:append-outer="increment(0)" prepend-icon="fas fa-minus" @click:prepend="decrement(0)"></v-text-field>
+                            </v-list-item>
+                            <v-list-item>
+                              <v-text-field v-model="adolcent" type="number" label="Дети(2–12 лет)" append-outer-icon="fas fa-plus" @click:append-outer="increment(1)" prepend-icon="fas fa-minus" @click:prepend="decrement(1)"></v-text-field>
+                            </v-list-item>
+                            <v-list-item>
+                              <v-text-field v-model="child" type="number" label="Младенцы (до 2х лет)" append-outer-icon="fas fa-plus" @click:append-outer="increment(2)" prepend-icon="fas fa-minus" @click:prepend="decrement(2)"></v-text-field>
+                            </v-list-item>
+                            <v-list-item>
+                              <v-select
+                                :items="
+                                  [
+                                    {'title':'Любой','code':'A'},
+                                    {'title':'Эконом класс','code':'E'},
+                                    {'title':'Бизнес класс','code':'B'},
+                                  ]"
+                                item-text="title"
+                                item-value="code"
+                                v-model="flyType"
+                                label="Тип класса"
+                              ></v-select>
+                            </v-list-item>
+                          </v-list>
+
+                          <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                              text
+                              @click="menuTraveler = false"
+                            >
+                              Закрыть
+                            </v-btn>
+                            <v-btn
+                              color="primary"
+                              text
+                              @click="menuTraveler = false"
+                            >
+                              Сохранить
+                            </v-btn>
+                          </v-card-actions>
+                        </v-card>
+                      </v-menu>
                     </div>
                   </div>
-                  <button class="trip__form-btn grid-6 popup-modal" href="#modal" type="submit">{{ $t('btn_search') }}</button>
+                  <button class="trip__form-btn grid-6 popup-modal" @click="sendToFly">{{ $t('btn_search') }}</button>
                 </div>
-              </form>
             </div>
             <div :class="'trip__tab tab-2 '+this.tabs[1].active">
               <form>
@@ -380,7 +491,7 @@
                       </div>
                     </div>
                   </div>
-                  <button class="trip__form-btn popup-modal" href="#modal" type="submit">Найти</button>
+                  <button class="trip__form-btn popup-modal"  >Найти</button>
                 </div>
               </form>
             </div>
@@ -413,10 +524,6 @@
                 {{ item['title_'+$i18n.locale] }}
               </h4>
               <div class="routes__item-text" v-html="truncate(item['description_' + $i18n.locale], 100)">
-<!--                <p>08:00 - Сбор 08:00-13:00</p>-->
-<!--                <p>1) Посещение памятника «Байдибек би»</p>-->
-<!--                <p>2) Посещение «Историко-краеведческого музея»</p>-->
-<!--                <p>3) Посещение</p>-->
               </div>
               <NuxtLink class="routes__item-btn popup-modal" :to="'/routes/'+item.alias">
                 <span>{{ $t('more_info') }}</span>
@@ -534,11 +641,11 @@
 </template>
 
 <script>
+import data from "~/static/countries.json";
+
 export default {
   data() {
     return {
-      dialog: false,
-      dialog2: false,
       tabs: [
         {
           id: 0,
@@ -565,10 +672,30 @@ export default {
           active: ''
         }
       ],
+      dialog: false,
+      dialog2: false,
+      dialogMenu:false,
       dateForm:"",
       date: "",
       menu: false,
       modal: false,
+      //Коды городов
+      fromAvia:"",
+      toAvia:"",
+      //От и куда по дате
+      fD:"",
+      fromData:"",
+      tD:"",
+      toData:"",
+      //К
+      fromMenu:false,
+      toMenu:false,
+      //
+      menuTraveler:false,
+      adult:1,
+      adolcent:0,
+      child:0,
+      flyType:"A"
     }
   },
   watch: {
@@ -582,12 +709,25 @@ export default {
       else{
         this.$router.push({path: 'events'});
       }
+    },
+    fD(val){
+      this.fromData = this.$moment(val).format("DD.MM.YYYY");
+    },
+    tD(val){
+      this.toData = this.$moment(val).format("DD.MM.YYYY");
     }
+
   },
   computed:{
     formatDate() {
       return this.date
     },
+    fromDataComputed(){
+      return this.fromData;
+    },
+    toDataComputed(){
+      return this.toData;
+    }
   },
   methods:{
     getImages(data){
@@ -608,9 +748,52 @@ export default {
       this.tabs[i].active = 'active'
     },
 
+    increment(type){
+      if(type == 0){
+        this.adult +=1
+      }
+      else if(type == 1){
+        this.adolcent +=1
+      }
+      else if(type == 2){
+        if(this.adult >= this.child){
+          this.child +=1
+        }
+        else{
+          this.$toast.info("Количество младенцев равно количеству взрослых")
+        }
+
+      }
+
+    },
+    decrement(type){
+      if(type == 0){
+        this.adult > 1 ? this.adult -=1 : null;
+      }
+      else if(type == 1){
+        this.adolcent > 0 ? this.adolcent -=1 : null;
+      }
+      else if(type == 2){
+        this.child > 0 ? this.child -=1 : null;
+      }
+    },
+
+    sendToFly(){
+      if(this.toAvia && this.fromAvia && this.fromData && this.toData && this.adult){
+        let url = "https://tickets.kz/avia/m/preloader/";
+        url += this.fromAvia + this.toAvia + this.fromData + '0' + "|" + this.toData + '0' + "/" + this.adult +"|" + this.adolcent + "|" + this.child + "/" + this.flyType;
+        window.open(url, '_blank');
+      }
+      else{
+        this.$toast.info("Пожалуйста заполните все поля!");
+      }
+
+    }
+
   },
   async asyncData({$axios}) {
     let sliders,categoryplace,events,routes,souvenirs,blogs = [];
+
     try{
       await $axios.$get("/sliders").then((e)=>{e.length > 0 ? sliders = e : null});
       await $axios.$get("/categoriesofthe-places").then((e)=>{e.length > 0 ? categoryplace = e : null});
@@ -622,10 +805,24 @@ export default {
     catch (e) {
       console.log(e);
     }
-    return {sliders,categoryplace,events,routes,souvenirs,blogs}
+    return {sliders,categoryplace,events,routes,souvenirs,blogs,data}
   },
-  mounted() {
-    // console.log(this.souvenirs)
+   mounted() {
+
+  }
+  }
+</script>
+<style lang="scss">
+.v-select__slot{
+  cursor: pointer;
+  input{
+      border: none !important;
   }
 }
-</script>
+.v-text-field__slot{
+  input{
+    border: none !important;
+  }
+}
+
+</style>
