@@ -140,6 +140,7 @@
   "log_in": "Войти",
   "log_out": "Выйти",
   "cabinet_not_saving": "Вы еще ничего не сохраняли",
+  "status": "Статус",
   "cabinet_status_1": "Одобрено ",
   "cabinet_status_0": "На модерации ",
   "cabinet_add_record": "Добавить запись",

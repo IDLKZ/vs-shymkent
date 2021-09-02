@@ -145,6 +145,7 @@
   "log_in": "Log in",
   "log_out": "Log out",
   "cabinet_not_saving": "You haven't saved anything yet",
+  "status": "Status",
   "cabinet_status_1": "Approved ",
   "cabinet_status_0": "Under moderation ",
   "cabinet_add_record": "Add an entry",
