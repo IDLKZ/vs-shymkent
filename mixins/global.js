@@ -12,6 +12,9 @@ const globals = {
         getImage(image) {
           return this.$store.state.image.image + image ;
         },
+        getEventum(id){
+          return this.$store.state.eventum.code + id
+        },
         getStarClass(item,max){
           max = Math.round(max);
           let className =  'guide-list__item-rating-star';

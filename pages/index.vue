@@ -163,12 +163,13 @@
                   v-model="dialog"
                 >
                   <template v-slot:activator="{ on, attrs }">
-                    <v-btn class="calendar-page__item-btn"
-                           color="red"
+                    <button class="calendar-page__item-btn"
                        v-bind="attrs"
-                       v-on="on">
-                      <span>Купить билеты</span>
-                    </v-btn>
+                       v-on="on"
+                    style="color: white!important;"
+                    >
+                      <span>{{ $t('buy') }}</span>
+                    </button>
                   </template>
 
                   <v-card>
@@ -572,14 +573,13 @@
                   solo-inverted
                 >
                   <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                      color="red lighten-2"
-                      dark
-                      v-bind="attrs"
-                      v-on="on"
+                    <button class="souvenirs__item-btn popup-modal"
+                            v-bind="attrs"
+                            v-on="on"
+                            style="color: white!important;"
                     >
-                      {{ $t('buy') }}
-                    </v-btn>
+                      <span>{{ $t('buy') }}</span>
+                    </button>
                   </template>
 
                   <v-card>
@@ -634,7 +634,7 @@
             <NuxtLink class="popup-modal" :to="'/news/'+item.alias">
               <img class="news__item-img" :src="getImages(item.image)" :alt="item['title_'+$i18n.locale]">
               <div class="news__item-date">
-                Опубликовано: <span>{{ item.created_at }}</span>
+                {{ $t('published') }}: <span>{{ item.created_at }}</span>
               </div>
               <p class="news__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></p>
             </NuxtLink>
@@ -744,9 +744,6 @@ export default {
     getImages(data){
       console.log(this.$store.state.image.image);
       return this.$store.state.image.image + data ;
-    },
-    getEventum(id){
-      return this.$store.state.eventum.code + id
     },
     truncate(string = '', value) {
       return string.substring(0, value) + '...';

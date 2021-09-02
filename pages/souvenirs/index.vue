@@ -96,9 +96,40 @@
                       </h4>
                       <p class="souvenirs__item-text" v-html="truncate(item['description_'+$i18n.locale],50)"></p>
                       <div class="souvenirs__item-price-wrapper">
-                        <button class="souvenirs__item-btn popup-modal" v-if="item.eventum">
-                          <span>{{ $t('buy') }}</span>
-                        </button>
+                        <v-dialog
+                          v-if="item.eventum"
+                          v-model="dialog"
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <button class="souvenirs__item-btn"
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    style="color: white!important;"
+                            >
+                              <span>{{ $t('buy') }}</span>
+                            </button>
+                          </template>
+                          <v-card>
+                            <v-card-text>
+                              <div id="modal-eventumCloseBtn" @click="dialog = false"
+                                   style="float: right;height: 10px;width: 15px;cursor: pointer;position: absolute;right: 10px;top: 8px;">
+                                <svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" width="100%" height="100%">
+                                  <rect fill="#000000" x="-1.8" y="6.2"
+                                        transform="matrix(0.7071 0.7071 -0.7071 0.7071 7.5178 -3.1079)" width="18.6"
+                                        height="2.7"></rect>
+                                  <rect fill="#000000" x="-1.8" y="6.2"
+                                        transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 18.1391 7.5282)" width="18.6"
+                                        height="2.7"></rect>
+                                </svg>
+                              </div>
+                              <iframe :src="getEventum(item.eventum)" style="height:573px;width:100%;"
+                                      frameborder="0"></iframe>
+                            </v-card-text>
+
+                            <v-divider></v-divider>
+
+                          </v-card>
+                        </v-dialog>
                         <div class="souvenirs__item-price">
                           {{ item.price }} ТГ
                         </div>
@@ -123,6 +154,7 @@ export default {
   name: "index",
   data(){
     return {
+      dialog: false,
       role_id:[],
       price:[],
       roles:[],
