@@ -24,9 +24,9 @@
         <form @submit.prevent="submit" ref="form" class="authorization__box-form">
           <input v-model="form.email" name="email" type="email" class="authorization__box-input" placeholder="E-mail">
           <input v-model="form.password" name="password" type="password" class="authorization__box-input" placeholder="Пароль">
-<!--          <a href="#" class="authorization__box-form-link">-->
-<!--            Забыли cвой пароль?-->
-<!--          </a>-->
+          <NuxtLink to="/forget" class="authorization__box-form-link">
+            Забыли cвой пароль?
+          </NuxtLink>
           <button class="authorization__box-form-btn" type="submit">
             {{ $t('log_in') }}
           </button>

@@ -228,7 +228,7 @@ if (process.client) {
 }
 export default {
   name: "create-souvenir",
-  middleware: 'auth',
+  middleware: ['shop'],
   layout: 'cabinet',
   components: {
     'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },

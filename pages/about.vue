@@ -22,7 +22,7 @@
         <div class="about__tabs">
           <ul class="about__tabs-caption">
             <li v-for="tab in tabs" :key="tab.id" :class="tab.active" @click="activeTab(tab.id)">
-              {{tab.title}}
+              {{$t(tab.title)}}
             </li>
             <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
 <!--            <a href="#" class="about__tabs-link">Сохранить</a>-->
@@ -327,7 +327,8 @@ export default {
       tabs: [
         {
           id: 0,
-          title: 'Шымкент в наши дни',
+          // title: 'Шымкент в наши дни',
+          title: 'main',
           active: 'active'
         },
         {

@@ -387,10 +387,16 @@
                 </div>
             </div>
             <div :class="'trip__tab tab-2 '+this.tabs[1].active">
-              <form>
                 <div class="form__inner">
                   <div class="trip__input-name">
-                    <input type="text" placeholder="Откуда" autocomplete="off">
+                    <v-text-field
+                      @input="getRailStation"
+                      outlined
+                      filled
+                      solo-inverted
+                      no-filter
+
+                      type="text" placeholder="Откуда" />
                   </div>
                   <div class="trip__input-name">
                     <input type="text" placeholder="Куда" autocomplete="off">
@@ -403,7 +409,6 @@
                   </div>
                   <button class="trip__form-btn popup-modal" href="#modal" type="submit">Найти</button>
                 </div>
-              </form>
             </div>
             <div :class="'trip__tab tab-3 '+this.tabs[2].active">
               <form>
@@ -561,7 +566,10 @@
               <div class="souvenirs__item-price-wrapper">
                 <v-dialog
                   v-if="item.eventum"
-                  v-model="dialog2"
+                  v-model="dialog2" outlined
+                  autocomplete="off"
+                  filled
+                  solo-inverted
                 >
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn
@@ -695,7 +703,10 @@ export default {
       adult:1,
       adolcent:0,
       child:0,
-      flyType:"A"
+      flyType:"A",
+      //Railway from and to
+      railFrom:"",
+      railTo:""
     }
   },
   watch: {
@@ -788,7 +799,24 @@ export default {
         this.$toast.info("Пожалуйста заполните все поля!");
       }
 
+    },
+
+     async getRailStation(val){
+      console.log("isTyping")
+      console.log(val);
+
+       if (val.length > 1){
+        await this.$axios.$get("https://gdv2api.tickets.ua/rail/station?key=f713450e-d974-46f3-9b62-f55f8549ec67&name="+val,
+          { headers: { 'Access-Control-Allow-Origin': '*' } }
+        )
+          .then((e)=>{
+            console.log(e);
+          })
+      }
+
+
     }
+
 
   },
   async asyncData({$axios}) {
