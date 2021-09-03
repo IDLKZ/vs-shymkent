@@ -393,6 +393,7 @@ export default {
         item.active = ''
       })
       this.moder = false
+      this.fails = []
       this.form.tag_id = ''
       this.form.id = ''
       this.form.author_id = this.$auth.user.user.id

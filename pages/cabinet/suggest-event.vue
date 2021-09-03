@@ -3,7 +3,7 @@
     <div class="account__save-tabs" v-if="this.$auth.user.user.status">
       <ul class="account__save-tabs-caption">
         <li v-for="tab in tabs" :key="tab.id" :class="tab.active" @click="activeTab(tab.id)">
-          {{tab.title}}
+          {{$t(tab.title)}}
         </li>
         <!--        <li>-->
         <!--          Билеты-->
@@ -13,7 +13,7 @@
       <div :class="'account__save-tabs-content '+this.tabs[0].active">
         <div class="calendar__inner__cabinet" v-if="events.data.length>0">
           <div class="calendar__item" v-for="(item,i) in events.data" :key="i">
-            <div class="calendar__item-img" :style="'background-image: url('+getImages(item.image)+');'">
+            <div class="calendar__item-img" :style="'background-image: url('+getImage(item.image)+');'">
               <div class="calendar__item-day" v-if="item.workdays.length>0">
                 <div v-for="(day,index) in item.workdays" :key="index">
                   <span>{{ $t('date') }} </span>{{day.date_start}} - {{day.date_end}}
@@ -33,7 +33,7 @@
               <div class="calendar__item-location">
                 {{ item.address }}
               </div>
-              <p class="calendar__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></p>
+              <p class="calendar__item-text" v-html="truncateTitle(item['description_'+$i18n.locale], 50)"></p>
               <div class="calendar__btn-wrapper">
                 <NuxtLink class="calendar__item-btn popup-modal" :to="'/events/' + item.alias">
                   <span>{{ $t('more_info') }}</span>
@@ -56,7 +56,7 @@
       <div :class="'account__save-tabs-content '+this.tabs[1].active">
         <div class="calendar__inner__cabinet" v-if="moderation.data.length>0">
           <div class="calendar__item" v-for="(item,i) in moderation.data" :key="i">
-            <div class="calendar__item-img" :style="'background-image: url('+getImages(item.image)+');'">
+            <div class="calendar__item-img" :style="'background-image: url('+getImage(item.image)+');'">
               <div class="calendar__item-day" v-if="item.workdays.length>0">
                 <div v-for="(day,index) in item.workdays" :key="index">
                   <span>{{ $t('date') }} </span>{{day.date_start}} - {{day.date_end}}
@@ -76,11 +76,15 @@
               <div class="calendar__item-location">
                 {{ item.address }}
               </div>
-              <p class="calendar__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></p>
-              <div class="calendar__btn-wrapper">
-                <NuxtLink class="calendar__item-btn popup-modal" :to="'/events/' + item.alias">
-                  <span>{{ $t('more_info') }}</span>
-                </NuxtLink>
+              <p class="calendar__item-text" v-html="truncateTitle(item['description_'+$i18n.locale], 50)"></p>
+              <div class="calendar-page__btn-wrapper my-4">
+                <a @click.prevent="deleteBlog(item.id)" class="calendar-page__item-btn popup-modal">
+                  <span>Удалить</span>
+                </a>
+                <a @click.prevent="activeModer(item.id)" class="calendar-page__item-link popup-modal">
+                  <span>Редактировать</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"></path></g></svg>
+                </a>
               </div>
             </div>
           </div>
@@ -289,6 +293,200 @@
           </form>
         </div>
       </div>
+      <div class="account__save-tabs-content " :class="{active: moder}">
+        <div class="account__blog">
+          <a @click="activeTab(1)" class="account__blog-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"/></g></svg>
+            {{ $t('back') }}
+          </a>
+          <h3 class="account__blog-title">
+            Редактор мероприятий
+          </h3>
+
+          <form @submit.prevent="update" enctype="multipart/form-data" class="account__blog-form">
+            <div class="account__personal-info-img" :style="'background-image: url('+getImage(img)+');'"></div>
+            <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+                Изображение для обложки
+              </h5>
+              <v-file-input
+                accept="image/*"
+                placeholder="Загрузить новое фото"
+                prepend-icon="mdi-camera"
+                label="Изображение для обложки"
+                @change="uploadImg"
+              ></v-file-input>
+              <div v-if="fails.image">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.image" :key="i">{{err}}</span>
+              </div>
+            </div>
+            <div class="account__blog-item">
+              <v-textarea
+                counter
+                label="Заголовок на казахском"
+                prepend-icon="mdi-comment"
+                v-model="form.title_kz"
+                rows="1"
+              ></v-textarea>
+              <div v-if="fails.title_kz">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.title_kz" :key="i">{{err}}</span>
+              </div>
+              <v-textarea
+                counter
+                label="Заголовок на русском"
+                prepend-icon="mdi-comment"
+                v-model="form.title_ru"
+                rows="1"
+              ></v-textarea>
+              <div v-if="fails.title_ru">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.title_ru" :key="i">{{err}}</span>
+              </div>
+              <v-textarea
+                counter
+                label="Заголовок на английском"
+                prepend-icon="mdi-comment"
+                v-model="form.title_en"
+                rows="1"
+              ></v-textarea>
+              <div v-if="fails.title_en">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.title_en" :key="i">{{err}}</span>
+              </div>
+              <h5 class="account__blog-item-title">
+                Место проведения
+              </h5>
+              <v-autocomplete
+                chips
+                clearable
+                dense
+                outlined
+                solo
+                :items="places"
+                item-text="title_ru"
+                item-value="id"
+                v-model="form.place_id"
+              ></v-autocomplete>
+              <div v-if="fails.place_id">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.place_id" :key="i">{{err}}</span>
+              </div>
+            </div>
+            <div class="account__blog-item__cabinet">
+              <h5 class="account__blog-item-title">
+                Дата проведения
+              </h5>
+              <v-menu
+                v-model="menu"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                transition="scale-transition"
+                offset-y
+                min-width="auto"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="form.date"
+                    prepend-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="form.date"
+                  @input="menu = false"
+                ></v-date-picker>
+              </v-menu>
+            </div>
+            <div class="account__blog-item__cabinet">
+              <h5 class="account__blog-item-title">
+                Время начала
+              </h5>
+              <v-dialog
+                ref="dialog"
+                v-model="modal"
+                :return-value.sync="form.time"
+                persistent
+                width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="form.time"
+                    label="--:--"
+                    prepend-icon="mdi-clock-time-four-outline"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-time-picker
+                  v-if="modal"
+                  v-model="form.time"
+                  full-width
+                >
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    text
+                    color="primary"
+                    @click="modal = false"
+                  >
+                    Cancel
+                  </v-btn>
+                  <v-btn
+                    text
+                    color="primary"
+                    @click="$refs.dialog.save(form.time)"
+                  >
+                    OK
+                  </v-btn>
+                </v-time-picker>
+              </v-dialog>
+            </div>
+            <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+                Описание на казахском
+              </h5>
+              <ckeditor :editor="editor" v-model="form.description_kz"></ckeditor>
+            </div>
+            <div v-if="fails.description_kz">
+              <span class="error--text v-size--small" v-for="(err,i) in fails.description_kz" :key="i">{{err}}</span>
+            </div>
+            <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+                Описание на русском
+              </h5>
+              <ckeditor :editor="editor" v-model="form.description_ru"></ckeditor>
+            </div>
+            <div v-if="fails.description_ru">
+              <span class="error--text v-size--small" v-for="(err,i) in fails.description_ru" :key="i">{{err}}</span>
+            </div>
+            <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+                Описание на английском
+              </h5>
+              <ckeditor :editor="editor" v-model="form.description_en"></ckeditor>
+            </div>
+            <div v-if="fails.description_en">
+              <span class="error--text v-size--small" v-for="(err,i) in fails.description_en" :key="i">{{err}}</span>
+            </div>
+            <div class="account__blog-item">
+              <v-textarea
+                counter
+                label="Средний чек"
+                prepend-icon="mdi-comment"
+                v-model="form.price"
+                rows="1"
+              ></v-textarea>
+              <div v-if="fails.price">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.price" :key="i">{{err}}</span>
+              </div>
+            </div>
+            <div class="account__blog-item">
+              <button type="submit" class="button">
+                Опубликовать
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
     <div v-else>
       <div class="account__not-found">
@@ -341,35 +539,32 @@ export default {
     return {
       menu: false,
       modal: false,
+      moder: false,
       editor: ClassicEditor,
       tabs: [
         {
           id: 0,
-          title: 'Одобрено',
+          title: 'cabinet_status_1',
           active: 'active'
         },
         {
           id: 1,
-          title: 'На модерации',
+          title: 'cabinet_status_0',
           active: ''
         }
       ],
       active: false,
       places: [],
-      fails: []
+      fails: [],
+      img: ''
     }
   },
   methods: {
-    getImages(data){
-      return this.$store.state.image.image + data ;
-    },
-    truncate(string, value) {
-      return string.substring(0, value) + '...';
-    },
     activeTab(i){
       this.tabs.forEach((item,i) => {
         item.active = ''
         this.active = false
+        this.moder = false
       })
       this.tabs[i].active = 'active'
     },
@@ -377,7 +572,46 @@ export default {
       this.tabs.forEach((item,i) => {
         item.active = ''
       })
+      this.moder = false
+      this.fails = []
+      this.form.place_id = '',
+      this.form.title_kz = '',
+      this.form.title_ru = '',
+      this.form.title_en = '',
+      this.form.description_kz = '',
+      this.form.description_ru = '',
+      this.form.description_en = '',
+      this.form.image = '',
+      this.form.price = '',
+      this.form.date = (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+      this.form.time = null
       this.active = true
+    },
+    async activeModer(id){
+      await this.$axios.get('/cabinet/edit-event/'+id).then((e) => {
+        this.form.id = id
+        this.form.place_id = e.data.place_id,
+          this.form.title_kz = e.data.title_kz,
+          this.form.title_ru = e.data.title_ru,
+          this.form.title_en = e.data.title_en,
+          this.form.description_kz = e.data.description_kz,
+          this.form.description_ru = e.data.description_ru,
+          this.form.description_en = e.data.description_en,
+          this.form.image = '',
+          this.form.price = e.data.price,
+          this.form.date = e.data.workdays[0].date_start,
+          this.form.time = e.data.workdays[0].time_start
+        this.img = e.data.image
+      }).catch(({response}) => {
+        if (response.data.status === 404){
+          window.location.assign('/cabinet')
+        }
+      })
+      this.tabs.forEach((item,i) => {
+        item.active = ''
+      })
+      this.active = false
+      this.moder = true
     },
     uploadImg(e){
       this.form.image = e;
@@ -392,9 +626,9 @@ export default {
         })
 
         await this.$axios.$post('/cabinet/send-event', formData).then(async (e) => {
-          console.log(e)
           this.$toast.success('Успешно отправлен на модерацию')
-          setTimeout(window.location.reload(), 500)
+          await this.loadData()
+          this.activeTab(1)
         }).catch(({response}) => {
           this.fails = response.data.errors
         })
@@ -403,6 +637,45 @@ export default {
         console.log(e)
       }
     },
+    async deleteBlog(id){
+      await this.$axios.get('/cabinet/delete-event/'+id).then((e) => {
+        this.loadData()
+        this.$toast.success('Успешно был удален!')
+      }).catch((e) =>{
+        console.log(e)
+      })
+    },
+    async update() {
+      try {
+        const formData = new FormData();
+        Object.keys(this.form).forEach((key) => {
+          if(this.form[key] != null){
+            formData.append(key, this.form[key])
+          }
+        })
+        formData.append("_method", "PUT");
+
+        // console.log(formData.getAll('title_kz'))
+        await this.$axios.$post('/cabinet/update-event', formData).then(async (e) => {
+          this.$toast.success('Успешно отправлен на модерацию')
+          await this.loadData()
+          this.activeTab(1)
+        }).catch(({response}) => {
+          this.fails = response.data.errors
+        })
+      }
+      catch (e) {
+        console.log(e)
+      }
+    },
+    async loadData(){
+      await this.$axios.$get("/cabinet/my-events").then((e)=>{
+        this.events = e[0]
+        this.moderation = e[1]
+        this.places = e[2]
+        this.form.organizator_id = e[3].id
+      });
+    }
   },
   async asyncData({$axios}) {
     let events, moderation, places = []
@@ -425,9 +698,6 @@ export default {
         moderation = e[1]
         places = e[2]
         form.organizator_id = e[3].id
-        // e[1].forEach((item,i) => {
-        //   tags.push(item.title_ru)
-        // })
       });
     }
     catch (e) {
@@ -435,6 +705,7 @@ export default {
     }
     return {events,moderation, places, form}
   },
+
   mounted() {
     // console.log(this.places)
   }
