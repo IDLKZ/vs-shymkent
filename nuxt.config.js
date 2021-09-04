@@ -61,6 +61,8 @@ export default {
     './plugins/mixins/validation.js',
     './plugins/share.js',
     './plugins/stars.js',
+    './plugins/slider.js',
+    './plugins/switch.js',
     '~/mixins/global.js'
   ],
 
@@ -170,7 +172,6 @@ export default {
       }
     }
   },
-
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     babel:{

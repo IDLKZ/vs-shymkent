@@ -24,3 +24,17 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+.load-more{
+
+  a{
+    &:hover{
+      color: white!important;
+    }
+  }
+
+
+}
+
+
+</style>

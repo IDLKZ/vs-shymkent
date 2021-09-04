@@ -1,40 +1,24 @@
 <template>
   <section>
+
     <footer class="footer">
       <div class="container">
         <div class="footer__slider-wrapper">
-          {{ $t('partners') }}
-          <div class="footer__slider-prev"></div>
-          <div class="footer__slider">
-            <a class="footer__slider-item" href="#">
-              <img src="/images/kazakhtourism.png" alt="" class="footer__slider-item-img">
-            </a>
-            <a class="footer__slider-item" href="#">
-              <img src="/images/KTA.png" alt="" class="footer__slider-item-img">
-            </a>
-            <a class="footer__slider-item" href="#">
-              <img src="/images/MSK.png" alt="" class="footer__slider-item-img">
-            </a>
-            <a class="footer__slider-item" href="#">
-              <img src="/images/FlyArystan.png" alt="" class="footer__slider-item-img">
-            </a>
-            <a class="footer__slider-item" href="#">
-              <img src="/images/ShymkentJSC.png" alt="" class="footer__slider-item-img">
-            </a>
-            <a class="footer__slider-item" href="#">
-              <img src="/images/Atameken.png" alt="" class="footer__slider-item-img">
-            </a>
-            <a class="footer__slider-item" href="#">
-              <img src="/images/ShymkentJSC.png" alt="" class="footer__slider-item-img">
-            </a>
-            <a class="footer__slider-item" href="#">
-              <img src="/images/AirBnB.png" alt="" class="footer__slider-item-img">
-            </a>
-            <a class="footer__slider-item" href="#">
-              <img src="/images/CanvasHotel.png" alt="" class="footer__slider-item-img">
-            </a>
+          <div class="col-md-3">
+            {{ $t('partners') }}
           </div>
-          <div class="footer__slider-next"></div>
+
+          <div class="col-md-9">
+            <VueSlickCarousel v-bind="settings" v-if="fts.partners">
+              <div class="partner-block" v-for="(partner,i) in fts.partners" :key="i">
+                <img class="partner-img" :src="getImage(partner.image)" width="100%">
+              </div>
+
+            </VueSlickCarousel>
+
+          </div>
+
+
         </div>
         <div class="footer__bottom">
           <div class="footer__inner">
@@ -179,15 +163,61 @@ export default {
         categories: [],
         phones: [],
         emails: []
+      },
+      settings:{
+        "arrow":true,
+        "dots": false,
+        "infinite": true,
+        "speed": 500,
+        "slidesToShow": 9,
+        "slidesToScroll": 1,
+        "initialSlide": 0,
+        'autoplay':true,
+        "responsive": [
+          {
+            "breakpoint": 1024,
+            "settings": {
+              "slidesToShow": 9,
+              "slidesToScroll": 1,
+              "infinite": true,
+              "dots": true
+            }
+          },
+          {
+            "breakpoint": 900,
+            "settings": {
+              "slidesToShow": 6,
+              "slidesToScroll": 1,
+              "initialSlide": 2
+            }
+          },
+          {
+            "breakpoint": 600,
+            "settings": {
+              "slidesToShow": 4,
+              "slidesToScroll": 1,
+              "initialSlide": 2
+            }
+          },
+          {
+            "breakpoint": 480,
+            "settings": {
+              "slidesToShow": 3,
+              "slidesToScroll": 1
+            }
+          }
+        ]
       }
+
     }
   },
   methods: {
     async loadSettings(){
-      this.fts = await this.$axios.$get("/footer")
+      this.fts = await this.$axios.$get("/footer");
+
     }
   },
-  mounted() {
+   mounted() {
     this.loadSettings()
   }
 
@@ -195,5 +225,21 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.partner-block{
+  padding: 10px;
+  min-height: 100px;
+  display: flex!important;
+  align-items: center;
 
+  .partner-img{
+    cursor: pointer;
+    filter: grayscale(100%);
+    &:hover{
+      filter:initial;
+    }
+  }
+}
+.slick-arrow{
+  background-color: #c42313!important;
+}
 </style>

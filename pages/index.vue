@@ -11,7 +11,8 @@
         <v-carousel-item v-if="sliders.length > 0"
                          v-for="(slide, i) in sliders"
                          :key="i"
-                         :src=getImages(slide.image)
+                         class="carousel-slider-usual"
+                         :style="{'background':'linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('+getImages(slide.image)+')'}"
         >
           <v-container style="height:100%; width:100vw"  class="pl-md-10 pl-3  d-flex align-center">
             <div>
@@ -22,7 +23,8 @@
               <p class="text-md-h5 text-subtitle-1 font-weight-bold white--text mb-md-10 mb-4">
                 {{slide["description_"+$i18n.locale]}}
               </p>
-              <v-btn color="red darken-1" class="white--text font-weight-bold"
+              <v-btn color="trip__form-btn" class="white--text font-weight-bold"
+                     style="background-color: #C42313;color: white"
                      :href="slide.link"
                      large
               >
@@ -39,6 +41,7 @@
     </v-container>
     <!-- Конец слайдера -->
 
+<!--    Путеводитель категории-->
     <section class="guide">
       <div class="container">
         <div class="top-content">
@@ -54,7 +57,7 @@
             {{ $t("place_subtitle_2") }}
           </div>
         </div>
-        <ul class="guide__content">
+        <ul class="guide__content pl-0">
 
           <li v-for="(item,i) in this.categoryplace" :key="i" class="guide__content-item" :style="'background-image: url('+getImages(item.image)+');'">
             <div class="guide__item-wrapper">
@@ -69,7 +72,9 @@
         </ul>
       </div>
     </section>
+<!--    Категория путеводителя-->
 
+<!--    События-->
     <section class="calendar">
       <div class="container">
         <div class="top-content calendar__top-content">
@@ -136,7 +141,9 @@
         </div>
         <div class="calendar__inner">
           <div class="calendar__item" v-for="(item,i) in this.events" :key="i">
-            <div class="calendar__item-img" :style="'background-image: url('+getImages(item.image)+');'">
+            <div class="calendar__item-img"
+                 :style="{'background':'linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('+getImages(item.image)+')'}"
+            >
               <div class="calendar__item-day" v-if="item.workdays.length>0">
                 <div v-for="(day,index) in item.workdays" :key="index">
                   <span>Дата </span>{{day.date_start}} - {{day.date_end}}
@@ -205,7 +212,9 @@
         </div>
       </div>
     </section>
+<!-- Конец Событий-->
 
+<!--    Начало путешествия-->
     <section class="trip">
       <div class="container">
         <div class="top-content">
@@ -223,42 +232,46 @@
             <div v-for="tab in tabs" :key="tab.id" :class="'trip__tabs-item tabs-item-1 '+tab.active" @click="activeTab(tab.id)" v-html="tab.svg+tab.title"></div>
           </div>
           <div class="trip__tabs-content">
+<!--            Полеты откуда куда-->
             <div :class="'trip__tab tab-1 '+this.tabs[0].active">
                 <div class="form__inner">
-                  <div class="trip__input-name grid-1">
-<!--                    <input type="text" :placeholder="$t('trip_from')" autocomplete="off">-->
-
+                  <div class="trip__input-name grid-1 my-2">
                     <v-autocomplete
                       hide-details
                       filled
                       solo-inverted
-                      class="pt-0"
+                      class="pt-0 my-2"
                       :items="data"
                       item-text="name_ru"
+                      background-color="white"
+                      color="black"
                       outlined
+                      dense
                       item-value="code"
                       v-model="fromAvia"
                       autocomplete="off"
                       :placeholder="$t('trip_from')"
                     ></v-autocomplete>
                   </div>
-                  <div class="trip__input-name grid-2">
+                  <div class="trip__input-name grid-2 my-2">
                     <v-autocomplete
                       hide-details
                       filled
                       solo-inverted
-                      class="pt-0"
+                      class="pt-0 my-2"
                       :items="data"
+                      background-color="white"
+                      color="black"
                       item-value="code"
                       v-model="toAvia"
                       item-text="name_ru"
+                      dense
                       outlined
                       autocomplete="off"
                       :placeholder="$t('trip_to')"
                     ></v-autocomplete>
                   </div>
-                  <div class="trip__input-date grid-3">
-<!--                    <input id="start-date-1" type="text" :placeholder="$t('trip_date_from')">-->
+                  <div class="trip__input-date grid-3 my-2">
                     <v-menu
                       ref="menu1"
                       v-model="fromMenu"
@@ -269,12 +282,14 @@
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
+                          class="my-2"
                           hide-details="auto"
                           v-model="fromDataComputed"
                           :label="$t('trip_date_from')"
                           v-bind="attrs"
                           v-on="on"
                           outlined
+                          dense
                           autocomplete="off"
                           filled
                           solo-inverted
@@ -287,8 +302,7 @@
                       ></v-date-picker>
                     </v-menu>
                   </div>
-                  <div class="trip__input-date grid-4">
-<!--                    <input id="end-date-1" class='trip__calendar' type="text" :placeholder="$t('trip_date_to')">-->
+                  <div class="trip__input-date grid-4 my-2">
                     <v-menu
                       ref="menu1"
                       v-model="toMenu"
@@ -299,12 +313,14 @@
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
+                          class="my-2"
                           hide-details="auto"
                           v-model="toDataComputed"
                           :label="$t('trip_date_to')"
                           v-bind="attrs"
                           background-color="white"
                           v-on="on"
+                          dense
                           outlined
                           autocomplete="off"
                           filled
@@ -318,8 +334,8 @@
                       ></v-date-picker>
                     </v-menu>
                   </div>
-                  <div class="trip__form-control grid-5">
-                    <div class="trip__form-control-wrapper">
+                  <div class="trip__form-control grid-5 my-2 py-2">
+                    <div class="trip__form-control-wrapper" style="height: 40px">
                       <v-menu
                         v-model="menuTraveler"
                         :close-on-content-click="false"
@@ -329,6 +345,8 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
                             color="white"
+                            class="my-2"
+                            filled
                             v-bind="attrs"
                             v-on="on"
                             elevation="0"
@@ -384,33 +402,50 @@
                       </v-menu>
                     </div>
                   </div>
-                  <button class="trip__form-btn grid-6 popup-modal" @click="sendToFly">{{ $t('btn_search') }}</button>
+                  <button class="trip__form-btn grid-6 popup-modal align-self-md-center" @click="sendToFly">{{ $t('btn_search') }}</button>
                 </div>
             </div>
+<!--            Жд-->
             <div :class="'trip__tab tab-2 '+this.tabs[1].active">
                 <div class="form__inner">
-                  <div class="trip__input-name">
-                    <v-text-field
-                      @input="getRailStation"
+                  <div class="trip__input-name my-2">
+                    <v-autocomplete
+                      class="my-2"
+                      item-text="name"
+                      item-value="code"
                       outlined
                       filled
+                      dense
                       solo-inverted
                       no-filter
-
+                      :items="stationsFrom"
+                      :search-input.sync="search"
                       type="text" placeholder="Откуда" />
                   </div>
-                  <div class="trip__input-name">
-                    <input type="text" placeholder="Куда" autocomplete="off">
+                  <div class="trip__input-name my-2">
+                    <v-autocomplete
+                      class="my-2"
+                      item-text="name"
+                      item-value="code"
+                      outlined
+                      filled
+                      dense
+                      solo-inverted
+                      no-filter
+                      :items="stationsTo"
+                      :search-input.sync="searchTo"
+                      type="text" placeholder="Куда" />
                   </div>
-                  <div class="trip__input-date">
-                    <input id="start-date-2" type="text" placeholder="Дата выезда">
+                  <div class="trip__input-date my-2">
+                    <input  id="start-date-2" type="text" placeholder="Дата выезда">
                   </div>
-                  <div class="trip__input-date">
-                    <input id="end-date-2" class='trip__calendar' type="text" placeholder="Обратно">
+                  <div class="trip__input-date my-2">
+                    <input  id="end-date-2" class='trip__calendar' type="text" placeholder="Обратно">
                   </div>
                   <button class="trip__form-btn popup-modal" href="#modal" type="submit">Найти</button>
                 </div>
             </div>
+<!--          Отели  -->
             <div :class="'trip__tab tab-3 '+this.tabs[2].active">
               <form>
                 <div class="form__inner">
@@ -456,6 +491,7 @@
                 </div>
               </form>
             </div>
+<!--            Квартиры-->
             <div :class="'trip__tab tab-4 '+this.tabs[3].active">
               <form>
                 <div class="form__inner">
@@ -508,7 +544,9 @@
 <!--        </div>-->
       </div>
     </section>
+    <!--   Начало путешествия-->
 
+<!--    Маршруты-->
     <section class="routes">
       <div class="container">
         <div class="top-content">
@@ -532,7 +570,7 @@
               <div class="routes__item-text" v-html="truncate(item['description_' + $i18n.locale], 100)">
               </div>
               <NuxtLink class="routes__item-btn popup-modal" :to="'/routes/'+item.alias">
-                <span>{{ $t('more_info') }}</span>
+                <span class="white--text">{{ $t('more_info') }}</span>
               </NuxtLink>
             </div>
           </div>
@@ -542,7 +580,8 @@
         </div>
       </div>
     </section>
-
+<!--    Маршруты-->
+<!--    Сувениры-->
     <section class="souvenirs">
       <div class="container">
         <div class="top-content">
@@ -615,7 +654,9 @@
         </div>
       </div>
     </section>
+<!--Сувениры-->
 
+<!--    Новости-->
     <section class="news">
       <div class="container">
         <div class="top-content">
@@ -645,6 +686,7 @@
         </div>
       </div>
     </section>
+<!--    Новости-->
   </div>
 </template>
 
@@ -705,8 +747,12 @@ export default {
       child:0,
       flyType:"A",
       //Railway from and to
+      stationsFrom:[],
+      stationsTo:[],
       railFrom:"",
-      railTo:""
+      railTo:"",
+      search:"",
+      searchTo:""
     }
   },
   watch: {
@@ -726,6 +772,12 @@ export default {
     },
     tD(val){
       this.toData = this.$moment(val).format("DD.MM.YYYY");
+    },
+    search (val) {
+      this.getRailStation(val)
+    },
+    searchTo (val) {
+      this.getRailStationTo(val)
     }
 
   },
@@ -799,17 +851,79 @@ export default {
     },
 
      async getRailStation(val){
-      console.log("isTyping")
-      console.log(val);
+      let readystations = [];
+        let stations2 = [];
 
+       let parseString = require('xml2js').parseString;
        if (val.length > 1){
-        await this.$axios.$get("https://gdv2api.tickets.ua/rail/station?key=f713450e-d974-46f3-9b62-f55f8549ec67&name="+val,
-          { headers: { 'Access-Control-Allow-Origin': '*' } }
-        )
-          .then((e)=>{
-            console.log(e);
-          })
+         try{
+           const xmlData = await fetch(
+             'https://gdv2api.tickets.ua/rail/station?key=f713450e-d974-46f3-9b62-f55f8549ec67&name='+val + "&lang=ru"
+           ).then(res => res.text())
+           parseString(xmlData, function (err, result) {
+             stations2 = result.response.stations[0].station;
+           });
+         }
+         catch (e) {
+         }
+         if (stations2.length){
+           for (let i = 0 ; i < stations2.length; i++){
+             if(stations2[i]["$"] !== undefined){
+               readystations.push(stations2[i]["$"])
+               if (stations2[i].substation !== undefined){
+                 for (let j = 0 ; j < stations2[i].substation.length; j++){
+                   if(stations2[i].substation[j]["$"] !== undefined){
+                     readystations.push(stations2[i].substation[j]["$"])
+                   }
+                 }
+               }
+             }
+           }
+         }
+         this.stationsFrom = readystations;
+
+
+       }
+
+
+
+    },
+    async getRailStationTo(val){
+      let readystations = [];
+      let stations2 = [];
+
+      let parseString = require('xml2js').parseString;
+      if (val.length > 1){
+        try{
+          const xmlData = await fetch(
+            'https://gdv2api.tickets.ua/rail/station?key=f713450e-d974-46f3-9b62-f55f8549ec67&name='+val + "&lang=ru"
+          ).then(res => res.text())
+          parseString(xmlData, function (err, result) {
+            stations2 = result.response.stations[0].station;
+          });
+        }
+        catch (e) {
+
+        }
+        if (stations2.length){
+          for (let i = 0 ; i < stations2.length; i++){
+            if(stations2[i]["$"] !== undefined){
+              readystations.push(stations2[i]["$"])
+              if (stations2[i].substation !== undefined){
+                for (let j = 0 ; j < stations2[i].substation.length; j++){
+                  if(stations2[i].substation[j]["$"] !== undefined){
+                    readystations.push(stations2[i].substation[j]["$"])
+                  }
+                }
+              }
+            }
+          }
+        }
+        this.stationsTo = readystations;
+
+
       }
+
 
 
     }
@@ -838,6 +952,11 @@ export default {
   }
 </script>
 <style lang="scss">
+.calendar__item-img{
+  background-repeat: no-repeat!important;
+  background-size: cover!important;
+  background-position: center!important;
+}
 .v-select__slot{
   cursor: pointer;
   input{
@@ -849,5 +968,12 @@ export default {
     border: none !important;
   }
 }
-
+.routes__item-btn{
+  color: white!important;
+}
+.carousel-slider-usual{
+  background-repeat: no-repeat!important;
+  background-size: cover!important;
+  background-position: center!important;
+}
 </style>
