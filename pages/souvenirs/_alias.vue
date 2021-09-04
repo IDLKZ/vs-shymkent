@@ -152,7 +152,8 @@ export default {
       return this.$store.state.image.image + data ;
     },
     truncate(string, value) {
-      return string.substring(0, value) + '…';
+      return string.length > value ? string.substring(0, value) + '…' : string;
+
     },
     async addSave(){
       // console.log(this.form)

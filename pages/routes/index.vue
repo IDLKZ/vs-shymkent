@@ -289,7 +289,8 @@ export default {
     },
 
     truncate(string, value) {
-      return string.substring(0, value) + '…';
+      return string.length > value ? string.substring(0, value) + '…' : string;
+
     },
 
     activeTab(i){

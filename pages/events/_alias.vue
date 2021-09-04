@@ -135,7 +135,7 @@ export default {
       return this.$store.state.image.image + data ;
     },
     truncate(string, value) {
-      return string.substring(0, value) + '…';
+      return string.length > value ? string.substring(0, value) + '…' : string;
     },
     activeTab(i){
       this.tabs.forEach((item,i) => {

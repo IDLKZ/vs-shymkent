@@ -100,8 +100,8 @@
                   {{item['title_'+$i18n.locale]}}
                 </NuxtLink>
                 <p class="guide-list__item-text" v-html="truncate(item['description_'+$i18n.locale],100)"></p>
-                <div class="guide-list__item-about">
-                  <NuxtLink :to="'/places/'+item.alias" class="guide-list__about-link">{{ $t('more_info') }}</NuxtLink>
+                <div class="guide-list__item-about ">
+                  <NuxtLink :to="'/places/'+item.alias" class="guide-list__about-link white--text">{{ $t('more_info') }}</NuxtLink>
                 </div>
               </div>
             </div>
@@ -186,7 +186,7 @@ export default {
       return this.$store.state.image.image + data ;
     },
     truncate(string, value) {
-      return string.substring(0, value) + '…';
+      return string.length > value ? string.substring(0, value) + '…' : string;
     },
     async loadData(){
       console.log(this.orderBy);
