@@ -106,13 +106,13 @@ export default {
   },
   created() {
     if (this.$auth.user.user.role_id === 6 || this.$auth.user.user.role_id === 7){
-      this.tabs[4].title = 'cabinet_menu_souvenirs'
-      this.tabs[4].link = '/cabinet/create-souvenir'
+      this.tabs[2].title = 'cabinet_menu_souvenirs'
+      this.tabs[2].link = '/cabinet/create-souvenir'
     }
     if ( this.$auth.user.user.role_id === 3){
-      this.tabs[4].svg = "<i class = 'far fa-question-circle mr-2'></i>"
-      this.tabs[4].title = 'Оставить заявку'
-      this.tabs[4].link = '/cabinet/create-souvenir'
+      this.tabs[2].svg = "<i class = 'far fa-question-circle mr-2'></i>"
+      this.tabs[2].title = 'Оставить заявку'
+      this.tabs[2].link = '/cabinet/create-souvenir'
     }
   },
 
