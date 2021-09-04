@@ -64,19 +64,19 @@
             </ul>
             <ul class="footer__nav-list">
               <h5 class="footer__nav-title">
-                Путешествие
+                {{ $t('tourism') }}
               </h5>
               <li class="footer__nav-list-item">
-                <a href="#">{{ $t('trip_type_1') }}</a>
+                <a :href="this.$router.options.base+'#trip'">{{ $t('trip_type_1') }}</a>
               </li>
               <li class="footer__nav-list-item">
-                <a href="#">{{ $t('trip_type_2') }}</a>
+                <a :href="this.$router.options.base+'#trip'">{{ $t('trip_type_2') }}</a>
               </li>
               <li class="footer__nav-list-item">
-                <a href="#">{{ $t('trip_type_3') }}</a>
+                <a :href="this.$router.options.base+'#trip'">{{ $t('trip_type_3') }}</a>
               </li>
               <li class="footer__nav-list-item">
-                <a href="#">{{ $t('trip_type_4') }}</a>
+                <a :href="this.$router.options.base+'#trip'">{{ $t('trip_type_4') }}</a>
               </li>
               <li class="footer__nav-list-item">
                 <a href="http://www.airserver.kz/flights/online-flights/">{{$t('trip_table')}}</a>
@@ -88,7 +88,7 @@
           </nav>
           <div class="footer__contact">
             <h5 class="footer__contact-title">
-              <a href="#">Контакты</a>
+              <a href="#">{{ $t('contact') }}</a>
             </h5>
             <div class="footer__contact-social">
               <a href="#" class="footer__contact-social-item fab fa-instagram-square" ></a>
@@ -117,9 +117,9 @@
                 </li>
               </div>
 
-              <li class="footer__contact-list-item">
-                <a class="error-form-link" href="#error-form">Сообщить об ошибке</a>
-              </li>
+<!--              <li class="footer__contact-list-item">-->
+<!--                <a class="error-form-link" href="#error-form">Сообщить об ошибке</a>-->
+<!--              </li>-->
             </ul>
           </div>
         </div>
