@@ -228,14 +228,14 @@ export default {
       }
       // this.$router.push({path: this.localePath('search'), query: {q: this.getSearch}});
     },
-    fullSee(){
-      if(localStorage.getItem("see")){
+    fullSee() {
+      if (localStorage.getItem("see")) {
         delete localStorage.see
-      }else {
-        localStorage.setItem("see",true);
+      } else {
+        localStorage.setItem("see", true);
       }
       location.reload();
-
+    },
     getActiveTab(path){
       if (this.$route.path == path){
         this.tabs.forEach((item,i) => {
