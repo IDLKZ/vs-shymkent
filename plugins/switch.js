@@ -22,6 +22,7 @@ Vue.mixin({
       if (this.$i18n.locale == 'en'){
         this.LANG = 'en-EN'
       }
+      this.$vuetify.lang.current = this.LANG;
     }
   },
   watch: {

@@ -298,6 +298,7 @@
                         ></v-text-field>
                       </template>
                       <v-date-picker
+                        :lang="LANG"
                         v-model="fD"
                         no-title
                         @input="fromMenu = false"
@@ -330,6 +331,7 @@
                         ></v-text-field>
                       </template>
                       <v-date-picker
+                        :lang="LANG"
                         v-model="tD"
                         no-title
                         @input="toMenu = false"
@@ -421,6 +423,7 @@
                       solo-inverted
                       no-filter
                       :items="stationsFrom"
+                      v-model="railFrom"
                       :search-input.sync="search"
                       type="text" placeholder="Откуда" />
                   </div>
@@ -435,16 +438,76 @@
                       solo-inverted
                       no-filter
                       :items="stationsTo"
+                      v-model="railTo"
                       :search-input.sync="searchTo"
                       type="text" placeholder="Куда" />
                   </div>
                   <div class="trip__input-date my-2">
-                    <input  id="start-date-2" type="text" placeholder="Дата выезда">
+                    <v-menu
+                      ref="menu1"
+                      v-model="stfromMenu"
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      max-width="290px"
+                      min-width="auto"
+                      :lang="LANG"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          class="my-2"
+                          hide-details="auto"
+                          v-model="fromDataComputed"
+                          :label="$t('trip_date_from')"
+                          v-bind="attrs"
+                          v-on="on"
+                          outlined
+                          dense
+                          autocomplete="off"
+                          filled
+                          solo-inverted
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        v-model="fD"
+                        no-title
+                        @input="stfromMenu = false"
+                        :lang="LANG"
+                      ></v-date-picker>
+                    </v-menu>
                   </div>
                   <div class="trip__input-date my-2">
-                    <input  id="end-date-2" class='trip__calendar' type="text" placeholder="Обратно">
+                    <v-menu
+                      ref="menu1"
+                      v-model="sttoMenu"
+                      :close-on-content-click="false"
+                      transition="scale-transition"
+                      max-width="290px"
+                      min-width="auto"
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                          class="my-2"
+                          hide-details="auto"
+                          v-model="toDataComputed"
+                          :label="$t('trip_date_to')"
+                          v-bind="attrs"
+                          background-color="white"
+                          v-on="on"
+                          dense
+                          outlined
+                          autocomplete="off"
+                          filled
+                          solo-inverted
+                        ></v-text-field>
+                      </template>
+                      <v-date-picker
+                        v-model="tD"
+                        no-title
+                        @input="sttoMenu = false"
+                      ></v-date-picker>
+                    </v-menu>
                   </div>
-                  <button class="trip__form-btn popup-modal" href="#modal" type="submit">Найти</button>
+                  <button class="trip__form-btn popup-modal text--white align-self-md-center mt-2" @click="sendToTrain" style="color: white" type="submit">Найти</button>
                 </div>
             </div>
 <!--          Отели  -->
@@ -489,7 +552,7 @@
                       </div>
                     </div>
                   </div>
-                  <button class="trip__form-btn popup-modal" href="#modal" type="submit">Найти</button>
+                  <button class="trip__form-btn popup-modal text--white align-self-md-center"  type="submit">Найти</button>
                 </div>
               </form>
             </div>
@@ -755,7 +818,10 @@ export default {
       railFrom:"",
       railTo:"",
       search:"",
-      searchTo:""
+      searchTo:"",
+      stfromMenu:false,
+      sttoMenu:false,
+
     }
   },
   watch: {
@@ -793,11 +859,11 @@ export default {
     },
     toDataComputed(){
       return this.toData;
-    }
+    },
+
   },
   methods:{
     getImages(data){
-      console.log(this.$store.state.image.image);
       return this.$store.state.image.image + data ;
     },
     truncate(string = '', value) {
@@ -846,86 +912,105 @@ export default {
         let url = "https://tickets.kz/avia/m/preloader/";
         url += this.fromAvia + this.toAvia + this.fromData + '0' + "|" + this.toData + '0' + "/" + this.adult +"|" + this.adolcent + "|" + this.child + "/" + this.flyType;
         window.open(url, '_blank');
+        this.toData = "";
+        this.fromData = "";
       }
       else{
         this.$toast.info("Пожалуйста заполните все поля!");
       }
 
     },
+    sendToTrain(){
+      if(this.railFrom && this.railTo && this.fromData && this.toData) {
+        let url = "https://tickets.kz/gd/preloader/~" +this.railFrom+"~"+this.railTo +"~" + this.fromData + "~2~kz~0~" + this.toData+ "~~~"
+        window.open(url, '_blank');
+        this.toData = "";
+        this.fromData = "";
+      }
+      else{
+        this.$toast.info("Пожалуйста, заполните все поля!");
+      }
+      },
 
-     async getRailStation(val){
-      let readystations = [];
+     async getRailStation(val = null){
+      if(val){
+        let readystations = [];
         let stations2 = [];
 
-       let parseString = require('xml2js').parseString;
-       if (val.length > 1){
-         try{
-           const xmlData = await fetch(
-             'https://gdv2api.tickets.ua/rail/station?key=f713450e-d974-46f3-9b62-f55f8549ec67&name='+val + "&lang=ru"
-           ).then(res => res.text())
-           parseString(xmlData, function (err, result) {
-             stations2 = result.response.stations[0].station;
-           });
-         }
-         catch (e) {
-         }
-         if (stations2.length){
-           for (let i = 0 ; i < stations2.length; i++){
-             if(stations2[i]["$"] !== undefined){
-               readystations.push(stations2[i]["$"])
-               if (stations2[i].substation !== undefined){
-                 for (let j = 0 ; j < stations2[i].substation.length; j++){
-                   if(stations2[i].substation[j]["$"] !== undefined){
-                     readystations.push(stations2[i].substation[j]["$"])
-                   }
-                 }
-               }
-             }
-           }
-         }
-         this.stationsFrom = readystations;
-
-
-       }
-
-
-
-    },
-    async getRailStationTo(val){
-      let readystations = [];
-      let stations2 = [];
-
-      let parseString = require('xml2js').parseString;
-      if (val.length > 1){
-        try{
-          const xmlData = await fetch(
-            'https://gdv2api.tickets.ua/rail/station?key=f713450e-d974-46f3-9b62-f55f8549ec67&name='+val + "&lang=ru"
-          ).then(res => res.text())
-          parseString(xmlData, function (err, result) {
-            stations2 = result.response.stations[0].station;
-          });
-        }
-        catch (e) {
-
-        }
-        if (stations2.length){
-          for (let i = 0 ; i < stations2.length; i++){
-            if(stations2[i]["$"] !== undefined){
-              readystations.push(stations2[i]["$"])
-              if (stations2[i].substation !== undefined){
-                for (let j = 0 ; j < stations2[i].substation.length; j++){
-                  if(stations2[i].substation[j]["$"] !== undefined){
-                    readystations.push(stations2[i].substation[j]["$"])
+        let parseString = require('xml2js').parseString;
+        if (val.length > 1){
+          try{
+            const xmlData = await fetch(
+              'https://gdv2api.tickets.ua/rail/station?key=f713450e-d974-46f3-9b62-f55f8549ec67&name='+val + "&lang=ru"
+            ).then(res => res.text())
+            parseString(xmlData, function (err, result) {
+              stations2 = result.response.stations[0].station;
+            });
+          }
+          catch (e) {
+          }
+          if (stations2.length){
+            for (let i = 0 ; i < stations2.length; i++){
+              if(stations2[i]["$"] !== undefined){
+                readystations.push(stations2[i]["$"])
+                if (stations2[i].substation !== undefined){
+                  for (let j = 0 ; j < stations2[i].substation.length; j++){
+                    if(stations2[i].substation[j]["$"] !== undefined){
+                      readystations.push(stations2[i].substation[j]["$"])
+                    }
                   }
                 }
               }
             }
           }
+          this.stationsFrom = readystations;
+
+
         }
-        this.stationsTo = readystations;
-
-
       }
+
+
+
+
+    },
+    async getRailStationTo(val = null){
+      if(val){
+        let readystations = [];
+        let stations2 = [];
+
+        let parseString = require('xml2js').parseString;
+        if (val.length > 1){
+          try{
+            const xmlData = await fetch(
+              'https://gdv2api.tickets.ua/rail/station?key=f713450e-d974-46f3-9b62-f55f8549ec67&name='+val + "&lang=ru"
+            ).then(res => res.text())
+            parseString(xmlData, function (err, result) {
+              stations2 = result.response.stations[0].station;
+            });
+          }
+          catch (e) {
+
+          }
+          if (stations2.length){
+            for (let i = 0 ; i < stations2.length; i++){
+              if(stations2[i]["$"] !== undefined){
+                readystations.push(stations2[i]["$"])
+                if (stations2[i].substation !== undefined){
+                  for (let j = 0 ; j < stations2[i].substation.length; j++){
+                    if(stations2[i].substation[j]["$"] !== undefined){
+                      readystations.push(stations2[i].substation[j]["$"])
+                    }
+                  }
+                }
+              }
+            }
+          }
+          this.stationsTo = readystations;
+
+
+        }
+      }
+
 
 
 
