@@ -282,8 +282,7 @@ export default {
           return 'footer-nav__content-item';
         }
       }
-    }
-  },
+    },
   mounted() {
     // console.log(this.$route)
   }
