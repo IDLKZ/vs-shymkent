@@ -22,17 +22,17 @@ export default {
       {rel:"stylesheet", href:"https://pro.fontawesome.com/releases/v5.10.0/css/all.css",
         integrity:"sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p",crossorigin:"anonymous"
       },
+
     ],
     script: [
       {src: 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js',type: "text/javascript"},
       {src: 'https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js'},
-      // {src: '/js/pace.js'},
-      // {src: '/js/js.cookie.min.js'},
-      // {src: '/js/bvi-init.min.js'},
-      // {src: '/js/bvi.min.js'},
-      // {src: '/js/libs.min.js'},
-      // {src: '/js/main.js'},
-      {src: '/js/script.js'}
+      {src: '/js/script.js'},
+     {
+        async:true,
+        src: "/fullsee.js",
+
+      },
     ]
   },
 

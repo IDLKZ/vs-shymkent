@@ -99,6 +99,7 @@
             </ul>
           </nav>
           <div class="header__icons-inner">
+            <v-icon @click="fullSee" color="#c42313" class="fas fa-eye"></v-icon>
             <div @mouseover="hoverEffect(true,null,null)"
                  class="header__map"
                  :class="{ active: map }">
@@ -227,6 +228,13 @@ export default {
       }
       // this.$router.push({path: this.localePath('search'), query: {q: this.getSearch}});
     },
+    fullSee(){
+      if(localStorage.getItem("see")){
+        delete localStorage.see
+      }else {
+        localStorage.setItem("see",true);
+      }
+      location.reload();
 
     getActiveTab(path){
       if (this.$route.path == path){
@@ -255,6 +263,7 @@ export default {
       }
     },
 
+    },
 
     getActiveNav(path){
       if(path !== "/"){
