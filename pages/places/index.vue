@@ -76,8 +76,9 @@
               <div class="guide-list__select select">
                   <v-select
                     :items="sorts"
-                    v-model="sorts.value"
+                    v-model="sorts"
                     item-text='title'
+                    item-value='value'
                     @change="sortBySelect"
                     dense
                   ></v-select>
@@ -126,15 +127,17 @@ export default {
       places:[],
       activeCheckbox:{0:false},
       orderBy:"desc",
-      sorts:[
-        {title:this.$t('new_records'),value:"desc"},
-        {title:this.$t('old_records'),value:"asc"},
-      ],
       search:""
     }
   },
 
   computed:{
+    sorts(){
+      return [
+        {title:this.$t('new_records'),value:"desc"},
+        {title:this.$t('old_records'),value:"asc"},
+      ]
+    },
     getCategoryId(){
       let categories = []
       for (let i in this.activeCheckbox){

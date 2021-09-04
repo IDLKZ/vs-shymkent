@@ -63,6 +63,7 @@
               </template>
               <v-date-picker
                 v-model="dateForm"
+                :locale="LANG"
                 no-title
                 @input="menu = false"
               ></v-date-picker>

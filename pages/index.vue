@@ -132,6 +132,7 @@
                 </template>
                 <v-date-picker
                   v-model="dateForm"
+                  :locale="LANG"
                   no-title
                   @input="menu = false"
                 ></v-date-picker>
@@ -146,13 +147,13 @@
             >
               <div class="calendar__item-day" v-if="item.workdays.length>0">
                 <div v-for="(day,index) in item.workdays" :key="index">
-                  <span>Дата </span>{{day.date_start}} - {{day.date_end}}
+                  <span>{{ $t('date') }} </span>{{day.date_start}} - {{day.date_end}}
                 </div>
 
               </div>
               <div class="calendar__item-time">
                 <div v-for="(day,index) in item.workdays" :key="index">
-                  <span>Время </span>{{day.time_start}} - {{day.time_end}}
+                  <span>{{ $t('time') }} </span>{{day.time_start}} - {{day.time_end}}
                 </div>
               </div>
             </div>
@@ -729,6 +730,7 @@ export default {
       date: "",
       menu: false,
       modal: false,
+      lang: "",
       //Коды городов
       fromAvia:"",
       toAvia:"",

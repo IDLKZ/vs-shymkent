@@ -41,9 +41,10 @@
               <div class="blog-list__select-header select__header mx-2">
                 <v-select
                   :items="sorts"
-                  v-model="sorts.value"
+                  v-model="sorts"
                   :label="$t('show_to')"
-                  item-text='title'
+                  item-text="title"
+                  item-value="value"
                   @change="sortBySelect"
                   dense
                 ></v-select>
@@ -144,22 +145,26 @@ export default {
   name: "index",
   data(){
     return{
+      title: "",
       tags:[],
       authors:[],
       activeClass:0,
       blogs:[],
       current_page:1,
       last_page:1,
-      sorts:[
-        {title:this.$t('new_records'),value:"desc"},
-        {title:this.$t('old_records'),value:"asc"},
-      ],
+
       orderBy:"desc",
       activeCheckbox:[],
       search:""
     }
   },
   computed:{
+    sorts(){
+      return [
+        {title:this.$t('new_records'),value:"desc"},
+        {title:this.$t('old_records'),value:"asc"},
+      ]
+    },
     getTagId(){
       let arr = [-1,0];
       return arr.includes(this.activeClass) == true ? "" : "&tag_id="+this.activeClass

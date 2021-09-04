@@ -193,10 +193,8 @@ export default {
           })
           // console.log(placemarks)
         }
-      }).catch(({response}) => {
-        if (response.status === 404){
-          window.location.assign('/events')
-        }
+      }).catch((e) => {
+        console.log(e)
       })
 
     if(event.galleries.length > 0){

@@ -4,11 +4,11 @@
     <footer class="footer">
       <div class="container">
         <div class="footer__slider-wrapper">
-          <div class="col-md-3">
+          <div class="col-md-2">
             {{ $t('partners') }}
           </div>
 
-          <div class="col-md-9">
+          <div class="col-md-10">
             <VueSlickCarousel v-bind="settings" v-if="fts.partners">
               <div class="partner-block" v-for="(partner,i) in fts.partners" :key="i">
                 <img class="partner-img" :src="getImage(partner.image)" width="100%">
