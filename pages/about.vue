@@ -328,17 +328,17 @@ export default {
         {
           id: 0,
           // title: 'Шымкент в наши дни',
-          title: 'main',
+          title: 'about_shymkent',
           active: 'active'
         },
         {
           id: 1,
-          title: 'История',
+          title: 'about_history',
           active: ''
         },
         {
           id: 2,
-          title: 'Для справки',
+          title: 'about_directory',
           active: ''
         },
         // {

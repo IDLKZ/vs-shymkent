@@ -153,6 +153,16 @@
   "cabinet_message": "Try to tell us your story about the city!",
   "cabinet_mobile_message": "To add an event, use the desktop version of the site",
   "cabinet_varning_message": "To add an event, confirm the status",
+  "about_shymkent": "Shymkent in our days",
+  "about_history": "History",
+  "about_directory": "For reference",
+  "cabinet_menu_savings": "Saved",
+  "cabinet_menu_orders": "My orders",
+  "cabinet_menu_reviews": "My reviews",
+  "cabinet_menu_blogs": "Write a blog",
+  "cabinet_menu_events": "Suggest an event",
+  "cabinet_menu_souvenirs": "Create a product",
+  "cabinet_menu_settings": "Settings",
   "privacy_statement": "Privacy policy",
   "footer_text": "The site was created with the support of the Department of tourism of Shymkent."
 }

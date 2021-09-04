@@ -148,6 +148,17 @@
   "cabinet_message": "Попробуйте рассказать нам свою историю о городе!",
   "cabinet_warning_message": "Для добавления мероприятия подтвердите статус",
   "cabinet_mobile_message": "Для добавления мероприятия воспользуйтесь десктопной версией сайта",
+  "about_shymkent": "Шымкент в наши дни",
+  "about_history": "История",
+  "about_directory": "Для справки",
+  "cabinet_menu_savings": "Сохраненное",
+  "cabinet_menu_orders": "Мои заказы",
+  "cabinet_menu_reviews": "Мои отзывы",
+  "cabinet_menu_blogs": "Написать в блог",
+  "cabinet_menu_events": "Предложить мероприятие",
+  "cabinet_menu_souvenirs": "Создать товар",
+  "cabinet_menu_settings": "Настройки",
+
   "privacy_statement": "Политика конфиденциальности",
   "footer_text": "Сайт создан при поддержке управления туризма г. Шымкент."
 }
