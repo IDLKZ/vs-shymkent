@@ -6,10 +6,7 @@ Vue.mixin({
     }
   },
   methods: {
-    async setValidationLocale(){
-      await this.$axios.$post("/switch-lang",{'locale':this.$i18n.locale});
 
-    },
 
 
     switchLanguages(){
@@ -22,13 +19,13 @@ Vue.mixin({
       if (this.$i18n.locale == 'en'){
         this.LANG = 'en-EN'
       }
-      this.$vuetify.lang.current = this.LANG;
+       this.$vuetify.lang.current = this.LANG;
     }
   },
   watch: {
     '$i18n.locale' () {
       this.switchLanguages();
-      this.$axios.setHeader("Accept-Language",this.$i18n.locale);
+       this.$axios.setHeader("Accept-Language",this.$i18n.locale);
     }
   },
   mounted() {

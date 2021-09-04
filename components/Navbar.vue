@@ -55,9 +55,12 @@
     <div class="footer-nav__menu">
       <div class="container pt-0">
         <ul class="footer-nav__items pl-0">
-          <li :class="getActiveTab(tab.path)" v-for="(tab,i) in tabs" :key="i">
-            <NuxtLink :to="tab.path" :style="'fill:'+tab.color+';'+'color:'+tab.color" v-html="tab.svg+$t(tab.title)"></NuxtLink>
-          </li>
+          <template v-if="tabs">
+            <li  v-for="(tab,i) in tabs" :key="i" :class="getActiveTab(tab.path)">
+              <NuxtLink :to="tab.path" v-html="tab.svg+$t(tab.title)"></NuxtLink>
+            </li>
+          </template>
+
         </ul>
       </div>
     </div>
@@ -237,14 +240,7 @@ export default {
       location.reload();
     },
     getActiveTab(path) {
-      if (this.$route.path == path) {
-        this.tabs.forEach((item, i) => {
-          item.color = 'white!important'
-          if (item.path == path) {
-            item.color = 'red!important'
-          }
-        })
-      }
+
       if (path !== "/") {
         if (this.$route.path.indexOf(path) !== -1) {
           return 'footer-nav__item active'
@@ -275,17 +271,29 @@ export default {
         }
       }
     },
-    mounted() {
-      // console.log(this.$route)
-    }
 
+
+  },
+  mounted() {
+    // console.log(this.$route)
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .footer-nav__content{
   height: auto!important;
   min-height: 100vh;
+}
+
+.footer-nav__item{
+  a{
+    color: white!important;
+    fill: white!important;
+  }
+}
+a.nuxt-link-exact-active{
+  color: #c42313!important;
+  fill: #c42313!important;
 }
 </style>
