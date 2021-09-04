@@ -141,7 +141,7 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
       map: true,
       search: false,
@@ -195,34 +195,34 @@ export default {
       ]
     }
   },
-  methods:{
+  methods: {
     toUpperCase(str) {
       return str.toUpperCase()
     },
     async changeLanguage(lang) {
-      this.$store.commit("setLanguage",lang);
+      this.$store.commit("setLanguage", lang);
       this.$i18n.locale = lang;
     },
-    hoverEffect(map = null,search = null,login = null){
-      if (map){
+    hoverEffect(map = null, search = null, login = null) {
+      if (map) {
         this.map = true
         this.search = false
         this.login = false
       }
-      if (search){
+      if (search) {
         this.search = true
         this.map = false
         this.login = false
       }
-      if (login){
+      if (login) {
         this.login = true
         this.map = false
         this.search = false
       }
     },
-    onSearch(){
-      if (this.$route.path == '/search'){
-        window.location.assign('/search?q='+this.getSearch)
+    onSearch() {
+      if (this.$route.path == '/search') {
+        window.location.assign('/search?q=' + this.getSearch)
       } else {
         this.$router.push({path: this.localePath('search'), query: {q: this.getSearch}});
       }
@@ -236,57 +236,50 @@ export default {
       }
       location.reload();
     },
-    getActiveTab(path){
-      if (this.$route.path == path){
-        this.tabs.forEach((item,i) => {
+    getActiveTab(path) {
+      if (this.$route.path == path) {
+        this.tabs.forEach((item, i) => {
           item.color = 'white!important'
-          if (item.path == path){
+          if (item.path == path) {
             item.color = 'red!important'
           }
         })
       }
-      if(path !== "/"){
-        if(this.$route.path.indexOf(path) !== -1){
+      if (path !== "/") {
+        if (this.$route.path.indexOf(path) !== -1) {
           return 'footer-nav__item active'
-        }
-        else{
+        } else {
           return 'footer-nav__item';
         }
-      }
-      else{
-        if(this.$route.path === "/"){
+      } else {
+        if (this.$route.path === "/") {
           return 'footer-nav__item active'
-        }
-        else{
+        } else {
           return 'footer-nav__item';
         }
       }
     },
 
+    getActiveNav(path) {
+      if (path !== "/") {
+        if (this.$route.path.indexOf(path) !== -1) {
+          return 'footer-nav__content-item active'
+        } else {
+          return 'footer-nav__content-item';
+        }
+      } else {
+        if (this.$route.path === "/") {
+          return 'footer-nav__content-item active'
+        } else {
+          return 'footer-nav__content-item';
+        }
+      }
     },
+    mounted() {
+      // console.log(this.$route)
+    }
 
-    getActiveNav(path){
-      if(path !== "/"){
-        if(this.$route.path.indexOf(path) !== -1){
-          return 'footer-nav__content-item active'
-        }
-        else{
-          return 'footer-nav__content-item';
-        }
-      }
-      else{
-        if(this.$route.path === "/"){
-          return 'footer-nav__content-item active'
-        }
-        else{
-          return 'footer-nav__content-item';
-        }
-      }
-    },
-  mounted() {
-    // console.log(this.$route)
   }
-
 }
 </script>
 
