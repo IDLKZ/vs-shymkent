@@ -72,7 +72,10 @@
       </div>
       <div class="calendar__inner">
         <div class="calendar__item" v-for="(item,i) in events" :key="i">
-          <div class="calendar__item-img" :style="'background-image: url('+getImages(item.image)+');'">
+          <div class="calendar__item-img"
+               :style="{'background':'linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('+getImages(item.image)+')'}"
+
+          >
             <div class="calendar__item-day" v-if="item.workdays.length>0">
               <div v-for="(day,index) in item.workdays" :key="index">
                 <span>{{ $t('date') }} </span>{{day.date_start}} - {{day.date_end}}
@@ -258,5 +261,9 @@ export default {
 </script>
 
 <style scoped>
-
+.calendar__item-img{
+  background-repeat: no-repeat!important;
+  background-size: cover!important;
+  background-position: center!important;
+}
 </style>

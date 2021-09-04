@@ -31,7 +31,7 @@
           <div class="routes-item__img" :style="'background-image: url('+getImages(Route.image)+');'"></div>
           <div class="routes-item__guide" v-if="Route.organizators.length>0">
             {{ $t('guides') }}:
-            <NuxtLink :to="'/guides/'+organizator.alias" v-for="(organizator,i) in Route.organizators" :key="i">{{organizator['title_'+$i18n.locale]}}</NuxtLink>
+            <NuxtLink class="white--text" :to="'/guides/'+organizator.alias" v-for="(organizator,i) in Route.organizators" :key="i">{{organizator['title_'+$i18n.locale]}}</NuxtLink>
           </div>
           <p class="routes-item__text" v-html="Route['description_'+$i18n.locale]"></p>
           <div class="routes-points" v-if="Route.places.length>0" id="pointNav">
