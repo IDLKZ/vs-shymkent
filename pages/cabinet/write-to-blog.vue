@@ -3,7 +3,7 @@
     <div class="account__save-tabs">
       <ul class="account__save-tabs-caption">
         <li v-for="tab in tabs" :key="tab.id" :class="tab.active" @click="activeTab(tab.id)">
-          {{tab.title}}
+          {{$t(tab.title)}}
         </li>
 <!--        <li>-->
 <!--          Билеты-->
@@ -13,8 +13,8 @@
       <div :class="'account__save-tabs-content '+this.tabs[0].active">
         <div class="account__blog-list-wrapper" v-if="blogs.data.length>0">
           <div class="account__blog-list">
-            <div class="account__blog-item" v-for="(blog,i) in blogs.data" :key="i">
-              <div class="account__blog-item-img" :style="'background-image: url('+getImages(blog.image)+');'"></div>
+            <div v-for="(blog,i) in blogs.data" :key="i">
+              <div class="account__blog-item-img" :style="'background-image: url('+getImage(blog.image)+');'"></div>
               <div class="account__blog-item-date">
                 {{ $t('date') }}: <span>{{ blog.created_at }}</span>
               </div>
@@ -22,7 +22,7 @@
               <div class="account__blog-item-inner">
                 <a href="#" class="account__blog-item-tag">#{{blog.tag['title_'+$i18n.locale]}}</a>
                 <div class="account__blog-item-status">
-                  Статус: <span>на модерации</span>
+                  {{$t('status')}}: <span>{{$t('cabinet_status_1')}}</span>
                 </div>
               </div>
             </div>
@@ -45,8 +45,8 @@
       <div :class="'account__save-tabs-content '+this.tabs[1].active">
         <div class="account__blog-list-wrapper" v-if="moderation.data.length>0">
           <div class="account__blog-list">
-            <div class="account__blog-item" v-for="(blog,i) in moderation.data" :key="i">
-              <div class="account__blog-item-img" :style="'background-image: url('+getImages(blog.image)+');'"></div>
+            <div v-for="(blog,i) in moderation.data" :key="i">
+              <div class="account__blog-item-img" :style="'background-image: url('+getImage(blog.image)+');'"></div>
               <div class="account__blog-item-date">
                 {{ $t('date') }}: <span>{{ blog.created_at }}</span>
               </div>
@@ -54,8 +54,17 @@
               <div class="account__blog-item-inner">
                 <a href="#" class="account__blog-item-tag">#{{blog.tag['title_'+$i18n.locale]}}</a>
                 <div class="account__blog-item-status">
-                  Статус: <span>{{ $t('cabinet_status_0') }}</span>
+                  {{ $t('status') }}: <span>{{ $t('cabinet_status_0') }}</span>
                 </div>
+              </div>
+              <div class="calendar-page__btn-wrapper my-4">
+                <a @click.prevent="deleteBlog(blog.id)" class="calendar-page__item-btn popup-modal">
+                  <span>Удалить</span>
+                </a>
+                <a @click.prevent="activeModer(blog.id)" class="calendar-page__item-link popup-modal">
+                  <span>Редактировать</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"></path></g></svg>
+                </a>
               </div>
             </div>
           </div>
@@ -95,8 +104,8 @@
                 label="Изображение для обложки"
                 @change="uploadImg"
               ></v-file-input>
-              <div v-if="errors.image">
-                <span class="error--text v-size--small" v-for="(err,i) in errors.image" :key="i">{{err}}</span>
+              <div v-if="fails.image">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.image" :key="i">{{err}}</span>
               </div>
             </div>
             <div class="account__blog-item">
@@ -110,8 +119,8 @@
                 v-model="form.title_kz"
                 rows="1"
               ></v-textarea>
-              <div v-if="errors.title_kz">
-                <span class="error--text v-size--small" v-for="(err,i) in errors.title_kz" :key="i">{{err}}</span>
+              <div v-if="fails.title_kz">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.title_kz" :key="i">{{err}}</span>
               </div>
               <v-textarea
                 counter
@@ -120,8 +129,8 @@
                 v-model="form.title_ru"
                 rows="1"
               ></v-textarea>
-              <div v-if="errors.title_ru">
-                <span class="error--text v-size--small" v-for="(err,i) in errors.title_ru" :key="i">{{err}}</span>
+              <div v-if="fails.title_ru">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.title_ru" :key="i">{{err}}</span>
               </div>
               <v-textarea
                 counter
@@ -130,8 +139,8 @@
                 v-model="form.title_en"
                 rows="1"
               ></v-textarea>
-              <div v-if="errors.title_en">
-                <span class="error--text v-size--small" v-for="(err,i) in errors.title_en" :key="i">{{err}}</span>
+              <div v-if="fails.title_en">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.title_en" :key="i">{{err}}</span>
               </div>
               <h5 class="account__blog-item-title">
                 Категория
@@ -148,8 +157,8 @@
                 item-value="id"
                 v-model="form.tag_id"
               ></v-autocomplete>
-              <div v-if="errors.tag_id">
-                <span class="error--text v-size--small" v-for="(err,i) in errors.tag_id" :key="i">{{err}}</span>
+              <div v-if="fails.tag_id">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.tag_id" :key="i">{{err}}</span>
               </div>
             </div>
             <div class="account__blog-item">
@@ -158,8 +167,8 @@
               </h5>
               <ckeditor :editor="editor" v-model="form.description_kz"></ckeditor>
             </div>
-            <div v-if="errors.description_kz">
-                      <span class="error--text v-size--small" v-for="(err,i) in errors.description_kz" :key="i">{{err}}</span>
+            <div v-if="fails.description_kz">
+                      <span class="error--text v-size--small" v-for="(err,i) in fails.description_kz" :key="i">{{err}}</span>
                     </div>
             <div class="account__blog-item">
               <h5 class="account__blog-item-title">
@@ -167,8 +176,8 @@
               </h5>
               <ckeditor :editor="editor" v-model="form.description_ru"></ckeditor>
             </div>
-            <div v-if="errors.description_ru">
-                      <span class="error--text v-size--small" v-for="(err,i) in errors.description_ru" :key="i">{{err}}</span>
+            <div v-if="fails.description_ru">
+                      <span class="error--text v-size--small" v-for="(err,i) in fails.description_ru" :key="i">{{err}}</span>
                     </div>
             <div class="account__blog-item">
               <h5 class="account__blog-item-title">
@@ -176,9 +185,123 @@
               </h5>
               <ckeditor :editor="editor" v-model="form.description_en"></ckeditor>
             </div>
-            <div v-if="errors.description_en">
-                      <span class="error--text v-size--small" v-for="(err,i) in errors.description_en" :key="i">{{err}}</span>
+            <div v-if="fails.description_en">
+                      <span class="error--text v-size--small" v-for="(err,i) in fails.description_en" :key="i">{{err}}</span>
                     </div>
+            <div class="account__blog-item">
+              <button type="submit" class="button">
+                Опубликовать
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="account__save-tabs-content " :class="{active: moder}">
+        <div class="account__blog">
+                    <a @click="activeTab(1)" class="account__blog-link">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"/></g></svg>
+                      {{ $t('back') }}
+                    </a>
+          <h3 class="account__blog-title">
+            Редактор публикаций
+          </h3>
+          <form @submit.prevent="update" enctype="multipart/form-data" class="account__blog-form">
+            <div class="account__personal-info-img" :style="'background-image: url('+getImage(img)+');'"></div>
+            <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+                Изображение для обложки
+              </h5>
+              <v-file-input
+                accept="image/*"
+                placeholder="Загрузить новое фото"
+                prepend-icon="mdi-camera"
+                label="Изображение для обложки"
+                @change="uploadImg"
+              ></v-file-input>
+              <div v-if="fails.image">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.image" :key="i">{{err}}</span>
+              </div>
+            </div>
+            <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+
+              </h5>
+              <v-textarea
+                counter
+                label="Заголовок на казахском"
+                prepend-icon="mdi-comment"
+                v-model="form.title_kz"
+                rows="1"
+              ></v-textarea>
+              <div v-if="fails.title_kz">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.title_kz" :key="i">{{err}}</span>
+              </div>
+              <v-textarea
+                counter
+                label="Заголовок на русском"
+                prepend-icon="mdi-comment"
+                v-model="form.title_ru"
+                rows="1"
+              ></v-textarea>
+              <div v-if="fails.title_ru">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.title_ru" :key="i">{{err}}</span>
+              </div>
+              <v-textarea
+                counter
+                label="Заголовок на английском"
+                prepend-icon="mdi-comment"
+                v-model="form.title_en"
+                rows="1"
+              ></v-textarea>
+              <div v-if="fails.title_en">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.title_en" :key="i">{{err}}</span>
+              </div>
+              <h5 class="account__blog-item-title">
+                Категория
+              </h5>
+              <v-autocomplete
+                chips
+                clearable
+                dense
+                outlined
+                solo
+                label="Теги"
+                :items="tags"
+                item-text="title_ru"
+                item-value="id"
+                v-model="form.tag_id"
+              ></v-autocomplete>
+              <div v-if="fails.tag_id">
+                <span class="error--text v-size--small" v-for="(err,i) in fails.tag_id" :key="i">{{err}}</span>
+              </div>
+            </div>
+            <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+                Описание на казахском
+              </h5>
+              <ckeditor :editor="editor" v-model="form.description_kz"></ckeditor>
+            </div>
+            <div v-if="fails.description_kz">
+              <span class="error--text v-size--small" v-for="(err,i) in fails.description_kz" :key="i">{{err}}</span>
+            </div>
+            <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+                Описание на русском
+              </h5>
+              <ckeditor :editor="editor" v-model="form.description_ru"></ckeditor>
+            </div>
+            <div v-if="fails.description_ru">
+              <span class="error--text v-size--small" v-for="(err,i) in fails.description_ru" :key="i">{{err}}</span>
+            </div>
+            <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+                Описание на английском
+              </h5>
+              <ckeditor :editor="editor" v-model="form.description_en"></ckeditor>
+            </div>
+            <div v-if="fails.description_en">
+              <span class="error--text v-size--small" v-for="(err,i) in fails.description_en" :key="i">{{err}}</span>
+            </div>
             <div class="account__blog-item">
               <button type="submit" class="button">
                 Опубликовать
@@ -228,18 +351,21 @@ export default {
       tabs: [
         {
           id: 0,
-          title: 'Одобрено',
+          title: 'cabinet_status_1',
           active: 'active'
         },
         {
           id: 1,
-          title: 'На модерации',
+          title: 'cabinet_status_0',
           active: ''
         }
       ],
       active: false,
+      moder: false,
       tags: [],
+      img: '',
       form: {
+        id: '',
         tag_id: '',
         author_id: this.$auth.user.user.id,
         title_kz: '',
@@ -250,20 +376,15 @@ export default {
         description_en: '',
         image: ''
       },
-      errors: []
+      fails: []
     }
   },
   methods: {
-    getImages(data){
-      return this.$store.state.image.image + data ;
-    },
-    truncate(string, value) {
-      return string.substring(0, value) + '...';
-    },
     activeTab(i){
       this.tabs.forEach((item,i) => {
         item.active = ''
         this.active = false
+        this.moder = false
       })
       this.tabs[i].active = 'active'
     },
@@ -271,7 +392,43 @@ export default {
       this.tabs.forEach((item,i) => {
         item.active = ''
       })
+      this.moder = false
+      this.fails = []
+      this.form.tag_id = ''
+      this.form.id = ''
+      this.form.author_id = this.$auth.user.user.id
+      this.form.title_kz = ''
+      this.form.title_ru = ''
+      this.form.title_en = ''
+      this.form.description_kz = ''
+      this.form.description_ru = ''
+      this.form.description_en = ''
+      this.form.image = ''
       this.active = true
+    },
+    async activeModer(id){
+      await this.$axios.get('/cabinet/edit-blog/'+id).then((e) => {
+          this.form.tag_id = e.data.tag_id
+          this.form.id = e.data.id
+          this.form.author_id = this.$auth.user.user.id
+          this.form.title_kz = e.data.title_kz
+          this.form.title_ru = e.data.title_ru
+          this.form.title_en = e.data.title_en
+          this.form.description_kz = e.data.description_kz
+          this.form.description_ru = e.data.description_ru
+          this.form.description_en = e.data.description_en
+          this.form.image = ''
+        this.img = e.data.image
+      }).catch(({response}) => {
+        if (response.data.status === 404){
+          window.location.assign('/cabinet')
+        }
+      })
+      this.tabs.forEach((item,i) => {
+        item.active = ''
+      })
+      this.active = false
+      this.moder = true
     },
     uploadImg(e){
       this.form.image = e;
@@ -287,9 +444,51 @@ export default {
         // console.log(formData)
         await this.$axios.$post('/cabinet/send-blog', formData).then(async (e) => {
           this.$toast.success('Успешно отправлен на модерацию')
-          setTimeout(window.location.reload(), 500)
+            await this.$axios.$get("/cabinet/my-blogs").then((e)=>{
+              this.blogs = e[0]
+              this.tags = e[1]
+              this.moderation = e[2]
+            });
+          this.activeTab(1)
         }).catch(({response}) => {
-          this.errors = response.data.errors
+          this.fails = response.data.errors
+        })
+      }
+      catch (e) {
+        console.log(e)
+      }
+    },
+    async deleteBlog(id){
+      await this.$axios.get('/cabinet/delete-blog/'+id).then((e) => {
+        this.$axios.$get("/cabinet/my-blogs").then((e)=>{
+          this.moderation = e[2]
+        });
+        this.$toast.success('Успешно был удален!')
+      }).catch((e) =>{
+        console.log(e)
+      })
+    },
+    async update() {
+      try {
+        const formData = new FormData();
+        Object.keys(this.form).forEach((key) => {
+          if(this.form[key] != null){
+            formData.append(key, this.form[key])
+          }
+        })
+        formData.append("_method", "PUT");
+
+        // console.log(formData.getAll('title_kz'))
+        await this.$axios.$post('/cabinet/update-blog', formData).then(async (e) => {
+          this.$toast.success('Успешно отправлен на модерацию')
+            await this.$axios.$get("/cabinet/my-blogs").then((e)=>{
+              this.blogs = e[0]
+              this.tags = e[1]
+              this.moderation = e[2]
+            });
+          this.activeTab(1)
+        }).catch(({response}) => {
+          this.fails = response.data.errors
         })
       }
       catch (e) {
@@ -304,9 +503,6 @@ export default {
         blogs = e[0]
         tags = e[1]
         moderation = e[2]
-        // e[1].forEach((item,i) => {
-        //   tags.push(item.title_ru)
-        // })
       });
     }
     catch (e) {

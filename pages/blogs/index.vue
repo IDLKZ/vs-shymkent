@@ -37,12 +37,12 @@
         <div class="blog-list__select-inner">
           <div class="blog-list__select-wrapper select__wrapper">
             <div class="blog-list__select select d-flex">
-              <div class="blog-list__select-label select__label">{{$t('show_to')}}:</div>
+<!--              <div class="blog-list__select-label select__label">{{$t('show_to')}}:</div>-->
               <div class="blog-list__select-header select__header mx-2">
                 <v-select
                   :items="sorts"
                   v-model="sorts.value"
-                  label="По дате"
+                  :label="$t('show_to')"
                   item-text='title'
                   @change="sortBySelect"
                   dense

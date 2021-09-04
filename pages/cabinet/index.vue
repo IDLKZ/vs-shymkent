@@ -4,7 +4,7 @@
       <div class="account__save-tabs">
         <ul class="account__save-tabs-caption">
           <li v-for="tab in tabs" :key="tab.id" :class="tab.active" @click="activeTab(tab.id)">
-            {{ tab.title }}
+            {{ $t(tab.title) }}
           </li>
         </ul>
         <div :class="'account__save-tabs-content '+this.tabs[0].active">
@@ -85,8 +85,43 @@
                   {{ item.address }}
                 </div>
                 <p class="calendar__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></p>
-                <div class="calendar__btn-wrapper">
-                  <NuxtLink class="calendar__item-btn popup-modal" :to="'/events/' + item.alias">
+                <div class="calendar-page__btn-wrapper">
+                  <v-dialog
+                    v-if="item.eventum"
+                    v-model="dialog"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <button class="calendar-page__item-btn"
+                              v-bind="attrs"
+                              v-on="on"
+                              style="color: white!important;"
+                      >
+                        <span>{{ $t('buy') }}</span>
+                      </button>
+                    </template>
+
+                    <v-card>
+                      <v-card-text>
+                        <div id="modal-eventumCloseBtn" @click="dialog = false"
+                             style="float: right;height: 10px;width: 15px;cursor: pointer;position: absolute;right: 10px;top: 8px;">
+                          <svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" width="100%" height="100%">
+                            <rect fill="#000000" x="-1.8" y="6.2"
+                                  transform="matrix(0.7071 0.7071 -0.7071 0.7071 7.5178 -3.1079)" width="18.6"
+                                  height="2.7"></rect>
+                            <rect fill="#000000" x="-1.8" y="6.2"
+                                  transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 18.1391 7.5282)" width="18.6"
+                                  height="2.7"></rect>
+                          </svg>
+                        </div>
+                        <iframe :src="getEventum(item.eventum)" style="height:573px;width:100%;"
+                                frameborder="0"></iframe>
+                      </v-card-text>
+
+                      <v-divider></v-divider>
+
+                    </v-card>
+                  </v-dialog>
+                  <NuxtLink class="calendar-page__item-link" :to="'/events/' + item.alias">
                     <span>{{ $t('more_info') }}</span>
                   </NuxtLink>
                 </div>
@@ -401,50 +436,51 @@ export default {
   layout: 'cabinet',
   data(){
     return {
+      dialog: false,
       tabs: [
         {
           id: 0,
-          title: 'Путеводитель',
+          title: 'place_title',
           active: 'active'
         },
         {
           id: 1,
-          title: 'Мероприятия',
+          title: 'events',
           active: ''
         },
         {
           id: 2,
-          title: 'Маршруты',
+          title: 'routes_title',
           active: ''
         },
         {
           id: 3,
-          title: 'Блоги',
+          title: 'blog',
           active: ''
         },
         {
           id: 4,
-          title: 'Гиды',
+          title: 'guides',
           active: ''
         },
         {
           id: 5,
-          title: 'Тур.агенства',
+          title: 'agencies',
           active: ''
         },
         {
           id: 6,
-          title: 'Магазины',
+          title: 'craft',
           active: ''
         },
         {
           id: 7,
-          title: 'Ремесленники',
+          title: 'craftman',
           active: ''
         },
         {
           id: 8,
-          title: 'Сувениры',
+          title: 'souvenirs',
           active: ''
         }
       ]
@@ -472,7 +508,8 @@ export default {
       agencies = [],
       shops = [],
       crafts = [],
-      souvenirs = []
+      souvenirs = [],
+      blogs = []
     try{
       await $axios.$get("/cabinet/savings").then((e)=>{
         // console.log(e.data)
@@ -483,6 +520,9 @@ export default {
             }
             if (item.event){
               events.push(item.event)
+            }
+            if (item.blog){
+              blogs.push(item.blog)
             }
             if (item.route){
               routes.push(item.route)
@@ -517,7 +557,7 @@ export default {
     catch (e) {
       console.log(e);
     }
-    return {places,events,routes,guides,agencies,crafts,shops,souvenirs}
+    return {places,events,blogs,routes,guides,agencies,crafts,shops,souvenirs}
   },
   mounted() {
 
