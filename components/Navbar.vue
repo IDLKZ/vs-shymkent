@@ -5,7 +5,7 @@
       <div class="footer-nav__content">
         <a class="footer-nav__logo" href="/"><img src="/images/logo.png" alt=""></a>
         <div class="footer-nav__search">
-          <input class="footer-nav__search-input" type="search" :placeholder="$t('search')">
+          <input class="footer-nav__search-input" @keyup.enter="onSearch" v-model="getSearch" type="search" :placeholder="$t('search')">
         </div>
         <ul class="footer-nav__content-list">
           <li :class="getActiveNav('/about')">

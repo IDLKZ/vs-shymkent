@@ -24,7 +24,7 @@
             <li v-for="tab in tabs" :key="tab.id" :class="tab.active" @click="activeTab(tab.id)">
               {{$t(tab.title)}}
             </li>
-            <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
+
 <!--            <a href="#" class="about__tabs-link">Сохранить</a>-->
 <!--            <a href="#" class="about__tabs-link">Поделиться</a>-->
           </ul>
@@ -262,7 +262,7 @@
               </p>
             </div>
           </div>
-
+          <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
 <!--          <div :class="'about__tabs-content'+this.tabs[3].active">-->
 <!--            <div class="about__gallery-tabs">-->
 <!--              <ul class="about__gallery-tabs-caption">-->
@@ -300,16 +300,15 @@
 <!--          </div>-->
         </div>
       </div>
-      <div class="post__btns">
+<!--      <div class="post__btns">-->
+<!--&lt;!&ndash;        <button class="post__btn">&ndash;&gt;-->
+<!--&lt;!&ndash;          <svg data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>&ndash;&gt;-->
+<!--&lt;!&ndash;          Сохранить&ndash;&gt;-->
+<!--&lt;!&ndash;        </button>&ndash;&gt;-->
 <!--        <button class="post__btn">-->
-<!--          <svg data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>-->
-<!--          Сохранить-->
+<!--          <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />-->
 <!--        </button>-->
-        <button class="post__btn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="11.052" height="11.056" viewBox="0 0 11.052 11.056"><path d="M11.052,5.525,6.014,0V3.31H5.428A5.428,5.428,0,0,0,0,8.738v2.318L.967,10A6.939,6.939,0,0,1,6.014,7.741V11.05ZM.648,9.39V8.738a4.78,4.78,0,0,1,4.78-4.781H6.661V1.672l3.514,3.853L6.661,9.378V7.093H6.08A7.588,7.588,0,0,0,.648,9.39Zm0,0"/></svg>
-          Поделиться
-        </button>
-      </div>
+<!--      </div>-->
     </div>
   </section>
 </template>

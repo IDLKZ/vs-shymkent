@@ -73,10 +73,11 @@
       </div>
       <div class="calendar__inner">
         <div class="calendar__item" v-for="(item,i) in events" :key="i">
-          <div class="calendar__item-img"
-               :style="{'background':'linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('+getImages(item.image)+')'}"
+          <NuxtLink :to="'/events/' + item.alias">
+            <div class="calendar__item-img"
+                 :style="{'background':'linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('+getImage(item.image)+')'}">
 
-          >
+
             <div class="calendar__item-day" v-if="item.workdays.length>0">
               <div v-for="(day,index) in item.workdays" :key="index">
                 <span>{{ $t('date') }} </span>{{day.date_start}} - {{day.date_end}}
@@ -89,6 +90,7 @@
               </div>
             </div>
           </div>
+          </NuxtLink>
           <div class="calendar__item-inner">
             <h4 class="calendar__item-title">
               {{ truncateTitle(item['title_'+$i18n.locale],20) }}
@@ -96,7 +98,7 @@
             <div class="calendar__item-location">
               {{ item.address }}
             </div>
-            <p class="calendar__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></p>
+            <p class="calendar__item-text" v-html="truncateTitle(item['description_'+$i18n.locale], 50)"></p>
             <div class="calendar-page__btn-wrapper">
               <v-dialog
                 v-if="item.eventum"
@@ -187,13 +189,6 @@ export default {
   },
 
   methods:{
-    getImages(data){
-      console.log(this.$store.state.image.image);
-      return this.$store.state.image.image + data ;
-    },
-    truncate(string, value) {
-      return string.length > value ? string.substring(0, value) + '…' : string;
-    },
     //Активные табы
     getActiveClass(index){
       if(index == this.activeClass){
