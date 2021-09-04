@@ -8,28 +8,28 @@
           <input class="footer-nav__search-input" type="search" :placeholder="$t('search')">
         </div>
         <ul class="footer-nav__content-list">
-          <li class="footer-nav__content-item active">
+          <li :class="getActiveNav('/about')">
             <NuxtLink to="/about">{{ $t("about_city") }}</NuxtLink>
           </li>
-          <li class="footer-nav__content-item">
+          <li  :class="getActiveNav('/places')">
             <NuxtLink to="/places">{{ $t('place_title') }}</NuxtLink>
           </li>
-          <li class="footer-nav__content-item footer-nav__content-item--to-del">
+          <li  :class="getActiveNav('/events')">
             <NuxtLink to="/events">{{ $t('events') }}</NuxtLink>
           </li>
-          <li class="footer-nav__content-item footer-nav__content-item--to-del">
+          <li  :class="getActiveNav('/routes')">
             <NuxtLink to="/routes">{{ $t('routes_title') }}</NuxtLink>
           </li>
-          <li class="footer-nav__content-item">
+          <li  :class="getActiveNav('/souvenirs')">
             <NuxtLink to="/souvenirs">{{ $t('souvenirs') }}</NuxtLink>
           </li>
-          <li class="footer-nav__content-item">
+          <li :class="getActiveNav('/news')">
             <NuxtLink to="/news">{{ $t('news') }}</NuxtLink>
           </li>
-          <li class="footer-nav__content-item">
+          <li :class="getActiveNav('/blogs')">
             <NuxtLink to="/blogs">{{ $t('blog') }}</NuxtLink>
           </li>
-          <li class="footer-nav__content-item footer-nav__content-item--to-del">
+          <li :class="getActiveNav('/login')">
             <NuxtLink to="/login">{{ $t('cabinet') }}</NuxtLink>
           </li>
         </ul>
@@ -217,13 +217,44 @@ export default {
     },
 
     getActiveTab(path){
-     if(this.$route.path.indexOf(path) !== -1){
-       return 'footer-nav__item active'
-     }
-     else{
-       return 'footer-nav__item';
-     }
+      if(path !== "/"){
+        if(this.$route.path.indexOf(path) !== -1){
+          return 'footer-nav__item active'
+        }
+        else{
+          return 'footer-nav__item';
+        }
+      }
+      else{
+        if(this.$route.path === "/"){
+          return 'footer-nav__item active'
+        }
+        else{
+          return 'footer-nav__item';
+        }
+      }
 
+
+    },
+
+
+    getActiveNav(path){
+      if(path !== "/"){
+        if(this.$route.path.indexOf(path) !== -1){
+          return 'footer-nav__content-item active'
+        }
+        else{
+          return 'footer-nav__content-item';
+        }
+      }
+      else{
+        if(this.$route.path === "/"){
+          return 'footer-nav__content-item active'
+        }
+        else{
+          return 'footer-nav__content-item';
+        }
+      }
     }
   },
   mounted() {
@@ -236,5 +267,6 @@ export default {
 <style scoped>
 .footer-nav__content{
   height: auto!important;
+  min-height: 100vh;
 }
 </style>

@@ -118,6 +118,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+                    dense
                     hide-details="auto"
                     v-model="formatDate"
                     :label="$t('events_time_4')"
@@ -126,7 +127,7 @@
                     v-on="on"
                     color="white"
                     outlined
-                    dark
+                    light
 
                   ></v-text-field>
                 </template>
