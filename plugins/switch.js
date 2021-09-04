@@ -6,6 +6,12 @@ Vue.mixin({
     }
   },
   methods: {
+    async setValidationLocale(){
+      await this.$axios.$post("/switch-lang",{'locale':this.$i18n.locale});
+
+    },
+
+
     switchLanguages(){
       if (this.$i18n.locale == 'kz'){
         this.LANG = 'kk-KK'
@@ -20,7 +26,8 @@ Vue.mixin({
   },
   watch: {
     '$i18n.locale' () {
-      this.switchLanguages()
+      this.switchLanguages();
+      this.$axios.setHeader("Accept-Language",this.$i18n.locale);
     }
   },
   mounted() {

@@ -187,7 +187,7 @@ export default {
     toUpperCase(str) {
       return str.toUpperCase()
     },
-    changeLanguage(lang) {
+    async changeLanguage(lang) {
       this.$store.commit("setLanguage",lang);
       this.$i18n.locale = lang;
     },

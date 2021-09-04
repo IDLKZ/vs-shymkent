@@ -118,7 +118,7 @@ export default {
   axios: {
     baseURL: "http://backend.visit-shymkent/api",
     credentials: false,
-    proxyHeaders: false
+    proxyHeaders: false,
   },
 
   auth: {
