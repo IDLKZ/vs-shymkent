@@ -525,7 +525,12 @@ figure img {
   flex-direction: column;
   justify-content: space-between;
 }
-
+.v-application{
+  line-height: normal!important;
+}
+.v-application p {
+  margin: 0!important;
+}
 
 @media screen and (max-width: 370px){
   .guide-list__items{
