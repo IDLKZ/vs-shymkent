@@ -160,7 +160,7 @@
             </div>
             <div class="calendar__item-inner">
               <h4 class="calendar__item-title">
-                {{ item['title_'+$i18n.locale] }}
+                {{ truncateTitle(item['title_'+$i18n.locale],35) }}
               </h4>
               <div class="calendar__item-location">
                 {{ item.address }}

@@ -1,7 +1,7 @@
 <template>
   <section>
-    <div class="footer-nav">
-      <div class="footer-nav__background" onclick="headerMenuHide()"></div>
+    <div class="footer-nav" style="overflow-y:scroll">
+      <div class="footer-nav__background" style="background-color: transparent!important;"  onclick="headerMenuHide()"></div>
       <div class="footer-nav__content">
         <a class="footer-nav__logo" href="/"><img src="/images/logo.png" alt=""></a>
         <div class="footer-nav__search">
