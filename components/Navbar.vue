@@ -114,6 +114,7 @@
                 <div class="header__more-wrapper">
                   <NuxtLink class="header__more-wrapper-item popup-modal" to="/news">{{ $t('news') }}</NuxtLink>
                   <NuxtLink class="header__more-wrapper-item popup-modal" to="/blogs">{{ $t('blog') }}</NuxtLink>
+                  <a class="header__more-wrapper-item popup-modal" :href="this.$router.options.base+'#trip'">{{ $t('plan_a_trip') }}</a>
                 </div>
               </li>
             </ul>

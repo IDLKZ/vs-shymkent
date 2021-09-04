@@ -28,7 +28,7 @@
       </div>
       <div class="routes-item__wrapper">
         <div class="routes-item__info-content">
-          <div class="routes-item__img" :style="'background-image: url('+getImages(Route.image)+');'"></div>
+          <div class="routes-item__img" :style="'background-image: url('+getImage(Route.image)+');'"></div>
           <div class="routes-item__guide" v-if="Route.organizators.length>0">
             {{ $t('guides') }}:
             <NuxtLink class="white--text" :to="'/guides/'+organizator.alias" v-for="(organizator,i) in Route.organizators" :key="i">{{organizator['title_'+$i18n.locale]}}</NuxtLink>
@@ -123,12 +123,6 @@ export default {
     }
   },
   methods:{
-    getImages(data){
-      return this.$store.state.image.image + data ;
-    },
-    truncate(string = '', value) {
-      return string.substring(0, value) + '…';
-    },
     activeTab(i){
       // console.log(this.points[i].active)
       for (var key in this.points){

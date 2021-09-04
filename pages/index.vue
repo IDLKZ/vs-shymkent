@@ -217,7 +217,7 @@
 <!-- Конец Событий-->
 
 <!--    Начало путешествия-->
-    <section class="trip">
+    <section id="trip" class="trip">
       <div class="container">
         <div class="top-content">
           <div class="top-content__wrapper top-content__wrapper-3">
@@ -541,9 +541,9 @@
             </div>
           </div>
         </div>
-<!--        <div class="trip__link-to-board">-->
-<!--          <a href="#">Табло прилетов</a>-->
-<!--        </div>-->
+        <div class="trip__link-to-board">
+          <a style="color:white!important;" href="http://www.airserver.kz/flights/online-flights/" target="_blank">{{$t('trip_link')}}</a>
+        </div>
       </div>
     </section>
     <!--   Начало путешествия-->
@@ -950,7 +950,7 @@ export default {
     return {sliders,categoryplace,events,routes,souvenirs,blogs,data}
   },
    mounted() {
-
+      // console.log(this.$router)
   }
   }
 </script>

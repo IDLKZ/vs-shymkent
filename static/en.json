@@ -11,7 +11,7 @@
   "map_shym": "Map of Shymkent",
   "search": "Search",
   "cabinet": "Personal account",
-
+  "plan_a_trip": "Plan a trip",
 
 
   "place_subtitle": "Discover the most beautiful places of your beloved Shymkent ",
@@ -37,7 +37,7 @@
   "trip_date_from": "Departure date",
   "trip_date_to": "Back",
   "trip_table": "Airport scoreboard",
-
+  "trip_link":"Arrival board",
   "btn_search": "Search",
   "searchable_title": "Сұрау бойынша іздеу нәтижелері",
   "searchable_result": "results",
