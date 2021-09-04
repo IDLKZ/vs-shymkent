@@ -520,3 +520,15 @@ figure img {
   margin-bottom: 30px;
   text-align: left;
 }
+.guide-list__item{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+@media screen and (max-width: 370px){
+  .guide-list__items{
+    grid-template-columns: 1fr;
+  }
+}

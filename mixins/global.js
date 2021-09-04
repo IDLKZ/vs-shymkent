@@ -7,7 +7,7 @@ const globals = {
       },
       methods:{
         truncateTitle(text,value) {
-          return text.length > value ? text.substring(0, value) + '…' : text;
+          return text.length > value ? text.substring(0, value) + '...' : text;
         },
         getImage(image) {
           return this.$store.state.image.image + image ;
