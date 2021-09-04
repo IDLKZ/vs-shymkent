@@ -118,6 +118,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+
                     dense
                     hide-details="auto"
                     v-model="formatDate"
@@ -127,8 +128,6 @@
                     v-on="on"
                     color="white"
                     outlined
-                    light
-
                   ></v-text-field>
                 </template>
                 <v-date-picker
@@ -236,13 +235,11 @@
           <div class="trip__tabs-content">
 <!--            Полеты откуда куда-->
             <div :class="'trip__tab tab-1 '+this.tabs[0].active">
-                <div class="form__inner">
-                  <div class="trip__input-name grid-1 my-2">
+                <div class="form__inner d-md-flex align-center">
+                  <div class="trip__input-name grid-1 my-sm-2">
                     <v-autocomplete
                       hide-details
                       filled
-                      solo-inverted
-                      class="pt-0 my-2"
                       :items="data"
                       item-text="name_ru"
                       background-color="white"
@@ -255,12 +252,10 @@
                       :placeholder="$t('trip_from')"
                     ></v-autocomplete>
                   </div>
-                  <div class="trip__input-name grid-2 my-2">
+                  <div class="trip__input-name grid-2 my-sm-2">
                     <v-autocomplete
                       hide-details
                       filled
-                      solo-inverted
-                      class="pt-0 my-2"
                       :items="data"
                       background-color="white"
                       color="black"
@@ -273,7 +268,7 @@
                       :placeholder="$t('trip_to')"
                     ></v-autocomplete>
                   </div>
-                  <div class="trip__input-date grid-3 my-2">
+                  <div class="trip__input-date grid-3 my-sm-2">
                     <v-menu
                       ref="menu1"
                       v-model="fromMenu"
@@ -284,17 +279,18 @@
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                          class="my-2"
                           hide-details="auto"
                           v-model="fromDataComputed"
                           :label="$t('trip_date_from')"
                           v-bind="attrs"
                           v-on="on"
                           outlined
+                          background-color="white"
+                          color="black"
                           dense
                           autocomplete="off"
                           filled
-                          solo-inverted
+
                         ></v-text-field>
                       </template>
                       <v-date-picker
@@ -305,7 +301,7 @@
                       ></v-date-picker>
                     </v-menu>
                   </div>
-                  <div class="trip__input-date grid-4 my-2">
+                  <div class="trip__input-date grid-4 my-sm-2">
                     <v-menu
                       ref="menu1"
                       v-model="toMenu"
@@ -316,18 +312,17 @@
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                          class="my-2"
                           hide-details="auto"
                           v-model="toDataComputed"
                           :label="$t('trip_date_to')"
                           v-bind="attrs"
                           background-color="white"
+                          color="black"
                           v-on="on"
                           dense
                           outlined
                           autocomplete="off"
                           filled
-                          solo-inverted
                         ></v-text-field>
                       </template>
                       <v-date-picker
@@ -338,7 +333,7 @@
                       ></v-date-picker>
                     </v-menu>
                   </div>
-                  <div class="trip__form-control grid-5 my-2 py-2">
+                  <div class="trip__form-control grid-5 my-sm-2">
                     <div class="trip__form-control-wrapper" style="height: 40px">
                       <v-menu
                         v-model="menuTraveler"
@@ -349,7 +344,7 @@
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
                             color="white"
-                            class="my-2"
+                            class="my-sm-2"
                             filled
                             v-bind="attrs"
                             v-on="on"
@@ -412,37 +407,41 @@
 <!--            Жд-->
             <div :class="'trip__tab tab-2 '+this.tabs[1].active">
                 <div class="form__inner">
-                  <div class="trip__input-name my-2">
+                  <div class="trip__input-name my-sm-2">
                     <v-autocomplete
-                      class="my-2"
+                      hide-details
+                      hide-no-data
                       item-text="name"
                       item-value="code"
                       outlined
                       filled
                       dense
-                      solo-inverted
+                      background-color="white"
+                      color="black"
                       no-filter
                       :items="stationsFrom"
                       v-model="railFrom"
                       :search-input.sync="search"
                       type="text" placeholder="Откуда" />
                   </div>
-                  <div class="trip__input-name my-2">
+                  <div class="trip__input-name my-sm-2">
                     <v-autocomplete
-                      class="my-2"
+                      hide-details
+                      hide-no-data
                       item-text="name"
                       item-value="code"
                       outlined
                       filled
                       dense
-                      solo-inverted
+                      background-color="white"
+                      color="black"
                       no-filter
                       :items="stationsTo"
                       v-model="railTo"
                       :search-input.sync="searchTo"
                       type="text" placeholder="Куда" />
                   </div>
-                  <div class="trip__input-date my-2">
+                  <div class="trip__input-date my-sm-2">
                     <v-menu
                       ref="menu1"
                       v-model="stfromMenu"
@@ -454,17 +453,17 @@
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                          class="my-2"
                           hide-details="auto"
                           v-model="fromDataComputed"
                           :label="$t('trip_date_from')"
+                          background-color="white"
+                          color="black"
                           v-bind="attrs"
                           v-on="on"
                           outlined
                           dense
                           autocomplete="off"
                           filled
-                          solo-inverted
                         ></v-text-field>
                       </template>
                       <v-date-picker
@@ -475,7 +474,7 @@
                       ></v-date-picker>
                     </v-menu>
                   </div>
-                  <div class="trip__input-date my-2">
+                  <div class="trip__input-date my-sm-2">
                     <v-menu
                       ref="menu1"
                       v-model="sttoMenu"
@@ -486,18 +485,17 @@
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-text-field
-                          class="my-2"
                           hide-details="auto"
                           v-model="toDataComputed"
                           :label="$t('trip_date_to')"
                           v-bind="attrs"
                           background-color="white"
+                          color="black"
                           v-on="on"
                           dense
                           outlined
                           autocomplete="off"
                           filled
-                          solo-inverted
                         ></v-text-field>
                       </template>
                       <v-date-picker
@@ -1040,6 +1038,7 @@ export default {
   }
 </script>
 <style lang="scss">
+
 .calendar__item-img{
   background-repeat: no-repeat!important;
   background-size: cover!important;
@@ -1063,5 +1062,19 @@ export default {
   background-repeat: no-repeat!important;
   background-size: cover!important;
   background-position: center!important;
+}
+.calendar__change-date{
+  .v-icon{
+    color: white!important;
+  }
+  fieldset {
+    border-color: white!important;
+  }
+  input{
+    color: white!important;
+  }
+  label{
+    color: white!important;
+  }
 }
 </style>
