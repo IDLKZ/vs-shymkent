@@ -59,10 +59,10 @@
               </div>
               <div class="calendar-page__btn-wrapper my-4">
                 <a @click.prevent="deleteBlog(blog.id)" class="calendar-page__item-btn popup-modal">
-                  <span>Удалить</span>
+                  <span>{{ $t('btn_delete') }}</span>
                 </a>
                 <a @click.prevent="activeModer(blog.id)" class="calendar-page__item-link popup-modal">
-                  <span>Редактировать</span>
+                  <span>{{ $t('btn_edit') }}</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"></path></g></svg>
                 </a>
               </div>
@@ -90,18 +90,18 @@
 <!--            Назад-->
 <!--          </a>-->
           <h3 class="account__blog-title">
-            Редактор публикаций
+            {{ $t('cabinet_editor') }}
           </h3>
           <form @submit.prevent="submit" enctype="multipart/form-data" class="account__blog-form">
             <div class="account__blog-item">
               <h5 class="account__blog-item-title">
-                Изображение для обложки
+                {{ $t('cabinet_img') }}
               </h5>
               <v-file-input
                 accept="image/*"
-                placeholder="Загрузить новое фото"
+                :placeholder="$t('upload_new_photo')"
                 prepend-icon="mdi-camera"
-                label="Изображение для обложки"
+                :label="$t('cabinet_img')"
                 @change="uploadImg"
               ></v-file-input>
               <div v-if="fails.image">
@@ -114,7 +114,7 @@
               </h5>
               <v-textarea
                 counter
-                label="Заголовок на казахском"
+                :label="$t('cabinet_title_kz')"
                 prepend-icon="mdi-comment"
                 v-model="form.title_kz"
                 rows="1"
@@ -124,7 +124,7 @@
               </div>
               <v-textarea
                 counter
-                label="Заголовок на русском"
+                :label="$t('cabinet_title_ru')"
                 prepend-icon="mdi-comment"
                 v-model="form.title_ru"
                 rows="1"
@@ -134,7 +134,7 @@
               </div>
               <v-textarea
                 counter
-                label="Заголовок на английском"
+                :label="$t('cabinet_title_en')"
                 prepend-icon="mdi-comment"
                 v-model="form.title_en"
                 rows="1"
@@ -143,7 +143,7 @@
                 <span class="error--text v-size--small" v-for="(err,i) in fails.title_en" :key="i">{{err}}</span>
               </div>
               <h5 class="account__blog-item-title">
-                Категория
+                {{ $t('cabinet_category') }}
               </h5>
               <v-autocomplete
                 chips
@@ -151,7 +151,7 @@
                 dense
                 outlined
                 solo
-                label="Теги"
+                :label="$t('tags')"
                 :items="tags"
                 item-text="title_ru"
                 item-value="id"
@@ -163,7 +163,7 @@
             </div>
             <div class="account__blog-item">
               <h5 class="account__blog-item-title">
-                Описание на казахском
+                {{ $t('cabinet_description_kz') }}
               </h5>
               <ckeditor :editor="editor" v-model="form.description_kz"></ckeditor>
             </div>
@@ -172,7 +172,7 @@
                     </div>
             <div class="account__blog-item">
               <h5 class="account__blog-item-title">
-                Описание на русском
+                {{ $t('cabinet_description_ru') }}
               </h5>
               <ckeditor :editor="editor" v-model="form.description_ru"></ckeditor>
             </div>
@@ -181,7 +181,7 @@
                     </div>
             <div class="account__blog-item">
               <h5 class="account__blog-item-title">
-                Описание на английском
+                {{ $t('cabinet_description_en') }}
               </h5>
               <ckeditor :editor="editor" v-model="form.description_en"></ckeditor>
             </div>
@@ -190,7 +190,7 @@
                     </div>
             <div class="account__blog-item">
               <button type="submit" class="button">
-                Опубликовать
+                {{ $t('cabinet_btn_publish') }}
               </button>
             </div>
           </form>
@@ -203,19 +203,19 @@
                       {{ $t('back') }}
                     </a>
           <h3 class="account__blog-title">
-            Редактор публикаций
+            {{ $t('cabinet_editor') }}
           </h3>
           <form @submit.prevent="update" enctype="multipart/form-data" class="account__blog-form">
             <div class="account__personal-info-img" :style="'background-image: url('+getImage(img)+');'"></div>
             <div class="account__blog-item">
               <h5 class="account__blog-item-title">
-                Изображение для обложки
+                {{ $t('cabinet_img') }}
               </h5>
               <v-file-input
                 accept="image/*"
-                placeholder="Загрузить новое фото"
+                :placeholder="$t('upload_new_photo')"
                 prepend-icon="mdi-camera"
-                label="Изображение для обложки"
+                :label="$t('cabinet_img')"
                 @change="uploadImg"
               ></v-file-input>
               <div v-if="fails.image">
@@ -228,7 +228,7 @@
               </h5>
               <v-textarea
                 counter
-                label="Заголовок на казахском"
+                :label="$t('cabinet_title_kz')"
                 prepend-icon="mdi-comment"
                 v-model="form.title_kz"
                 rows="1"
@@ -238,7 +238,7 @@
               </div>
               <v-textarea
                 counter
-                label="Заголовок на русском"
+                :label="$t('cabinet_title_ru')"
                 prepend-icon="mdi-comment"
                 v-model="form.title_ru"
                 rows="1"
@@ -248,7 +248,7 @@
               </div>
               <v-textarea
                 counter
-                label="Заголовок на английском"
+                :label="$t('cabinet_title_en')"
                 prepend-icon="mdi-comment"
                 v-model="form.title_en"
                 rows="1"
@@ -257,7 +257,7 @@
                 <span class="error--text v-size--small" v-for="(err,i) in fails.title_en" :key="i">{{err}}</span>
               </div>
               <h5 class="account__blog-item-title">
-                Категория
+                {{ $t('cabinet_category') }}
               </h5>
               <v-autocomplete
                 chips
@@ -265,7 +265,7 @@
                 dense
                 outlined
                 solo
-                label="Теги"
+                :label="$t('tags')"
                 :items="tags"
                 item-text="title_ru"
                 item-value="id"
@@ -277,7 +277,7 @@
             </div>
             <div class="account__blog-item">
               <h5 class="account__blog-item-title">
-                Описание на казахском
+                {{ $t('cabinet_description_kz') }}
               </h5>
               <ckeditor :editor="editor" v-model="form.description_kz"></ckeditor>
             </div>
@@ -286,7 +286,7 @@
             </div>
             <div class="account__blog-item">
               <h5 class="account__blog-item-title">
-                Описание на русском
+                {{ $t('cabinet_description_ru') }}
               </h5>
               <ckeditor :editor="editor" v-model="form.description_ru"></ckeditor>
             </div>
@@ -295,7 +295,7 @@
             </div>
             <div class="account__blog-item">
               <h5 class="account__blog-item-title">
-                Описание на английском
+                {{ $t('cabinet_description_en') }}
               </h5>
               <ckeditor :editor="editor" v-model="form.description_en"></ckeditor>
             </div>
@@ -304,7 +304,7 @@
             </div>
             <div class="account__blog-item">
               <button type="submit" class="button">
-                Опубликовать
+                {{ $t('cabinet_btn_publish') }}
               </button>
             </div>
           </form>
@@ -317,10 +317,10 @@
       <div class="account__not-found">
         <svg xmlns="http://www.w3.org/2000/svg" width="37.547" height="33.937" viewBox="0 0 37.547 33.937"><g transform="translate(0 -24.615)"><g transform="translate(0 24.615)"><g transform="translate(0 0)"><path d="M33.575,24.615H3.971A3.976,3.976,0,0,0,0,28.586V47.36a3.976,3.976,0,0,0,3.971,3.971H13.56l-1.155,5.776H8.665a.722.722,0,1,0,0,1.444H28.882a.722.722,0,0,0,0-1.444h-3.74l-1.155-5.776h9.589a3.976,3.976,0,0,0,3.971-3.971V28.586A3.976,3.976,0,0,0,33.575,24.615Zm-19.7,32.492,1.155-5.776h7.481l1.155,5.776H13.878ZM36.1,47.36a2.53,2.53,0,0,1-2.527,2.527H3.971A2.53,2.53,0,0,1,1.444,47.36V45.555H36.1V47.36Zm0-3.249H1.444V42.666H5.776a.722.722,0,1,0,0-1.444H1.444V28.586a2.53,2.53,0,0,1,2.527-2.527h29.6A2.53,2.53,0,0,1,36.1,28.586V44.111Z" transform="translate(0 -24.615)"/></g></g><g transform="translate(17.329 46.277)"><g transform="translate(0 0)"><path d="M237.752,320a1.444,1.444,0,1,0,1.444,1.444A1.446,1.446,0,0,0,237.752,320Z" transform="translate(-236.308 -320)"/></g></g><g transform="translate(7.221 41.223)"><path d="M99.892,251.662a.7.7,0,0,0-.041-.136.729.729,0,0,0-.066-.124.7.7,0,0,0-.2-.2.719.719,0,0,0-.125-.066.68.68,0,0,0-.135-.041.711.711,0,0,0-.282,0,.68.68,0,0,0-.135.041.707.707,0,0,0-.125.066.7.7,0,0,0-.2.2.734.734,0,0,0-.066.124.7.7,0,0,0-.041.136.694.694,0,0,0,0,.282.678.678,0,0,0,.041.135.706.706,0,0,0,.066.125.7.7,0,0,0,.2.2.717.717,0,0,0,.125.066.734.734,0,0,0,.135.042.73.73,0,0,0,.282,0,.734.734,0,0,0,.135-.042.707.707,0,0,0,.125-.066.7.7,0,0,0,.2-.2.716.716,0,0,0,.066-.125.678.678,0,0,0,.041-.135.694.694,0,0,0,0-.282Z" transform="translate(-98.462 -251.081)"/></g></g></svg>
         <h4 class="account__not-found-text">
-          <p>Для добавления мероприятия воспользуйтесь десктопной версией сайта.</p>
+          <p>{{ $t('cabinet_mobile_message') }}.</p>
         </h4>
         <div class="load-more">
-          <a href="#">Вернуться назад</a>
+          <a href="#">{{ $t('back') }}</a>
         </div>
       </div>
     </div>

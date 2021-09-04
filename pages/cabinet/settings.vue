@@ -9,14 +9,14 @@
                     <form @submit.prevent="uploadPhoto" enctype="multipart/form-data">
                       <v-file-input
                         accept="image/*"
-                        placeholder="Загрузить новое фото"
+                        :placeholder="$t('upload_new_photo')"
                         prepend-icon="mdi-camera"
                         label="Фото"
                         @change="uploadImg"
                       ></v-file-input>
                       <button type="submit" class="input__file-button">
                         <span class="input__file-icon-wrapper"></span>
-                        <span class="input__file-button-text">Загрузить личное фото</span>
+                        <span class="input__file-button-text">{{ $t('upload_own_photo') }}</span>
                       </button>
                     </form>
                   </div>
@@ -32,14 +32,14 @@
                     <form @submit.prevent="uploadImageCompany" enctype="multipart/form-data">
                       <v-file-input
                         accept="image/*"
-                        placeholder="Загрузить фото компании"
+                        :placeholder="$t('upload_new_photo')"
                         prepend-icon="mdi-camera"
                         label="Фото"
                         @change="uploadPhotoCompany"
                       ></v-file-input>
                       <button type="submit" class="input__file-button">
                         <span class="input__file-icon-wrapper"></span>
-                        <span class="input__file-button-text">Загрузить фото компании</span>
+                        <span class="input__file-button-text">{{ $t('upload_companies_photo') }}</span>
                       </button>
                     </form>
                   </div>
@@ -52,7 +52,7 @@
 
             <div class="account__personal-info-content">
               <h3 class="account__personal-info-content-title">
-                Персональная информация
+                {{ $t('personal_info') }}
               </h3>
               <form @submit.prevent="submit" class="account__personal-info-form">
                 <div class="account__personal-info-form-inner">
@@ -64,7 +64,7 @@
                     </div>
                   </div>
                   <div class="account__personal-info-form-item">
-                    <label>Номер телефона</label>
+                    <label>{{ $t('phone') }}</label>
                     <input v-model="form.phone" type="number" class="account__personal-info-input" :placeholder="form.phone">
                     <div v-if="fails.phone">
                       <span class="error--text v-size--small" v-for="(err,i) in fails.phone" :key="i">{{err}}</span>
@@ -80,7 +80,7 @@
                   </div>
 
                   <div class="account__personal-info-form-item">
-                    <label>Пароль</label>
+                    <label>{{ $t('password') }}</label>
                     <input v-model="form.password" type="password" class="account__personal-info-input" placeholder="Введите новый пароль">
                     <div v-if="fails.password">
                       <span class="error--text v-size--small" v-for="(err,i) in fails.password" :key="i">{{err}}</span>
@@ -93,7 +93,7 @@
 
               <div class="account__personal-info-content">
                 <h3 class="account__personal-info-content-title">
-                  Информация о деятельности
+                  {{ $t('companies_info') }}
                   <v-tooltip bottom v-if="!person.status">
                     <template v-slot:activator="{ on, attrs }">
                       <span
@@ -110,7 +110,7 @@
                 <form @submit.prevent="updateGuide" v-if="this.$auth.user.user.role_id === 4">
                   <div class="account__personal-info-form-inner__cabinet">
                     <div class="account__personal-info-form-item">
-                      <label>Знание языков</label>
+                      <label>{{ $t('languages') }}</label>
                       <v-combobox
                         v-model="guide.languages"
                         :items="languages"
@@ -123,49 +123,49 @@
                       </v-combobox>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Описание на казахском</label>
+                      <label>{{ $t('cabinet_description_kz') }}</label>
                       <ckeditor :editor="editor" v-model="guide.description_kz"></ckeditor>
                       <div v-if="fails.description_kz">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.description_kz" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Описание на русском</label>
+                      <label>{{ $t('cabinet_description_ru') }}</label>
                       <ckeditor :editor="editor" v-model="guide.description_ru"></ckeditor>
                       <div v-if="fails.description_ru">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.description_ru" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Описание на английском</label>
+                      <label>{{ $t('cabinet_description_en') }}</label>
                       <ckeditor :editor="editor" v-model="guide.description_en"></ckeditor>
                       <div v-if="fails.description_en">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.description_en" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Образование (на каз)</label>
+                      <label>{{ $t('education_kz') }}</label>
                       <ckeditor :editor="editor" v-model="guide.education_kz"></ckeditor>
                       <div v-if="fails.education_kz">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.education_kz" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Образование (на рус)</label>
+                      <label>{{ $t('education_ru') }}</label>
                       <ckeditor :editor="editor" v-model="guide.education_ru"></ckeditor>
                       <div v-if="fails.education_ru">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.education_ru" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Образование (на анг)</label>
+                      <label>{{ $t('education_en') }}</label>
                       <ckeditor :editor="editor" v-model="guide.education_en"></ckeditor>
                       <div v-if="fails.education_en">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.education_en" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Контактные данные</label>
+                      <label>{{ $t('phones_for_contact') }}</label>
                       <v-combobox
                         v-model="guide.phone"
                         :items="guide.phone"
@@ -178,7 +178,7 @@
                       </v-combobox>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Соц.сети</label>
+                      <label>{{ $t('social') }}</label>
                       <v-combobox
                         v-model="guide.social_networks"
                         :items="guide.social_networks"
@@ -191,7 +191,7 @@
                       </v-combobox>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Веб-сайт</label>
+                      <label>{{ $t('website') }}</label>
                       <v-combobox
                         v-model="guide.sites"
                         :items="guide.sites"
@@ -204,40 +204,41 @@
                       </v-combobox>
                     </div>
                   </div>
-                  <button type="submit" class="account__personal-info-form-btn" style="color: white!important;">Сохранить изменения</button>
+                  <button type="submit" class="account__personal-info-form-btn" style="color: white!important;">
+                    {{ $t('save') }}</button>
                 </form>
                 <form @submit.prevent="updateAgency" v-if="this.$auth.user.user.role_id === 5">
                   <div class="account__personal-info-form-inner__cabinet">
                     <div class="account__personal-info-form-item">
-                      <label>Наименование</label>
+                      <label>{{ $t('title') }}</label>
                       <input v-model="agency.title" type="text" class="account__personal-info-input" :placeholder="agency.title">
                       <div v-if="fails.title">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.title" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Описание на казахском</label>
+                      <label>{{ $t('cabinet_description_kz') }}</label>
                       <ckeditor :editor="editor" v-model="agency.description_kz"></ckeditor>
                       <div v-if="fails.description_kz">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.description_kz" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Описание на русском</label>
+                      <label>{{ $t('cabinet_description_ru') }}</label>
                       <ckeditor :editor="editor" v-model="agency.description_ru"></ckeditor>
                       <div v-if="fails.description_ru">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.description_ru" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Описание на английском</label>
+                      <label>{{ $t('cabinet_description_en') }}</label>
                       <ckeditor :editor="editor" v-model="agency.description_en"></ckeditor>
                       <div v-if="fails.description_en">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.description_en" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Контактные данные</label>
+                      <label>{{ $t('phones_for_contact') }}</label>
                       <v-combobox
                         v-model="agency.phone"
                         :items="agency.phone"
@@ -250,7 +251,7 @@
                       </v-combobox>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Соц.сети</label>
+                      <label>{{ $t('social') }}</label>
                       <v-combobox
                         v-model="agency.social_networks"
                         :items="agency.social_networks"
@@ -263,7 +264,7 @@
                       </v-combobox>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Веб-сайт</label>
+                      <label>{{ $t('website') }}</label>
                       <v-combobox
                         v-model="agency.sites"
                         :items="agency.sites"
@@ -276,47 +277,47 @@
                       </v-combobox>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Адрес</label>
+                      <label>{{ $t('address') }}</label>
                       <input v-model="agency.address" type="text" class="account__personal-info-input" :placeholder="agency.address">
                       <div v-if="fails.address">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.address" :key="i">{{err}}</span>
                       </div>
                     </div>
                   </div>
-                  <button type="submit" class="account__personal-info-form-btn" style="color: white!important;">Сохранить изменения</button>
+                  <button type="submit" class="account__personal-info-form-btn" style="color: white!important;">{{ $t('save') }}</button>
                 </form>
                 <form @submit.prevent="updateCraft" v-if="this.$auth.user.user.role_id === 6">
                   <div class="account__personal-info-form-inner__cabinet">
                     <div class="account__personal-info-form-item">
-                      <label>Наименование</label>
+                      <label>{{ $t('title') }}</label>
                       <input v-model="craft.title" type="text" class="account__personal-info-input" :placeholder="craft.title">
                       <div v-if="fails.title">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.title" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Описание на казахском</label>
+                      <label>{{ $t('cabinet_description_kz') }}</label>
                       <ckeditor :editor="editor" v-model="craft.description_kz"></ckeditor>
                       <div v-if="fails.description_kz">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.description_kz" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Описание на русском</label>
+                      <label>{{ $t('cabinet_description_ru') }}</label>
                       <ckeditor :editor="editor" v-model="craft.description_ru"></ckeditor>
                       <div v-if="fails.description_ru">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.description_ru" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Описание на английском</label>
+                      <label>{{ $t('cabinet_description_en') }}</label>
                       <ckeditor :editor="editor" v-model="craft.description_en"></ckeditor>
                       <div v-if="fails.description_en">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.description_en" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Контактные данные</label>
+                      <label>{{ $t('phones_for_contact') }}</label>
                       <v-combobox
                         v-model="craft.phone"
                         :items="craft.phone"
@@ -329,7 +330,7 @@
                       </v-combobox>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Соц.сети</label>
+                      <label>{{ $t('social') }}</label>
                       <v-combobox
                         v-model="craft.social_networks"
                         :items="craft.social_networks"
@@ -342,7 +343,7 @@
                       </v-combobox>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Веб-сайт</label>
+                      <label>{{ $t('website') }}</label>
                       <v-combobox
                         v-model="craft.sites"
                         :items="craft.sites"
@@ -355,40 +356,40 @@
                       </v-combobox>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Адрес</label>
+                      <label>{{ $t('address') }}</label>
                       <input v-model="craft.address" type="text" class="account__personal-info-input" :placeholder="craft.address">
                       <div v-if="fails.address">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.address" :key="i">{{err}}</span>
                       </div>
                     </div>
                   </div>
-                  <button type="submit" class="account__personal-info-form-btn" style="color: white!important;">Сохранить изменения</button>
+                  <button type="submit" class="account__personal-info-form-btn" style="color: white!important;">{{ $t('save') }}</button>
                 </form>
                 <form @submit.prevent="updateCraftman" v-if="this.$auth.user.user.role_id === 7">
                   <div class="account__personal-info-form-inner__cabinet">
                     <div class="account__personal-info-form-item">
-                      <label>Описание на казахском</label>
+                      <label>{{ $t('cabinet_description_kz') }}</label>
                       <ckeditor :editor="editor" v-model="craftman.description_kz"></ckeditor>
                       <div v-if="fails.description_kz">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.description_kz" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Описание на русском</label>
+                      <label>{{ $t('cabinet_description_ru') }}</label>
                       <ckeditor :editor="editor" v-model="craftman.description_ru"></ckeditor>
                       <div v-if="fails.description_ru">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.description_ru" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Описание на английском</label>
+                      <label>{{ $t('cabinet_description_en') }}</label>
                       <ckeditor :editor="editor" v-model="craftman.description_en"></ckeditor>
                       <div v-if="fails.description_en">
                         <span class="error--text v-size--small" v-for="(err,i) in fails.description_en" :key="i">{{err}}</span>
                       </div>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Контактные данные</label>
+                      <label>{{ $t('phones_for_contact') }}</label>
                       <v-combobox
                         v-model="craftman.phone"
                         :items="craftman.phone"
@@ -401,7 +402,7 @@
                       </v-combobox>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Соц.сети</label>
+                      <label>{{ $t('social') }}</label>
                       <v-combobox
                         v-model="craftman.social_networks"
                         :items="craftman.social_networks"
@@ -414,7 +415,7 @@
                       </v-combobox>
                     </div>
                     <div class="account__personal-info-form-item">
-                      <label>Веб-сайт</label>
+                      <label>{{ $t('website') }}</label>
                       <v-combobox
                         v-model="craftman.sites"
                         :items="craftman.sites"
@@ -427,7 +428,7 @@
                       </v-combobox>
                     </div>
                   </div>
-                  <button type="submit" class="account__personal-info-form-btn" style="color: white!important;">Сохранить изменения</button>
+                  <button type="submit" class="account__personal-info-form-btn" style="color: white!important;">{{ $t('save') }}</button>
                 </form>
               </div>
             </div>
