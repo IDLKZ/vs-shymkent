@@ -98,8 +98,10 @@
                 <div class="calendar-item__contact-title">
                   {{ $t('phones_for_contact') }}:
                 </div>
-                <div class="calendar-item__contact-text" v-for="(item,i) in event.phone" :key="i">
-                  <span>{{item}} <span v-if="event.phone.length>1">.,</span></span>
+                <div class="calendar-item__contact-text">
+                  <span v-for="(item,i) in event.phone" :key="i">
+                    {{item}}
+                  </span>
                 </div>
               </li>
             </ul>
