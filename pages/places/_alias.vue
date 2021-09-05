@@ -370,12 +370,14 @@ export default {
         })
       }
     }
-
-    let TIMA = JSON.parse(place.address_link)
     let placemarks = []
-    TIMA.forEach((item, i) => {
-      placemarks[i] = [item.lat, item.lng];
-    })
+    if(place.address_link){
+      let TIMA = JSON.parse(place.address_link)
+      TIMA.forEach((item, i) => {
+        placemarks[i] = [item.lat, item.lng];
+      })
+    }
+
 
     if(place.galleries.length > 0){
       for(let i = 0; i < place.galleries.length; i++){
