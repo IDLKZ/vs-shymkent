@@ -1,7 +1,7 @@
 <template>
   <div>
     <!--    Слайдер -->
-    <v-container fluid class="pa-0">
+    <v-container-fluid class="pa-0" style="width: 100vw!important;">
       <v-carousel
         cycle
         height="80vh"
@@ -38,7 +38,7 @@
 
       </v-carousel>
 
-    </v-container>
+    </v-container-fluid>
     <!-- Конец слайдера -->
 
 <!--    Путеводитель категории-->
@@ -165,7 +165,7 @@
                 {{ item.address }}
               </div>
               <p class="calendar__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></p>
-              <div class="calendar-page__btn-wrapper">
+              <div class="calendar-page__btn-wrapper my-4 py-2">
                 <v-dialog
                   v-if="item.eventum"
                   v-model="dialog"
