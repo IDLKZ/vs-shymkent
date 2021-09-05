@@ -192,8 +192,8 @@
                         {{item['title_'+$i18n.locale]}}
                       </NuxtLink>
                       <p class="guide-list__item-text" v-html="truncateTitle(item['description_'+$i18n.locale],100)"></p>
-                      <div class="guide-list__item-about">
-                        <NuxtLink :to="'/places/'+item.alias" class="guide-list__about-link white--text">Подробнее</NuxtLink>
+                      <div class="guide-list__item-about mt-3">
+                        <NuxtLink :to="'/places/'+item.alias" class="guide-list__about-link white--text">{{ $t('more_info') }}</NuxtLink>
                       </div>
                     </div>
                   </div>
@@ -293,7 +293,7 @@
               </div>
               <p class="calendar__item-text" v-html="truncateTitle(item['description_'+$i18n.locale], 50)"></p>
               <div class="calendar__btn-wrapper">
-                <NuxtLink class="calendar__item-btn popup-modal" to="#">
+                <NuxtLink class="calendar__item-btn mt-3" to="#">
                   <span>{{ $t('more_info') }}</span>
                 </NuxtLink>
               </div>
