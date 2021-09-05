@@ -378,7 +378,9 @@ export default {
       })
     }
 
-
+    galleries.push({
+      id:100, src:store.state.image.image +place.image, thumbnail:store.state.image.image +place.image
+    })
     if(place.galleries.length > 0){
       for(let i = 0; i < place.galleries.length; i++){
         galleries.push(
@@ -386,9 +388,7 @@ export default {
         )
       }
     }
-    galleries.push({
-      id:100, src:store.state.image.image +place.image, thumbnail:store.state.image.image +place.image
-    })
+
     return {place,galleries,placemarks, form, saveColor, places, btn_save}
   },
   methods:{

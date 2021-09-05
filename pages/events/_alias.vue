@@ -209,7 +209,9 @@ export default {
       }).catch((e) => {
         console.log(e)
       })
-
+    galleries.push({
+      id:100, src:store.state.image.image +event.image, thumbnail:store.state.image.image +event.image
+    })
     if(event.galleries.length > 0){
       for(let i = 0; i < event.galleries.length; i++){
         galleries.push(
@@ -217,9 +219,7 @@ export default {
         )
       }
     }
-    galleries.push({
-      id:100, src:store.state.image.image +event.image, thumbnail:store.state.image.image +event.image
-    })
+
     return {event,galleries,placemarks, form, saveColor, btn_save};
   },
   mounted() {
