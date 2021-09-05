@@ -40,7 +40,6 @@
                     marker-type="placemark"
                     :coords="item"
                     :hint-content="place['title_'+$i18n.locale]"
-                    :balloon="{header: 'header', body: 'body', footer: 'footer'}"
                     :icon="{color: 'green', glyph: 'cinema'}"
                     cluster-name="1"
                   ></ymap-marker>
