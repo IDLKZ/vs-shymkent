@@ -150,7 +150,7 @@ export default {
     let souvenirs = [];
     let form = {};
     let saveColor = ''
-    let btn_save = ''
+    let btn_save = 'save'
     await $axios.$get("/souvenir/"+route.params.alias)
       .then(e => {
         if (Object.keys(e).length === 0) throw({ statusCode: 404, message: 'Event not found' })

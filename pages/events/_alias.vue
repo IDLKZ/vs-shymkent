@@ -178,7 +178,7 @@ export default {
     let galleries = [];
     let placemarks = [];
     let saveColor = ''
-    let btn_save= ''
+    let btn_save= 'save'
     let form = {}
     await $axios.$get("/event/"+route.params.alias)
       .then(e => {
