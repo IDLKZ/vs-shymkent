@@ -257,7 +257,7 @@ export default {
     let agent;
     let form = {};
     let saveColor = ''
-    let btn_save = ''
+    let btn_save = 'save'
     await $axios.$get("/agency/"+params.alias)
       .then(e => {
         if (Object.keys(e).length === 0) throw({ statusCode: 404, message: 'Event not found' })

@@ -351,7 +351,7 @@ export default {
     let galleries = [];
     let form = {}
     let saveColor = ''
-    let btn_save = ''
+    let btn_save = 'save'
     const alias = params.alias
     const place = await $axios.$get('/single-place/'+alias);
     const places = await $axios.$get('/getPlace?count=2');

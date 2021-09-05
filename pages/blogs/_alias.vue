@@ -240,7 +240,7 @@ export default {
     let blog = null;
     let form = {}
     let saveColor = ''
-    let btn_save = ''
+    let btn_save = 'save'
     let blogs,reviews = [];
     await $axios.$get("/singleBlog/" + alias).then((e)=>{
       blog = e[0];

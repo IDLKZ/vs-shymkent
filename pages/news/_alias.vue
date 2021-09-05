@@ -166,7 +166,7 @@ export default {
     let current_page,last_page = 1;
     let form = {}
     let saveColor = ''
-    let btn_save = ''
+    let btn_save = 'save'
     const alias = params.alias
     await $axios.$get('/new/'+alias).then((e)=>{
       New = e[0]
