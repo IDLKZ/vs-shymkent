@@ -19,13 +19,14 @@
               {{ place['title_'+$i18n.locale] }}
             </h2>
             <span class="top-content__text" v-for="(item,i) in this.place.category" :key="i">
-              {{item['title_'+$i18n.locale]}} /
+
+              {{item['title_'+$i18n.locale]}} <span v-if="place.category.length>1">/</span>
             </span>
           </div>
         </div>
         <div class="guide-item__inner">
           <div class="guide-item__images">
-            <lingallery :iid.sync="currentId" :width="700" :height="500" :items=galleries />
+            <lingallery :iid.sync="currentId" :width="700" :height="'auto'" :items=galleries />
             <div class="guide-item__map">
               <yandex-map :coords="coords"
                           zoom="10"

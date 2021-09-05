@@ -93,8 +93,8 @@
                 <NuxtLink :to="'/places/'+item.alias"></NuxtLink>
               </div>
               <div class="guide-list__item-info">
-                <div class="guide-list__item-category" v-for="(item,i) in item.category" :key="i">
-                  {{item['title_'+$i18n.locale]}} /
+                <div class="guide-list__item-category" v-for="(value,i) in item.category" :key="i">
+                  {{value['title_'+$i18n.locale]}}
                 </div>
               </div>
               <div class="guide-list__item-content">
