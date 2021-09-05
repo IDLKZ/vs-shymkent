@@ -6,8 +6,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - Visit',
-    title: 'Visit',
+    titleTemplate: '%s - Туристический портал города Шымкент',
+    title: 'Visit-Shymkent',
     htmlAttrs: {
       lang: 'ru'
     },

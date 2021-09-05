@@ -65,14 +65,14 @@
                 {{ $t('published') }}: {{hot.created_at}}
               </div>
             </li>
-            <a  class="news-list__last-news-link">
+            <a href="#allNewsHere"  class="news-list__last-news-link">
               <svg xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"/></g></svg>
             </a>
           </ul>
         </div>
-      </div v-i>
+      </div>
       <template v-if="news.length">
-        <div class="news-list__items">
+        <div class="news-list__items" id="allNewsHere">
           <div class="news-list__item" v-for="(New,i) in news" :key="i">
             <NuxtLink class="popup-modal" :to="'/news/'+New.alias">
               <img class="news-list__item-img" :src="getImages(New.image)" alt="">

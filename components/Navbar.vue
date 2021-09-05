@@ -66,7 +66,7 @@
     </div>
     <header class="header">
       <div class="container pa-0">
-        <div class="header__wrapper">
+        <div class="header__wrapper px-4">
           <div class="header__menu-btn" onclick="headerMenuShow()">
             <span></span>
           </div>
@@ -86,7 +86,7 @@
                 <NuxtLink class="popup-modal" to="/routes">{{ $t('routes_title') }}</NuxtLink>
               </li>
               <li class="header__menu-item">
-                <NuxtLink class="popup-modal" to="/souvenirs">{{ $t('souvenirs') }}</NuxtLink>
+                <NuxtLink class="popup-modal" to="/blogs">{{ $t('blog') }}</NuxtLink>
               </li>
               <li class="header__menu-item-btn">
                 <a class="header__more-btn">
@@ -95,7 +95,7 @@
                 </a>
                 <div class="header__more-wrapper">
                   <NuxtLink class="header__more-wrapper-item popup-modal" to="/news">{{ $t('news') }}</NuxtLink>
-                  <NuxtLink class="header__more-wrapper-item popup-modal" to="/blogs">{{ $t('blog') }}</NuxtLink>
+                  <NuxtLink class="header__more-wrapper-item popup-modal" to="/souvenirs">{{ $t('souvenirs') }}</NuxtLink>
                   <a class="header__more-wrapper-item popup-modal" :href="this.$router.options.base+'#trip'">{{ $t('plan_a_trip') }}</a>
                 </div>
               </li>

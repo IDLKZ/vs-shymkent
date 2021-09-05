@@ -79,6 +79,7 @@
                     v-model="sorts"
                     item-text='title'
                     item-value='value'
+                    label="По дате"
                     @change="sortBySelect"
                     dense
                   ></v-select>
@@ -101,7 +102,7 @@
                   {{item['title_'+$i18n.locale]}}
                 </NuxtLink>
                 <p class="guide-list__item-text" v-html="truncate(item['description_'+$i18n.locale],100)"></p>
-                <div class="guide-list__item-about ">
+                <div class="guide-list__item-about my-2">
                   <NuxtLink :to="'/places/'+item.alias" class="guide-list__about-link white--text mt-3">{{ $t('more_info') }}</NuxtLink>
                 </div>
               </div>

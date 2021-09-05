@@ -58,7 +58,6 @@
                   prepend-icon="mdi-calendar"
                   v-bind="attrs"
                   v-on="on"
-
                 ></v-text-field>
               </template>
               <v-date-picker
@@ -256,10 +255,25 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .calendar__item-img{
   background-repeat: no-repeat!important;
   background-size: cover!important;
   background-position: center!important;
 }
+
+
+  .v-icon{
+    color: #646464!important;
+  }
+  fieldset {
+    border-color: #646464!important;
+  }
+  input{
+    color: #646464!important;
+  }
+  label{
+    color: #646464!important;
+  }
+
 </style>

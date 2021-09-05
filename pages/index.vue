@@ -4,7 +4,7 @@
     <v-container fluid class="pa-0">
       <v-carousel
         cycle
-        height="100vh"
+        height="80vh"
         hide-delimiter-background
         show-arrows-on-hover
       >
@@ -106,7 +106,7 @@
               >{{ $t('events_time_3') }}</button>
             </li>
           </ul>
-          <div class="calendar__change-date ">
+          <div class="calendar__change-date index-calendar">
             <div class="calendar__change-date">
               <v-menu
                 ref="menu1"
@@ -333,7 +333,7 @@
                       ></v-date-picker>
                     </v-menu>
                   </div>
-                  <div class="trip__form-control grid-5 my-sm-2">
+                  <div class="trip__form-control grid-5 my-sm-2 pb-1">
                     <div class="trip__form-control-wrapper" style="height: 40px">
                       <v-menu
                         v-model="menuTraveler"
@@ -401,7 +401,7 @@
                       </v-menu>
                     </div>
                   </div>
-                  <button class="trip__form-btn grid-6 popup-modal align-self-md-center" @click="sendToFly">{{ $t('btn_search') }}</button>
+                  <button class="trip__form-btn grid-6 popup-modal align-self-md-center mb-2" @click="sendToFly">{{ $t('btn_search') }}</button>
                 </div>
               <div class="trip__link-to-board">
                 <a style="color:white!important;" href="http://www.airserver.kz/flights/online-flights/" target="_blank">{{$t('trip_link')}}</a>
@@ -508,7 +508,7 @@
                       ></v-date-picker>
                     </v-menu>
                   </div>
-                  <button class="trip__form-btn popup-modal text--white align-self-md-center mt-2" @click="sendToTrain" style="color: white" type="submit">Найти</button>
+                  <button class="trip__form-btn popup-modal text--white align-self-md-center mb-2" @click="sendToTrain" style="color: white" type="submit">Найти</button>
                 </div>
             </div>
 <!--          Отели  -->
@@ -553,7 +553,7 @@
                       </div>
                     </div>
                   </div>
-                  <button class="trip__form-btn popup-modal text--white align-self-md-center"  type="submit">Найти</button>
+                  <button class="trip__form-btn popup-modal align-self-md-center white--text"  type="submit">Найти</button>
                 </div>
               </form>
             </div>
@@ -1029,7 +1029,7 @@ export default {
   background-size: cover!important;
   background-position: center!important;
 }
-.calendar__change-date{
+.index-calendar{
   .v-icon{
     color: white!important;
   }
