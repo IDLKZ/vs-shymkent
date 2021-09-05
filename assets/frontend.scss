@@ -527,7 +527,7 @@ figure img {
 .guide-list__item{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 .v-application{
   line-height: normal!important;
