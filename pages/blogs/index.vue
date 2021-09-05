@@ -276,12 +276,24 @@ export default {
   },
   //Асинхронная загрузка
   async asyncData({$axios}){
-    let blogs,tags = [];
+    let blogs,tags,authors = [];
+    let activeCheckbox = [0];
     let current_page,last_page = 1;
     await $axios.$get("/tags").then((e)=>{tags = e;}).catch(e=>{console.log(e)})
+    for(let i = 0; i < tags.length; i++){
+      activeCheckbox.push(tags[i].id);
+    }
+    let tagId= activeCheckbox.length > 0 ? "&tag_id=" + JSON.stringify(activeCheckbox) : "";
+
+    await $axios.$get("/author-blogs?page=1" + tagId).then(e=>{
+      authors = e.data
+    }).catch(e=>{console.log(e)});
+
+
     await $axios.$get("/blogs").then((e)=>{blogs = e.data;current_page = e.current_page;last_page = e.last_page;}).catch(e=>{console.log(e)})
 
-    return {tags,blogs,current_page,last_page}
+
+    return {tags,blogs,current_page,last_page,activeCheckbox,authors}
 
 
   }
