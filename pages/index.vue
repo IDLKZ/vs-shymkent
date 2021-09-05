@@ -403,6 +403,9 @@
                   </div>
                   <button class="trip__form-btn grid-6 popup-modal align-self-md-center" @click="sendToFly">{{ $t('btn_search') }}</button>
                 </div>
+              <div class="trip__link-to-board">
+                <a style="color:white!important;" href="http://www.airserver.kz/flights/online-flights/" target="_blank">{{$t('trip_link')}}</a>
+              </div>
             </div>
 <!--            Жд-->
             <div :class="'trip__tab tab-2 '+this.tabs[1].active">
@@ -602,9 +605,6 @@
             </div>
           </div>
         </div>
-        <div class="trip__link-to-board">
-          <a style="color:white!important;" href="http://www.airserver.kz/flights/online-flights/" target="_blank">{{$t('trip_link')}}</a>
-        </div>
       </div>
     </section>
     <!--   Начало путешествия-->
@@ -660,51 +660,17 @@
         </div>
         <div class="souvenirs__items-inner">
           <div class="souvenirs__item" v-for="(item,i) in souvenirs.data" :key="i">
-            <div class="souvenirs__item-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
+            <NuxtLink :to="'/souvenirs/'+item.alias">
+              <div class="souvenirs__item-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
+            </NuxtLink>
+
             <div class="souvenirs__item-content">
               <h4 class="souvenirs__item-title">
                 {{ item['title_'+$i18n.locale] }}
               </h4>
               <p class="souvenirs__item-text" v-html="truncate(item['description_'+$i18n.locale], 75)"></p>
               <div class="souvenirs__item-price-wrapper">
-                <v-dialog
-                  v-if="item.eventum"
-                  v-model="dialog2" outlined
-                  autocomplete="off"
-                  filled
-                  solo-inverted
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <button class="souvenirs__item-btn popup-modal"
-                            v-bind="attrs"
-                            v-on="on"
-                            style="color: white!important;"
-                    >
-                      <span>{{ $t('buy') }}</span>
-                    </button>
-                  </template>
-
-                  <v-card>
-                    <v-card-text>
-                          <div @click="dialog2 = false"
-                               style="float: right;height: 10px;width: 15px;cursor: pointer;position: absolute;right: 10px;top: 8px;">
-                            <svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" width="100%" height="100%">
-                              <rect fill="#000000" x="-1.8" y="6.2"
-                                    transform="matrix(0.7071 0.7071 -0.7071 0.7071 7.5178 -3.1079)" width="18.6"
-                                    height="2.7"></rect>
-                              <rect fill="#000000" x="-1.8" y="6.2"
-                                    transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 18.1391 7.5282)" width="18.6"
-                                    height="2.7"></rect>
-                            </svg>
-                          </div>
-                          <iframe :src="getEventum(item.eventum)" style="height:573px;width:100%;"
-                                  frameborder="0"></iframe>
-                    </v-card-text>
-
-                    <v-divider></v-divider>
-
-                  </v-card>
-                </v-dialog>
+                <NuxtLink style="color:white!important;" class="souvenirs__item-btn" :to="'/souvenirs/'+item.alias"><span>{{ $t('more_info') }}</span></NuxtLink>
                 <div class="souvenirs__item-price">
                   {{item.price}} ТГ
                 </div>

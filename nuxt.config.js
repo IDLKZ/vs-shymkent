@@ -9,7 +9,7 @@ export default {
     titleTemplate: '%s - Visit',
     title: 'Visit',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'ru'
     },
     meta: [
       { charset: 'utf-8' },
@@ -157,6 +157,9 @@ export default {
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],
+    lang: {
+      current: "ru"
+    },
     theme: {
       dark: false,
       themes: {

@@ -111,8 +111,8 @@ export default {
     }
     if ( this.$auth.user.user.role_id === 3){
       this.tabs[2].svg = "<i class = 'far fa-question-circle mr-2'></i>"
-      this.tabs[2].title = 'Оставить заявку'
-      this.tabs[2].link = '/cabinet/create-souvenir'
+      this.tabs[2].title = 'cabinet_menu_request'
+      this.tabs[2].link = '/cabinet/leave-request'
     }
   },
 

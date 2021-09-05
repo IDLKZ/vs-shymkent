@@ -23,9 +23,44 @@
       <div class="calendar-item__inner">
         <div class="calendar-item__left-content">
           <lingallery :iid.sync="currentId" :width="400" :height="'auto'" :items=galleries class="mr-md-6"/>
-          <button class="calendar-item__btn" v-if="event.eventum">
-            {{ $t('buy') }}
-          </button>
+          <v-dialog
+            v-if="event.eventum"
+            v-model="dialog2" outlined
+            autocomplete="off"
+            filled
+            solo-inverted
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <button class="calendar-item__btn"
+                      v-bind="attrs"
+                      v-on="on"
+                      style="color: white!important;"
+              >
+                <span>{{ $t('buy') }}</span>
+              </button>
+            </template>
+
+            <v-card>
+              <v-card-text>
+                <div @click="dialog2 = false"
+                     style="float: right;height: 10px;width: 15px;cursor: pointer;position: absolute;right: 10px;top: 8px;">
+                  <svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" width="100%" height="100%">
+                    <rect fill="#000000" x="-1.8" y="6.2"
+                          transform="matrix(0.7071 0.7071 -0.7071 0.7071 7.5178 -3.1079)" width="18.6"
+                          height="2.7"></rect>
+                    <rect fill="#000000" x="-1.8" y="6.2"
+                          transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 18.1391 7.5282)" width="18.6"
+                          height="2.7"></rect>
+                  </svg>
+                </div>
+                <iframe :src="getEventum(event.eventum)" style="height:573px;width:100%;"
+                        frameborder="0"></iframe>
+              </v-card-text>
+
+              <v-divider></v-divider>
+
+            </v-card>
+          </v-dialog>
         </div>
         <div class="calendar-item__content">
           <div class="calendar-item__content-item">
@@ -94,11 +129,11 @@
           </div>
           <div class="calendar-item__content-item">
             <div class="post__btns">
-              <form @submit.prevent="addSave">
+              <form @submit.prevent="addSave(form,saveColor)">
                 <input v-model="form.event_id" type="hidden" name="event_id">
-                <button type="submit" class="post__btn">
-                  <svg :class="this.saveColor" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
-                  {{ $t('save') }}
+                <button type="submit" class="post__btn" :class="this.saveColor">
+                  <svg data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
+                  {{ $t(btn_save) }}
                 </button>
               </form>
               <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
@@ -122,6 +157,7 @@ export default {
   },
   data(){
     return {
+      dialog2: false,
       event:null,
       galleries: [],
       currentId:null,
@@ -130,44 +166,19 @@ export default {
     }
   },
   methods:{
-    getImages(data){
-      console.log(this.$store.state.image.image);
-      return this.$store.state.image.image + data ;
-    },
-    truncate(string, value) {
-      return string.length > value ? string.substring(0, value) + '…' : string;
-    },
     activeTab(i){
       this.tabs.forEach((item,i) => {
         item.active = ''
       })
       this.tabs[i].active = 'active'
     },
-    async addSave(){
-      // console.log(this.form)
-      try {
-        this.$toast.show('Updating in...')
-        await this.$axios.$post("/cabinet/add-save", this.form).then((response) => {
-          this.$toast.success('Успешно добавлен')
-          this.saveColor = response
-          // window.location.reload()
-        }).catch(({response}) => {
-          if (response.status === 401){
-            window.location.assign('/login')
-          }
-          // this.errors = response.data.errors
-        })
-      } catch (e) {
-        this.$toast.error('Error')
-        console.log(e)
-      }
-    }
   },
   async asyncData({$axios,route,redirect,store}) {
     let event;
     let galleries = [];
     let placemarks = [];
-    let saveColor = '';
+    let saveColor = ''
+    let btn_save= ''
     let form = {}
     await $axios.$get("/event/"+route.params.alias)
       .then(e => {
@@ -181,8 +192,10 @@ export default {
               event.savings.forEach((item,i) => {
                 if (item.user_id == store.$auth.$state.user.user.id){
                   saveColor = 'color--red'
+                  btn_save = 'saved'
                 } else {
                   saveColor = ''
+                  btn_save = 'save'
                 }
               })
             }
@@ -207,7 +220,7 @@ export default {
     galleries.push({
       id:100, src:store.state.image.image +event.image, thumbnail:store.state.image.image +event.image
     })
-    return {event,galleries,placemarks, form, saveColor};
+    return {event,galleries,placemarks, form, saveColor, btn_save};
   },
   mounted() {
     // console.log(this.galleries)

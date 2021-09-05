@@ -72,7 +72,7 @@
           <div v-if="fails.title_en" :class="d_none">
                 <span class="error--text v-size--small" v-for="(err,i) in fails.title_en" :key="i">{{err}}</span>
               </div>
-          <button class="authorization__box-form-btn" type="submit">
+          <button style="color: white!important;" class="authorization__box-form-btn" type="submit">
             {{ $t('register_btn') }}
           </button>
           <div class="authorization__box-polit">

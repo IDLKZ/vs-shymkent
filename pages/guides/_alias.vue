@@ -20,7 +20,7 @@
           {{ guide['title_'+$i18n.locale] }}
         </h2>
         <div class="tour-guide__wrapper">
-          <div class="tour-guide__img" :style="'background-image: url('+getImages(guide.image)+');'"></div>
+          <div class="tour-guide__img" :style="'background-image: url('+getImage(guide.image)+');'"></div>
           <div class="tour-guide__content">
             <div class="tour-guide__content-info">
               <div class="tour-guide__content-info-item" v-html="guide['description_'+$i18n.locale]"></div>
@@ -49,11 +49,11 @@
                 </ul>
               </div>
               <div class="post__btns">
-                <form @submit.prevent="addSave">
+                <form @submit.prevent="addSave(form, saveColor)">
                   <input v-model="form.organizator_id" type="hidden">
-                  <button type="submit" class="post__btn">
-                    <svg :class="this.saveColor" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
-                    {{ $t('save') }}
+                  <button type="submit" class="post__btn" :class="this.saveColor">
+                    <svg data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
+                    {{ $t(btn_save) }}
                   </button>
                 </form>
                 <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
@@ -88,7 +88,7 @@
                     <div class="tour-agency__reviews-item" v-for="review in guide.reviews">
                       <div class="tour-agency__reviews-item-top">
                         <div class="tour-agency__reviews-item-img"
-                             :style="'background-image: url('+getImages(review.user.image)+');'"></div>
+                             :style="'background-image: url('+getImage(review.user.image)+');'"></div>
                         <div class="tour-agency__reviews-item-inner">
                           <div class="tour-agency__reviews-inner-name">
                             {{review.user.name}}
@@ -118,7 +118,7 @@
             <div class="d-flex">
               <v-avatar >
                 <img
-                  :src="getImages(this.$auth.user.user.image)"
+                  :src="getImage(this.$auth.user.user.image)"
                   :alt="this.$auth.user.user.name"
                 >
               </v-avatar>
@@ -171,7 +171,7 @@
         <div class="tour-guide__routes-list-wrapper" v-if="guide.routes.length>0">
           <div class="tour-guide__routes-list" v-for="(item,i) in guide.routes" :key="i">
             <NuxtLink :to="'/places/'+item.alias" class="routes-page__item">
-              <div class="routes-page__item-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
+              <div class="routes-page__item-img" :style="'background-image: url('+getImage(item.image)+');'"></div>
               <div class="routes-page__item-content">
                 <h4 class="routes-page__item-title">
                   {{ item.category['title_'+$i18n.locale] }}
@@ -181,7 +181,7 @@
                     {{ type['title_'+$i18n.locale] }}
                   </li>
                 </ul>
-                <div class="routes-page__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></div>
+                <div class="routes-page__item-text" v-html="truncateTitle(item['description_'+$i18n.locale], 50)"></div>
                 <div class="routes-page__item-about">
                   <div class="routes-page__item-time">
                     {{ $t('duration') }}: <span>{{ item.time }}.</span>
@@ -235,36 +235,12 @@ export default {
       this.forms.review = "";
 
     },
-    getImages(data){
-      return this.$store.state.image.image + data ;
-    },
-    truncate(string = '', value) {
-      return string.length > value ? string.substring(0, value) + '…' : string;
-    },
-    async addSave(){
-      // console.log(this.form)
-      try {
-        this.$toast.show('Updating in...')
-        await this.$axios.$post("/cabinet/add-save", this.form).then((response) => {
-          this.$toast.success('Успешно добавлен')
-          this.saveColor = response
-          // window.location.reload()
-        }).catch(({response}) => {
-          if (response.status === 401){
-            window.location.assign('/login')
-          }
-          // this.errors = response.data.errors
-        })
-      } catch (e) {
-        this.$toast.error('Error')
-        console.log(e)
-      }
-    },
   },
   async asyncData({$axios,params,redirect,store}) {
     let guide;
     let form = {};
-    let saveColor = '';
+    let saveColor = ''
+    let btn_save = ''
     await $axios.$get("/guide/"+params.alias)
       .then(e => {
         if (Object.keys(e).length === 0) throw({ statusCode: 404, message: 'Event not found' })
@@ -277,8 +253,10 @@ export default {
               guide.savings.forEach((item,i) => {
                 if (item.user_id == store.$auth.$state.user.user.id){
                   saveColor = 'color--red'
+                  btn_save = 'saved'
                 } else {
                   saveColor = ''
+                  btn_save = 'save'
                 }
               })
             }
@@ -288,7 +266,7 @@ export default {
         console.log(e)
       })
 
-    return {guide,form,saveColor};
+    return {guide,form,saveColor,btn_save};
   },
   mounted() {
     // console.log(this.guide)

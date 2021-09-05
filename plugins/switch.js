@@ -6,9 +6,6 @@ Vue.mixin({
     }
   },
   methods: {
-
-
-
     switchLanguages(){
       if (this.$i18n.locale == 'kz'){
         this.LANG = 'kk-KK'
@@ -29,6 +26,6 @@ Vue.mixin({
     }
   },
   mounted() {
-    this.switchLanguages()
+
   }
 })

@@ -161,11 +161,11 @@
                     Аудиогид
                   </a>
                 </button>
-                <form @submit.prevent="addSave">
+                <form @submit.prevent="addSave(form,saveColor)">
                   <input v-model="form.place_id" type="hidden" name="place_id">
-                  <button type="submit" class="post__btn">
-                    <svg :class="this.saveColor" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
-                    {{ $t('save') }}
+                  <button type="submit" class="post__btn" :class="this.saveColor">
+                    <svg data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
+                    {{ $t(btn_save) }}
                   </button>
                 </form>
                 <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
@@ -179,7 +179,7 @@
               <div class="guide-item__sameplace-slider">
                 <div class="guide-item__sameplace-slider-item">
                   <div class="guide-list__item" v-for="(item,i) in places" :key="i">
-                    <div class="guide-list__item-img" :style="'background-image: url('+getImages(item.image)+');'">
+                    <div class="guide-list__item-img" :style="'background-image: url('+getImage(item.image)+');'">
                       <NuxtLink :to="'/places/'+item.alias"></NuxtLink>
                     </div>
                     <div class="guide-list__item-info">
@@ -191,7 +191,7 @@
                       <NuxtLink :to="'/places/'+item.alias" class="guide-list__item-title">
                         {{item['title_'+$i18n.locale]}}
                       </NuxtLink>
-                      <p class="guide-list__item-text" v-html="truncate(item['description_'+$i18n.locale],100)"></p>
+                      <p class="guide-list__item-text" v-html="truncateTitle(item['description_'+$i18n.locale],100)"></p>
                       <div class="guide-list__item-about">
                         <NuxtLink :to="'/places/'+item.alias" class="guide-list__about-link white--text">Подробнее</NuxtLink>
                       </div>
@@ -271,7 +271,7 @@
         </div>
         <div class="calendar__inner" v-if="place.events.length>0">
           <div class="calendar__item" v-for="(item,i) in place.events" :key="i">
-            <div class="calendar__item-img" :style="'background-image: url('+getImages(item.image)+');'">
+            <div class="calendar__item-img" :style="'background-image: url('+getImage(item.image)+');'">
               <div class="calendar__item-day" v-if="item.workdays.length>0">
                 <div v-for="(day,index) in item.workdays" :key="index">
                   <span>{{ $t('date') }} </span>{{day.date_start}} - {{day.date_end}}
@@ -291,7 +291,7 @@
               <div class="calendar__item-location">
                 {{ item.address }}
               </div>
-              <p class="calendar__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></p>
+              <p class="calendar__item-text" v-html="truncateTitle(item['description_'+$i18n.locale], 50)"></p>
               <div class="calendar__btn-wrapper">
                 <NuxtLink class="calendar__item-btn popup-modal" to="#">
                   <span>{{ $t('more_info') }}</span>
@@ -350,7 +350,8 @@ export default {
   async asyncData({params, $axios, store}) {
     let galleries = [];
     let form = {}
-    let saveColor = '';
+    let saveColor = ''
+    let btn_save = ''
     const alias = params.alias
     const place = await $axios.$get('/single-place/'+alias);
     const places = await $axios.$get('/getPlace?count=2');
@@ -361,8 +362,10 @@ export default {
         place.savings.forEach((item,i) => {
           if (item.user_id == store.$auth.$state.user.user.id){
             saveColor = 'color--red'
+            btn_save = 'saved'
           } else {
             saveColor = ''
+            btn_save = 'save'
           }
         })
       }
@@ -384,35 +387,9 @@ export default {
     galleries.push({
       id:100, src:store.state.image.image +place.image, thumbnail:store.state.image.image +place.image
     })
-    return {place,galleries,placemarks, form, saveColor,places}
+    return {place,galleries,placemarks, form, saveColor, places, btn_save}
   },
   methods:{
-    getImages(data){
-      // console.log(this.$store.state.image.image);
-      return this.$store.state.image.image + data ;
-    },
-    truncate(string, value) {
-      return string.length > value ? string.substring(0, value) + '…' : string;
-    },
-    async addSave(){
-      // console.log(this.form)
-      try {
-        this.$toast.show('Updating in...')
-        await this.$axios.$post("/cabinet/add-save", this.form).then((response) => {
-          this.$toast.success('Успешно добавлен')
-          this.saveColor = response
-          // window.location.reload()
-        }).catch(({response}) => {
-          if (response.status === 401){
-            window.location.assign('/login')
-          }
-          // this.errors = response.data.errors
-        })
-      } catch (e) {
-        this.$toast.error('Error')
-        console.log(e)
-      }
-    }
 
   },
   mounted() {

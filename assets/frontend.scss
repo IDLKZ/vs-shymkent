@@ -491,6 +491,7 @@ figure img {
 }
 .color--red {
   fill: red;
+  color: #fd3939 !important;
 }
 .color--white{
   color: white!important;
@@ -534,7 +535,9 @@ figure img {
 .v-application p {
   margin: 0!important;
 }
-
+.slick-prev::before, .slick-next::before{
+  color: black!important;
+}
 @media screen and (max-width: 370px){
   .guide-list__items{
     grid-template-columns: 1fr;

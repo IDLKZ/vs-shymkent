@@ -65,7 +65,7 @@
       </div>
     </div>
     <header class="header">
-      <div class="container">
+      <div class="container pa-0">
         <div class="header__wrapper">
           <div class="header__menu-btn" onclick="headerMenuShow()">
             <span></span>

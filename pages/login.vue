@@ -27,7 +27,7 @@
           <NuxtLink to="/forget" class="authorization__box-form-link">
             Забыли cвой пароль?
           </NuxtLink>
-          <button class="authorization__box-form-btn" type="submit">
+          <button style="color:white!important;" class="authorization__box-form-btn" type="submit">
             {{ $t('log_in') }}
           </button>
         </form>
@@ -54,13 +54,13 @@ export default {
   methods: {
     async submit() {
       try {
-        this.$toast.show('Logging in...')
+        this.$toast.show(this.$t('notification_logging_in'))
         await this.$auth.loginWith("local", {
           data: this.form
         })
-        this.$toast.success('Successfully authenticated')
+        this.$toast.success(this.$t('notification_success_auth'))
       } catch (e) {
-        this.$toast.error('Error while authenticating')
+        this.$toast.error(this.$t('notification_error_auth'))
         return console.log(e);
       }
       this.$router.push({

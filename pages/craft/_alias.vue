@@ -20,7 +20,7 @@
           {{ craft['title_'+$i18n.locale] }}
         </h2>
         <div class="souvenirs-item__wrapper">
-          <div class="souvenirs-item__img" :style="'background-image: url('+getImages(craft.image)+');'"></div>
+          <div class="souvenirs-item__img" :style="'background-image: url('+getImage(craft.image)+');'"></div>
           <div class="souvenirs-item__content">
             <div class="souvenirs-item__content-info souvenirs-item__content-info--move">
               <div class="souvenirs-item__content-info-item">
@@ -73,11 +73,11 @@
                 </ul>
               </div>
               <div class="post__btns">
-                <form @submit.prevent="addSave">
+                <form @submit.prevent="addSave(form,saveColor)">
                   <input v-model="form.shop_id" type="hidden">
-                  <button type="submit" class="post__btn">
-                    <svg :class="this.saveColor" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
-                    {{ $t('save') }}
+                  <button type="submit" class="post__btn" :class="this.saveColor">
+                    <svg data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
+                    {{ $t(btn_save) }}
                   </button>
                 </form>
                 <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
@@ -106,7 +106,7 @@
               <div class="souvenirs-item__aside-items">
                 <div class="souvenirs-item__aside-item" v-for="craftman in craftmans" :key="craftman.id">
                   <div class="souvenirs-item__aside-img"
-                       :style="'background-image: url('+getImages(craftman.image)+');'"
+                       :style="'background-image: url('+getImage(craftman.image)+');'"
                   ></div>
                   <NuxtLink v-if="craftman.role_id == 7"  :to="'/craftman/' + craftman.alias" class="souvenirs-item__aside-item-title">
                     {{ craftman["title_" + $i18n.locale] }}
@@ -144,13 +144,13 @@
         <div class="souvenirs__items-inner">
           <div class="souvenirs__item" v-for="(item,i) in souvenirs" :key="i">
             <NuxtLink :to="'/souvenirs/'+item.alias">
-              <div class="souvenirs__item-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
+              <div class="souvenirs__item-img" :style="'background-image: url('+getImage(item.image)+');'"></div>
             </NuxtLink>
             <div class="souvenirs__item-content">
               <h4 class="souvenirs__item-title">
                 <NuxtLink :to="'/souvenirs/'+item.alias">{{ item['title_'+$i18n.locale] }}</NuxtLink>
               </h4>
-              <p class="souvenirs__item-text" v-html="truncate(item['description_'+$i18n.locale],50)"></p>
+              <p class="souvenirs__item-text" v-html="truncateTitle(item['description_'+$i18n.locale],50)"></p>
               <div class="souvenirs__item-price-wrapper">
                 <button class="souvenirs__item-btn popup-modal" v-if="item.eventum">
                   <span>{{ $t('buy') }}</span>
@@ -178,13 +178,6 @@ export default {
     }
   },
   methods:{
-    getImages(data){
-      return this.$store.state.image.image + data ;
-    },
-    truncate(string, value) {
-      return string.length > value ? string.substring(0, value) + '…' : string;
-
-    },
     getStarClass(item,max){
       let className =  'guide-list__item-rating-star';
       for (let i = 1; i <= max; i++){
@@ -193,25 +186,6 @@ export default {
         }
       }
       return className;
-    },
-    async addSave(){
-      // console.log(this.form)
-      try {
-        this.$toast.show('Updating in...')
-        await this.$axios.$post("/cabinet/add-save", this.form).then((response) => {
-          this.$toast.success('Успешно добавлен')
-          this.saveColor = response
-          // window.location.reload()
-        }).catch(({response}) => {
-          if (response.status === 401){
-            window.location.assign('/login')
-          }
-          // this.errors = response.data.errors
-        })
-      } catch (e) {
-        this.$toast.error('Error')
-        console.log(e)
-      }
     }
   },
   async asyncData({$axios,route,redirect,store}) {
@@ -219,7 +193,8 @@ export default {
     let souvenirs = [];
     let craftmans = [];
     let form = {};
-    let saveColor = '';
+    let saveColor = ''
+    let btn_save = ''
     await $axios.$get("/shop/"+route.params.alias)
       .then(e => {
         if (Object.keys(e).length === 0) throw({ statusCode: 404, message: 'Event not found' })
@@ -233,8 +208,10 @@ export default {
               craft.savings.forEach((item,i) => {
                 if (item.user_id == store.$auth.$state.user.user.id){
                   saveColor = 'color--red'
+                  btn_save = 'saved'
                 } else {
                   saveColor = ''
+                  btn_save = 'save'
                 }
               })
             }
@@ -246,7 +223,7 @@ export default {
       })
     await $axios.$get("/getRandomCraftmans?count=2").then(e=>{craftmans = e})
 
-    return {craft,souvenirs,form,saveColor,craftmans};
+    return {craft,souvenirs,form,saveColor,btn_save,craftmans};
   }
 }
 </script>

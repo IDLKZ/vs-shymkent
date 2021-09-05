@@ -124,6 +124,7 @@
   "see_also": "See also",
   "blogs_subtitle": "Tourism and not only ",
   "save": "Save",
+  "saved": "Saved",
   "send": "Send",
   "back": "Back",
   "tags": "Tags",
@@ -165,7 +166,7 @@
   "cabinet_menu_events": "Suggest an event",
   "cabinet_menu_souvenirs": "Create a product",
   "cabinet_menu_settings": "Settings",
-
+  "cabinet_menu_request": "Leave a request",
   "cabinet_editor": "Publication Editor",
   "cabinet_img": "Cover image ",
   "cabinet_title_kz": "Title in Kazakh",
@@ -191,5 +192,13 @@
   "tourism": "Tourism",
   "contact": "Contact",
   "privacy_statement": "Privacy policy",
-  "footer_text": "The site was created with the support of the Department of tourism of Shymkent."
+  "footer_text": "The site was created with the support of the Department of tourism of Shymkent.",
+
+  "cabinet_request_message_1": "Dear user! Thank you for using the resources of our website! If you have any questions about changing the role to a travel agency, guide, shop, craftsman, as well as if you have any questions about the site, possible problems or content, and other questions, please write to the mail",
+  "cabinet_request_message_2": "or call the customer service department! Please, when sending a letter, provide detailed information - full name or company name, contact phone number, email",
+  "notification_logging_in": "Logging in...",
+  "notification_success_auth": "Successfully authenticated",
+  "notification_error_auth": "Error while authenticating",
+  "notification_updating_in": "Update in...",
+  "notification_updated": "Successfully updated"
 }

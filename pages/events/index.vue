@@ -99,7 +99,7 @@
               {{ item.address }}
             </div>
             <p class="calendar__item-text" v-html="truncateTitle(item['description_'+$i18n.locale], 50)"></p>
-            <div class="calendar-page__btn-wrapper">
+            <div class="calendar-page__btn-wrapper mt-3">
               <v-dialog
                 v-if="item.eventum"
                 v-model="dialog"

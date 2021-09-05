@@ -57,11 +57,11 @@
             </div>
           </div>
           <div class="post__btns">
-            <form @submit.prevent="addSave">
+            <form @submit.prevent="addSave(form,saveColor)">
               <input v-model="form.route_id" type="hidden">
-              <button type="submit" class="post__btn">
-                <svg :class="this.saveColor" data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
-                {{ $t('save') }}
+              <button type="submit" class="post__btn" :class="this.saveColor">
+                <svg data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
+                {{ $t(btn_save) }}
               </button>
             </form>
             <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
@@ -130,25 +130,6 @@ export default {
       }
       this.points[i].active = 'active'
       // console.log(this.points[i].active)
-    },
-    async addSave(){
-      // console.log(this.form)
-      try {
-        this.$toast.show('Updating in...')
-        await this.$axios.$post("/cabinet/add-save", this.form).then((response) => {
-          this.$toast.success('Успешно добавлен')
-          this.saveColor = response
-          // window.location.reload()
-        }).catch(({response}) => {
-          if (response.status === 401){
-            window.location.assign('/login')
-          }
-          // this.errors = response.data.errors
-        })
-      } catch (e) {
-        this.$toast.error('Error')
-        console.log(e)
-      }
     }
   },
   async asyncData({$axios,route,redirect,store}) {
@@ -157,7 +138,8 @@ export default {
     let placemarks = [];
     const points = {};
     let form = {};
-    let saveColor = '';
+    let saveColor = ''
+    let btn_save = ''
     await $axios.$get("/route/"+route.params.alias)
       .then(e => {
         if (Object.keys(e).length === 0) throw({ statusCode: 404, message: 'Event not found' })
@@ -170,8 +152,10 @@ export default {
               Route.savings.forEach((item,i) => {
                 if (item.user_id == store.$auth.$state.user.user.id){
                   saveColor = 'color--red'
+                  btn_save = 'saved'
                 } else {
                   saveColor = ''
+                  btn_save = 'save'
                 }
               })
             }
@@ -213,7 +197,7 @@ export default {
 
     }
     // console.log(placemarks)
-    return {Route,galleries,placemarks,points,form,saveColor};
+    return {Route,galleries,placemarks,points,form,saveColor,btn_save};
   },
   mounted() {
     // console.log(this.$route)

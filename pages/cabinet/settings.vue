@@ -25,7 +25,7 @@
                   <!--                </button>-->
                 </div>
               </div>
-              <div class="account__personal-info-img-wrapper">
+              <div class="account__personal-info-img-wrapper" v-if="this.$auth.user.user.role_id !== 3">
                 <div class="account__personal-info-img" :style="'background-image: url('+getImages(photo)+');'"></div>
                 <div class="account__personal-info-btns-wrapper">
                   <div class="input__wrapper">
@@ -88,24 +88,24 @@
 
                   </div>
                 </div>
-                <button type="submit" class="account__personal-info-form-btn" style="color: white!important;">Сохранить изменения</button>
+                <button type="submit" class="account__personal-info-form-btn" style="color: white!important;">{{$t('save') }}</button>
               </form>
 
-              <div class="account__personal-info-content">
+              <div class="account__personal-info-content" v-if="this.$auth.user.user.role_id !== 3">
                 <h3 class="account__personal-info-content-title">
                   {{ $t('companies_info') }}
-                  <v-tooltip bottom v-if="!person.status">
-                    <template v-slot:activator="{ on, attrs }">
-                      <span
-                        v-bind="attrs"
-                        v-on="on"
-                        class="red--text"
-                        style="font-size: 14px"
-                      >(Не подтвержден)</span>
-                    </template>
-                    <span>Чтоб подтвердить аккаунт обратитесь к администратору сайта!</span>
-                  </v-tooltip>
-                  <span v-if="person.status" class="green--text" style="font-size: 14px">(Подтвержден)</span>
+<!--                  <v-tooltip bottom v-if="!person.status">-->
+<!--                    <template v-slot:activator="{ on, attrs }">-->
+<!--                      <span-->
+<!--                        v-bind="attrs"-->
+<!--                        v-on="on"-->
+<!--                        class="red&#45;&#45;text"-->
+<!--                        style="font-size: 14px"-->
+<!--                      >(Не подтвержден)</span>-->
+<!--                    </template>-->
+<!--                    <span>Чтоб подтвердить аккаунт обратитесь к администратору сайта!</span>-->
+<!--                  </v-tooltip>-->
+<!--                  <span v-if="person.status" class="green&#45;&#45;text" style="font-size: 14px">(Подтвержден)</span>-->
                 </h3>
                 <form @submit.prevent="updateGuide" v-if="this.$auth.user.user.role_id === 4">
                   <div class="account__personal-info-form-inner__cabinet">
