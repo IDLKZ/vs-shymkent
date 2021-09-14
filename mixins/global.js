@@ -15,7 +15,12 @@ const globals = {
             return text.length > value ? text.substring(0, value) + '...' : text;
           },
           getImage(image) {
-            return this.$store.state.image.image + image;
+            if(image == null || image == "null"){
+              return  "https://www.freeiconspng.com/uploads/no-image-icon-4.png";
+            }
+            else{
+              return this.$store.state.image.image + image;
+            }
           },
           getEventum(id) {
             return this.$store.state.eventum.code + id
@@ -55,7 +60,6 @@ const globals = {
               })
             } catch (e) {
               this.$toast.error('Error')
-              console.log(e)
             }
           }
         }

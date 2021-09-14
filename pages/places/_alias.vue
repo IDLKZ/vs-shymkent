@@ -103,9 +103,9 @@
                                 {{ $t('website') }}:
                             </span>
                 <div class="guide-item__contact-text">
-                  <div v-if="place.social_networks">
-                    <div v-for="(item,i) in place.social_networks" :key="i">
-                      <a :href="item">{{item}}</a> .,
+                  <div v-if="place.sites">
+                    <div v-for="(item,i) in place.sites" :key="i">
+                      <a :href="item" target="_blank">{{item}}</a> .,
                     </div>
                   </div>
 
@@ -197,7 +197,7 @@
                       </NuxtLink>
                       <p class="guide-list__item-text" v-html="truncateTitle(item['description_'+$i18n.locale],100)"></p>
                       <div class="guide-list__item-about mt-3">
-                        <NuxtLink :to="'/places/'+item.alias" class="guide-list__about-link white--text">{{ $t('more_info') }}</NuxtLink>
+                        <NuxtLink :to="'/places/'+item.alias" class="guide-list__about-link white--text my-4">{{ $t('more_info') }}</NuxtLink>
                       </div>
                     </div>
                   </div>

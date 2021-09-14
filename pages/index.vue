@@ -513,95 +513,288 @@
             </div>
 <!--          Отели  -->
             <div :class="'trip__tab tab-3 '+this.tabs[2].active">
-              <form>
-                <div class="form__inner">
-                  <div class="trip__input-name">
-                    <input type="text" placeholder="Город" autocomplete="off">
-                  </div>
-                  <div class="trip__input-date">
-                    <input id="start-date-3" type="text" placeholder="Прибытие">
-                  </div>
-                  <div class="trip__input-date">
-                    <input id="end-date-3" class='trip__calendar' type="text" placeholder="Выезд">
-                  </div>
-                  <div class="trip__form-control">
-                    <div class="trip__form-control-wrapper">
-                      <div class="trip__form-count">
-                        <span class="adults-count">1</span> взрослый, <span class="children-count">без</span> детей, <span class="babies-count">1</span> номер
-                      </div>
-                      <div class="trip__dropdown">
-                        <ul class="trip__form-dropdown">
-                          <li class="trip__form-item">
-                            Взрослые
-                            <div class="quantity">
-                              <input class="adults__tab-3" type="number" min="0" max="9" step="1" value="1">
-                            </div>
-                          </li>
-                          <li class="trip__form-item">
-                            Дети
-                            <div class="quantity">
-                              <input class="children__tab-3" type="number" min="0" max="9" step="1" value="0">
-                            </div>
-                          </li>
-                          <li class="trip__form-item">
-                            Младенцы
-                            <div class="quantity">
-                              <input class="babies__tab-3" type="number" min="0" max="9" step="1" value="1">
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <button class="trip__form-btn popup-modal align-self-md-center white--text"  type="submit">Найти</button>
+              <div class="form__inner d-md-flex align-center">
+                <div class="trip__input-name grid-1 my-sm-2">
+                  <v-autocomplete
+                    hide-details
+                    filled
+                    :items="data"
+                    background-color="white"
+                    color="black"
+                    item-value="code"
+                    v-model="toAvia"
+                    item-text="name_ru"
+                    dense
+                    outlined
+                    autocomplete="off"
+                    :placeholder="$t('trip_to')"
+                  ></v-autocomplete>
                 </div>
-              </form>
+                <div class="trip__input-date grid-2 my-sm-2">
+                  <v-menu
+                    ref="menu1"
+                    v-model="fromHotelModal"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    max-width="290px"
+                    min-width="auto"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        hide-details="auto"
+                        v-model="fromApartmentComputed"
+                        :label="$t('trip_date_from')"
+                        v-bind="attrs"
+                        v-on="on"
+                        outlined
+                        background-color="white"
+                        color="black"
+                        dense
+                        autocomplete="off"
+                        filled
+
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      :lang="LANG"
+                      v-model="apartmentDateFrom"
+                      no-title
+                      @input="fromHotelModal = false"
+                    ></v-date-picker>
+                  </v-menu>
+                </div>
+                <div class="trip__input-date grid-3 my-sm-2">
+                  <v-menu
+                    ref="menu1"
+                    v-model="toHotelModal"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    max-width="290px"
+                    min-width="auto"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        hide-details="auto"
+                        v-model="toApartmentComputed"
+                        :label="$t('trip_date_to')"
+                        v-bind="attrs"
+                        background-color="white"
+                        color="black"
+                        v-on="on"
+                        dense
+                        outlined
+                        autocomplete="off"
+                        filled
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      :lang="LANG"
+                      v-model="apartmentDateTo"
+                      no-title
+                      @input="toHotelModal = false"
+                    ></v-date-picker>
+                  </v-menu>
+                </div>
+                <div class="trip__form-control grid-4 my-sm-2 pb-1">
+                  <div class="trip__form-control-wrapper" style="height: 40px">
+                    <v-menu
+                      v-model="menuHotelModal"
+                      :close-on-content-click="false"
+                      :nudge-width="200"
+                      offset-x
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                          color="white"
+                          class="my-sm-2"
+                          filled
+                          v-bind="attrs"
+                          v-on="on"
+                          elevation="0"
+                        >
+                          Кол-во людей
+                        </v-btn>
+                      </template>
+
+                      <v-card>
+                        <v-list>
+                          <v-list-item>
+                            <v-text-field v-model="adult" type="number" label="Взрослые" append-outer-icon="fas fa-plus" @click:append-outer="increment(0,true)" prepend-icon="fas fa-minus" @click:prepend="decrement(0)"></v-text-field>
+                          </v-list-item>
+                          <v-list-item>
+                            <v-text-field v-model="adolcent" type="number" label="Дети" append-outer-icon="fas fa-plus" @click:append-outer="increment(1,true)" prepend-icon="fas fa-minus" @click:prepend="decrement(1)"></v-text-field>
+                          </v-list-item>
+                        </v-list>
+
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            text
+                            @click="menuHotelModal = false"
+                          >
+                            Закрыть
+                          </v-btn>
+                          <v-btn
+                            color="primary"
+                            text
+                            @click="menuHotelModal = false"
+                          >
+                            Сохранить
+                          </v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-menu>
+                  </div>
+                </div>
+                <button class="trip__form-btn grid-5 popup-modal align-self-md-center mb-2" @click="bookHotel">{{ $t('btn_search') }}</button>
+              </div>
+
+
             </div>
 <!--            Квартиры-->
-            <div :class="'trip__tab tab-4 '+this.tabs[3].active">
-              <form>
-                <div class="form__inner">
-                  <div class="trip__input-name">
-                    <input type="text" placeholder="Город" autocomplete="off">
-                  </div>
-                  <div class="trip__input-date">
-                    <input id="start-date-4" type="text" placeholder="Прибытие">
-                  </div>
-                  <div class="trip__input-date">
-                    <input id="end-date-4" class='trip__calendar' type="text" placeholder="Выезд">
-                  </div>
-                  <div class="trip__form-control">
-                    <div class="trip__form-control-wrapper">
-                      <div class="trip__form-count">
-                        <span class="guests" data-count="1">1</span> гость
-                      </div>
-                      <div class="trip__dropdown">
-                        <ul class="trip__form-dropdown">
-                          <li class="trip__form-item">
-                            Взрослые (от 13 лет)
-                            <div class="quantity">
-                              <input class="adults__tab-4" type="number" min="0" max="9" step="1" value="1">
-                            </div>
-                          </li>
-                          <li class="trip__form-item">
-                            Дети (от 2 до 12 лет)
-                            <div class="quantity">
-                              <input class="children__tab-4" type="number" min="0" max="9" step="1" value="0">
-                            </div>
-                          </li>
-                          <li class="trip__form-item">
-                            Младенцы (до 2 лет)
-                            <div class="quantity">
-                              <input class="babies__tab-4" type="number" min="0" max="9" step="1" value="0">
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                  <button class="trip__form-btn popup-modal"  >Найти</button>
+            <div :class="'trip__tab tab-1 '+this.tabs[3].active">
+              <div class="form__inner d-md-flex align-center">
+                <div class="trip__input-name grid-1 my-sm-2">
+                  <v-autocomplete
+                    hide-details
+                    filled
+                    :items="apartments"
+                    background-color="white"
+                    color="black"
+                    item-value="explore_search_params.query"
+                    v-model="apartment"
+                    item-text="explore_search_params.query"
+                    dense
+                    outlined
+                    autocomplete="off"
+                    :search-input.sync="searchApartment"
+                    :placeholder="$t('trip_to')"
+                  ></v-autocomplete>
                 </div>
-              </form>
+                <div class="trip__input-date grid-2 my-sm-2">
+                  <v-menu
+                    ref="menu1"
+                    v-model="fromApartmentModal"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    max-width="290px"
+                    min-width="auto"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        hide-details="auto"
+                        v-model="fromApartmentComputed"
+                        :label="$t('trip_date_from')"
+                        v-bind="attrs"
+                        v-on="on"
+                        outlined
+                        background-color="white"
+                        color="black"
+                        dense
+                        autocomplete="off"
+                        filled
+
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      :lang="LANG"
+                      v-model="apartmentDateFrom"
+                      no-title
+                      @input="fromApartmentModal = false"
+                    ></v-date-picker>
+                  </v-menu>
+                </div>
+                <div class="trip__input-date grid-3 my-sm-2">
+                  <v-menu
+                    ref="menu1"
+                    v-model="toApartmentModal"
+                    :close-on-content-click="false"
+                    transition="scale-transition"
+                    max-width="290px"
+                    min-width="auto"
+                  >
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-text-field
+                        hide-details="auto"
+                        v-model="toApartmentComputed"
+                        :label="$t('trip_date_to')"
+                        v-bind="attrs"
+                        background-color="white"
+                        color="black"
+                        v-on="on"
+                        dense
+                        outlined
+                        autocomplete="off"
+                        filled
+                      ></v-text-field>
+                    </template>
+                    <v-date-picker
+                      :lang="LANG"
+                      v-model="apartmentDateTo"
+                      no-title
+                      @input="toApartmentModal = false"
+                    ></v-date-picker>
+                  </v-menu>
+                </div>
+                <div class="trip__form-control grid-4 my-sm-2 pb-1">
+                  <div class="trip__form-control-wrapper" style="height: 40px">
+                    <v-menu
+                      v-model="menuApartmentTraveler"
+                      :close-on-content-click="false"
+                      :nudge-width="200"
+                      offset-x
+                    >
+                      <template v-slot:activator="{ on, attrs }">
+                        <v-btn
+                          color="white"
+                          class="my-sm-2"
+                          filled
+                          v-bind="attrs"
+                          v-on="on"
+                          elevation="0"
+                        >
+                          Кол-во людей
+                        </v-btn>
+                      </template>
+
+                      <v-card>
+                        <v-list>
+                          <v-list-item>
+                            <v-text-field v-model="adult" type="number" label="Взрослые(старше 12 лет)" append-outer-icon="fas fa-plus" @click:append-outer="increment(0,true)" prepend-icon="fas fa-minus" @click:prepend="decrement(0)"></v-text-field>
+                          </v-list-item>
+                          <v-list-item>
+                            <v-text-field v-model="adolcent" type="number" label="Дети(2–12 лет)" append-outer-icon="fas fa-plus" @click:append-outer="increment(1,true)" prepend-icon="fas fa-minus" @click:prepend="decrement(1)"></v-text-field>
+                          </v-list-item>
+                          <v-list-item>
+                            <v-text-field v-model="child" type="number" label="Младенцы (до 2х лет)" append-outer-icon="fas fa-plus" @click:append-outer="increment(2,true)" prepend-icon="fas fa-minus" @click:prepend="decrement(2)"></v-text-field>
+                          </v-list-item>
+                        </v-list>
+
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn
+                            text
+                            @click="menuApartmentTraveler = false"
+                          >
+                            Закрыть
+                          </v-btn>
+                          <v-btn
+                            color="primary"
+                            text
+                            @click="menuApartmentTraveler = false"
+                          >
+                            Сохранить
+                          </v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-menu>
+                  </div>
+                </div>
+                <button class="trip__form-btn grid-5 popup-modal align-self-md-center mb-2" @click="findAppartment">{{ $t('btn_search') }}</button>
+              </div>
+              <div class="trip__link-to-board">
+                <a style="color:white!important;" href="http://www.airserver.kz/flights/online-flights/" target="_blank">{{$t('trip_link')}}</a>
+              </div>
             </div>
           </div>
         </div>
@@ -785,6 +978,20 @@ export default {
       searchTo:"",
       stfromMenu:false,
       sttoMenu:false,
+      //Apartment - AirBnb
+      apartment:"",
+      apartments:[],
+      fromApartmentModal:false,
+      toApartmentModal:false,
+      apartmentDateFrom:"",
+      apartmentDateTo:"",
+      searchApartment:"",
+      menuApartmentTraveler:false,
+      //Hotels - Booking
+      fromHotelModal:false,
+      toHotelModal:false,
+      menuHotelModal:false
+
 
     }
   },
@@ -806,14 +1013,24 @@ export default {
     tD(val){
       this.toData = this.$moment(val).format("DD.MM.YYYY");
     },
+    fromDataApartment(val){
+      this.apartmentDateFrom = this.$moment(val).format("YYYY-MM-DD");
+    },
+    toDataApartment(val){
+      this.apartmentDateTo = this.$moment(val).format("YYYY-MM-DD");
+    },
     search (val) {
       this.getRailStation(val)
     },
     searchTo (val) {
       this.getRailStationTo(val)
+    },
+    async searchApartment(val){
+       await this.getApartmentList(val);
     }
 
   },
+
   computed:{
     formatDate() {
       return this.date
@@ -824,6 +1041,12 @@ export default {
     toDataComputed(){
       return this.toData;
     },
+    fromApartmentComputed(){
+      return this.apartmentDateFrom;
+    },
+    toApartmentComputed(){
+      return this.apartmentDateTo;
+    }
 
   },
   methods:{
@@ -841,22 +1064,36 @@ export default {
       this.tabs[i].active = 'active'
     },
 
-    increment(type){
-      if(type == 0){
-        this.adult +=1
-      }
-      else if(type == 1){
-        this.adolcent +=1
-      }
-      else if(type == 2){
-        if(this.adult >= this.child){
-          this.child +=1
+    increment(type,isNotAvia = null){
+      if(isNotAvia === null){
+        if(type == 0){
+          this.adult +=1
         }
-        else{
-          this.$toast.info("Количество младенцев равно количеству взрослых")
+        else if(type == 1){
+          this.adolcent +=1
         }
+        else if(type == 2){
+          if(this.adult >= this.child){
+            this.child +=1
+          }
+          else{
+            this.$toast.info("Количество младенцев равно количеству взрослых")
+          }
 
+        }
       }
+      else{
+        if(type == 0){
+          this.adult +=1
+        }
+        else if(type == 1){
+          this.adolcent +=1
+        }
+        else if(type == 2){
+            this.child +=1
+          }
+      }
+
 
     },
     decrement(type){
@@ -932,10 +1169,6 @@ export default {
 
         }
       }
-
-
-
-
     },
     async getRailStationTo(val = null){
       if(val){
@@ -978,7 +1211,42 @@ export default {
 
 
 
+    },
+
+
+    async getApartmentList(val = null){
+      if(val === null){val = ""};
+      if(val.length >= 3){
+        try{
+          delete this.$axios.defaults.headers.common["Authorization"];
+          await this.$axios.$get("https://www.airbnb.ru/api/v2/autocompletes?num_results=5&user_input=" + val + "&api_version=1.2.0",)
+          .then((value)=>{this.apartments = value.autocomplete_terms}).catch();
+        }
+        catch (e) {}
+      }
+    },
+
+    findAppartment(){
+      if(this.apartmentDateFrom && this.apartmentDateTo && this.adult && this.apartment){
+        let url = "https://www.airbnb.ru/s/{st}/homes?checkin="+this.apartmentDateFrom +"&checkout="+this.apartmentDateTo+"&adults="+ this.adult +"&children="+ this.adolcent +"&infants="+this.child +"&query="+this.apartment
+        window.open(url, '_blank');
+      }
+      else{
+        this.$toast.info("Заполните все поля|Fill all the fields");
+      }
+    },
+
+    bookHotel(){
+      if(this.apartmentDateFrom && this.apartmentDateTo && this.adult && this.toAvia){
+        let url = "http://sp.booking.com/searchresults.html?checkin=" + this.apartmentDateFrom + ";checkout=" + this.apartmentDateTo + ";iata_orr=1;iata=" + this.toAvia + ";label=chocotravel-homepage-searchextension;lang=ru;group_adults=" + this.adult + ";group_children=" + this.adolcent
+        window.open(url, '_blank');
+
+      }
+      else{
+        this.$toast.info("Заполните все поля/Fill all the fields");
+      }
     }
+
 
 
   },
