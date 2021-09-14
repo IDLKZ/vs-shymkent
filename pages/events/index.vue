@@ -79,6 +79,7 @@
 
             <div class="calendar__item-day" v-if="item.workdays.length>0">
               <div v-for="(day,index) in item.workdays" :key="index">
+                <small v-if="day.weekday.id == 1">{{day.weekday["title_" + $i18n.locale]}}</small>
                 <span>{{ $t('date') }} </span>{{day.date_start}} - {{day.date_end}}
               </div>
 

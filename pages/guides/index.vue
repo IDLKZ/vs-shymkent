@@ -42,7 +42,7 @@
             <div class="routes-page__employees-list-wrapper">
               <div class="routes-page__employees-list ">
                 <NuxtLink :to="'/guides/'+guide.alias" class="routes-page__employees-list-item" v-for="guide in guides" :key="guide.id">
-                  <div class="routes-page__employees-img" :style="'background-image: url('+getImages(guide.user.image)+');'"></div>
+                  <div class="routes-page__employees-img" :style="'background-image: url('+getImage(guide.user.image)+');'"></div>
                   <div class="routes-page__employees-content">
                     <h5 class="routes-page__employees-title">
                       {{ guide.user.name }}
@@ -62,7 +62,9 @@
                         {{ $t('languages') }}:
                       </div>
                       <div class="routes-page__employees-lang-item">
-                        <span v-for="(lang,i) in guide.languages" :key="i">{{lang}} , </span>
+                        <span v-for="(lang,i) in guide.languages" :key="i">{{lang}}
+                          {{i < guide.languages.length-1 ? "," : ""}}
+                        </span>
                       </div>
                     </div>
                     <div class="routes-page__employees-info">
@@ -98,10 +100,6 @@ export default {
     }
   },
   methods:{
-    getImages(data){
-      console.log(this.$store.state.image.image);
-      return this.$store.state.image.image + data ;
-    },
     truncate(string, value) {
       return string.length > value ? string.substring(0, value) + '…' : string;
     },
@@ -153,6 +151,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@media screen and (min-width: 1000px){
+  .routes-page{
+    &__employees-list{
+      grid-template-columns: 1fr 1fr 1fr!important;
+    }
+  }
+}
 
 </style>
