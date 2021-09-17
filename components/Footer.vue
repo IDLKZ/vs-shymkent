@@ -31,17 +31,17 @@
           </div>
           <nav class="footer__nav">
             <ul class="footer__nav-list">
-              <h5 class="footer__nav-title">
+              <NuxtLink class="footer__nav-title" to="/places">
                 {{$t('place_title')}}
-              </h5>
+              </NuxtLink>
               <li class="footer__nav-list-item" v-for="(category,key) in fts.categories" :key="key">
                 <NuxtLink  :to="'/places?place='+category.alias">{{category['title_'+$i18n.locale]}}</NuxtLink>
               </li>
             </ul>
             <ul class="footer__nav-list">
-              <h5 class="footer__nav-title">
+              <NuxtLink class="footer__nav-title my-2" to="/events">
                 {{ $t('events') }}
-              </h5>
+              </NuxtLink>
               <li class="footer__nav-list-item">
                 <NuxtLink to="/events">{{ $t('events_title') }}</NuxtLink>
               </li>
@@ -53,9 +53,9 @@
               </li>
             </ul>
             <ul class="footer__nav-list">
-              <h5 class="footer__nav-title">
+              <NuxtLink class="footer__nav-title" to="/souvenirs">
                 {{ $t('shop') }}
-              </h5>
+              </NuxtLink>
               <li class="footer__nav-list-item">
                 <NuxtLink to="/souvenirs">{{ $t('souvenirs') }}</NuxtLink>
               </li>
@@ -64,9 +64,9 @@
 <!--              </li>-->
             </ul>
             <ul class="footer__nav-list">
-              <h5 class="footer__nav-title">
+              <NuxtLink class="footer__nav-title" to="/routes">
                 {{ $t('tourism') }}
-              </h5>
+              </NuxtLink>
               <li class="footer__nav-list-item">
                 <a :href="this.$router.options.base+'#trip'">{{ $t('trip_type_1') }}</a>
               </li>

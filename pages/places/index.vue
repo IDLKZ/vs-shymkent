@@ -41,10 +41,10 @@
                   <input @click="toggleActiveCheckBox(item.id)"  :checked="activeCheckbox[item.id]"    class="check-all" type="checkbox" :id="'cb'+item.id">
                   <label :for="'cb'+item.id">
                     {{item['title_'+$i18n.locale]}}</label>
-                  <svg onclick="guideListAccordion()" v-if="item.children" class="guide-list__accordion-trigger-svg" xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"/></g></svg>
+                  <svg @click="toggleActiveSideCheck(i)" v-if="item.children" :class="getActiveSideBox(i)" xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"/></g></svg>
                 </div>
 <!--                  Подкатегории путеводителя-->
-                <div class="guide-list__accordion-content" v-if="item.children">
+                <div class="guide-list__accordion-content" v-if="item.children" :style="getActiveStyle(i)">
                   <div class="guide-list__accordion-content-item" v-for="(value, i) in item.children" :key="i">
                     <input @click="toggleActiveCheckBox(value.id,value.parent_id)" :checked="activeCheckbox[value.id]" type="checkbox" :id="'cb'+value.id">
                     <label :for="'cb'+value.id">
@@ -71,7 +71,7 @@
                 </svg>
               </button>
             </div>
-            <div class="guide-list__select-wrapper select__wrapper d-block">
+            <div class="guide-list__select-wrapper select__wrapper d-block" style="width: 100%">
               <div class="guide-list__select-label select__label">{{ $t('show_to') }}:</div>
               <div class="guide-list__select select">
                   <v-select
@@ -128,7 +128,8 @@ export default {
       places:[],
       activeCheckbox:{0:false},
       orderBy:"desc",
-      search:""
+      search:"",
+      activeSide:[]
     }
   },
 
@@ -147,7 +148,7 @@ export default {
           }
       }
       return categories.length > 0 ? "&categories=" + JSON.stringify(categories) : "";
-    }
+    },
   },
 
   methods:{
@@ -186,6 +187,33 @@ export default {
       this.loadData();
     },
 
+    toggleActiveSideCheck(item){
+      if(this.activeSide.includes(item)){
+        this.activeSide.splice(this.activeSide.indexOf(item),1);
+      }
+      else{
+        this.activeSide.push(item)
+      }
+    },
+    getActiveSideBox(item){
+      if(this.activeSide.includes(item)){
+        return  "guide-list__accordion-trigger-svg active"
+      }
+      else{
+        return "guide-list__accordion-trigger-svg"
+      }
+    },
+
+    getActiveStyle(i){
+      if(this.activeSide.includes(i)){
+        return {display:"block"}
+      }
+      else{
+        return {display:"none"}
+      }
+    },
+
+
     getImages(data){
       return this.$store.state.image.image + data ;
     },
@@ -193,7 +221,6 @@ export default {
       return string.length > value ? string.substring(0, value) + '…' : string;
     },
     async loadData(){
-      console.log(this.orderBy);
       try{
         await this.$axios.$get("/places?page="+this.current_page + this.getCategoryId + "&order=" + this.orderBy + "&search=" + this.search).then((e)=>{
           this.current_page == 1 ?  this.places = e.data : this.places.push(...e.data);

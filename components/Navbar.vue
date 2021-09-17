@@ -198,6 +198,12 @@ export default {
       ]
     }
   },
+
+  watch:{
+    $route(to, from) {
+      headerMenuHide();
+    }
+  },
   methods: {
     toUpperCase(str) {
       return str.toUpperCase()
