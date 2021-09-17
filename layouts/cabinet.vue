@@ -14,7 +14,7 @@
           </ul>
           <div class="account__tabs">
             <ul class="account__tabs-caption d-md-flex justify-md-space-around">
-              <NuxtLink :style="'color:'+tab.color" :to="tab.link" v-for="tab in tabs" :key="tab.id" :class="tab.active" @click.native="activeTab(tab.id)" v-html="tab.svg+$t(tab.title)"></NuxtLink>
+              <NuxtLink :style="'color:'+tab.color" :to="tab.link" v-for="(tab,i) in tabs" :key="tab.id" :class="tab.active" @click.native="activeTab(i)" v-html="tab.svg+$t(tab.title)"></NuxtLink>
               <a @click="logout">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                 {{ $t('log_out') }}
@@ -82,6 +82,14 @@ export default {
         },
         {
           id: 3,
+          title: 'cabinet_menu_routes',
+          link: '/cabinet/create-routes',
+          svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" height="30" width="30"><g transform="matrix(2.142857142857143,0,0,2.142857142857143,0,0)"><g><path d="M11.5,5c0,2.49-4.5,8.5-4.5,8.5S2.5,7.49,2.5,5a4.5,4.5,0,0,1,9,0Z" style="fill: none;stroke: #000001;stroke-linecap: round;stroke-linejoin: round"></path><circle cx="7" cy="5" r="1.5" style="fill: none;stroke: #000001;stroke-linecap: round;stroke-linejoin: round"></circle></g></g></svg>',
+          active: 'd-none',
+          color: ''
+        },
+        {
+          id: 4,
           title: 'cabinet_menu_settings',
           link: '/cabinet/settings',
           svg: '<svg xmlns="http://www.w3.org/2000/svg" width="15.675" height="15.675" viewBox="0 0 15.675 15.675"><g transform="translate(0 0)"><path d="M8.33,15.675H7.346A1.445,1.445,0,0,1,5.9,14.232V13.9a6.328,6.328,0,0,1-.983-.408l-.236.236a1.443,1.443,0,0,1-2.041,0l-.7-.7a1.443,1.443,0,0,1,0-2.041l.236-.236a6.329,6.329,0,0,1-.408-.983H1.443A1.445,1.445,0,0,1,0,8.33V7.346A1.445,1.445,0,0,1,1.443,5.9h.333a6.33,6.33,0,0,1,.408-.983l-.236-.236a1.443,1.443,0,0,1,0-2.041l.7-.7a1.443,1.443,0,0,1,2.041,0l.236.236A6.334,6.334,0,0,1,5.9,1.776V1.443A1.445,1.445,0,0,1,7.346,0H8.33A1.445,1.445,0,0,1,9.773,1.443v.333a6.328,6.328,0,0,1,.983.408l.236-.236a1.443,1.443,0,0,1,2.041,0l.7.7a1.443,1.443,0,0,1,0,2.041l-.236.236A6.329,6.329,0,0,1,13.9,5.9h.333a1.445,1.445,0,0,1,1.443,1.443V8.33a1.445,1.445,0,0,1-1.443,1.443H13.9a6.33,6.33,0,0,1-.408.983l.236.236a1.443,1.443,0,0,1,0,2.041l-.7.7a1.443,1.443,0,0,1-2.041,0l-.236-.236a6.334,6.334,0,0,1-.983.408v.333A1.445,1.445,0,0,1,8.33,15.675ZM5.074,12.527a5.413,5.413,0,0,0,1.4.582.459.459,0,0,1,.344.445v.678a.525.525,0,0,0,.525.525H8.33a.525.525,0,0,0,.525-.525v-.678A.459.459,0,0,1,9.2,13.11a5.413,5.413,0,0,0,1.4-.582.459.459,0,0,1,.559.071l.48.48a.524.524,0,0,0,.742,0l.7-.7a.524.524,0,0,0,0-.742L12.6,11.16a.459.459,0,0,1-.071-.558,5.412,5.412,0,0,0,.582-1.4.459.459,0,0,1,.445-.344h.678a.525.525,0,0,0,.525-.525V7.346a.525.525,0,0,0-.525-.525h-.678a.459.459,0,0,1-.445-.344,5.413,5.413,0,0,0-.582-1.4.459.459,0,0,1,.071-.558l.48-.48a.524.524,0,0,0,0-.742l-.7-.7a.524.524,0,0,0-.742,0l-.48.481a.459.459,0,0,1-.559.071,5.413,5.413,0,0,0-1.4-.582.459.459,0,0,1-.344-.445V1.443A.525.525,0,0,0,8.33.918H7.346a.525.525,0,0,0-.525.525v.678a.459.459,0,0,1-.344.445,5.413,5.413,0,0,0-1.4.582.459.459,0,0,1-.559-.071l-.48-.48a.524.524,0,0,0-.742,0l-.7.7a.524.524,0,0,0,0,.742l.481.481a.459.459,0,0,1,.071.558,5.412,5.412,0,0,0-.582,1.4.459.459,0,0,1-.445.344H1.443a.525.525,0,0,0-.525.525V8.33a.525.525,0,0,0,.525.525h.678a.459.459,0,0,1,.445.344,5.413,5.413,0,0,0,.582,1.4.459.459,0,0,1-.071.558l-.48.48a.524.524,0,0,0,0,.742l.7.7a.524.524,0,0,0,.742,0l.48-.481a.461.461,0,0,1,.559-.071Z"/><path d="M148.011,151.421a3.411,3.411,0,1,1,3.411-3.411A3.414,3.414,0,0,1,148.011,151.421Zm0-5.9a2.492,2.492,0,1,0,2.492,2.492A2.495,2.495,0,0,0,148.011,145.518Z" transform="translate(-140.173 -140.173)"/></g></svg>',
@@ -105,6 +113,9 @@ export default {
     },
   },
   created() {
+    if (this.$auth.user.user.role_id === 4 || this.$auth.user.user.role_id === 5){
+      this.tabs[3].active = ''
+    }
     if (this.$auth.user.user.role_id === 6 || this.$auth.user.user.role_id === 7){
       this.tabs[2].title = 'cabinet_menu_souvenirs'
       this.tabs[2].link = '/cabinet/create-souvenir'

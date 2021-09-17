@@ -399,7 +399,7 @@ export default {
 
   },
   mounted() {
-      console.log(this.place)
+      console.log(this.placemarks)
   }
 }
 </script>

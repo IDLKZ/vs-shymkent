@@ -116,7 +116,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    baseURL: "https://admin.visit-shymkent.kz/api",
+    baseURL: "http://backend.visit-shymkent/api",
     credentials: false,
     proxyHeaders: false,
   },
