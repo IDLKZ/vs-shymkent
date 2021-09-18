@@ -106,7 +106,7 @@
               >{{ $t('events_time_3') }}</button>
             </li>
           </ul>
-          <div class="calendar__change-date index-calendar">
+          <div class="calendar__change-date index-calendar index-page-calendar">
             <div class="calendar__change-date">
               <v-menu
                 ref="menu1"
@@ -354,19 +354,19 @@
                           </v-btn>
                         </template>
 
-                        <v-card>
+                        <v-card class="py-5">
                           <v-list>
                             <v-list-item>
-                              <v-text-field v-model="adult" type="number" label="Взрослые(старше 12 лет)" append-outer-icon="fas fa-plus" @click:append-outer="increment(0)" prepend-icon="fas fa-minus" @click:prepend="decrement(0)"></v-text-field>
+                              <v-text-field outlined v-model="adult" type="number" label="Взрослые(старше 12 лет)" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(0)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(0)"></v-text-field>
                             </v-list-item>
                             <v-list-item>
-                              <v-text-field v-model="adolcent" type="number" label="Дети(2–12 лет)" append-outer-icon="fas fa-plus" @click:append-outer="increment(1)" prepend-icon="fas fa-minus" @click:prepend="decrement(1)"></v-text-field>
+                              <v-text-field outlined v-model="adolcent" type="number" label="Дети(2–12 лет)" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(1)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(1)"></v-text-field>
                             </v-list-item>
                             <v-list-item>
-                              <v-text-field v-model="child" type="number" label="Младенцы (до 2х лет)" append-outer-icon="fas fa-plus" @click:append-outer="increment(2)" prepend-icon="fas fa-minus" @click:prepend="decrement(2)"></v-text-field>
+                              <v-text-field outlined v-model="child" type="number" label="Младенцы (до 2х лет)" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(2)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(2)"></v-text-field>
                             </v-list-item>
                             <v-list-item>
-                              <v-select
+                              <v-select outlined
                                 :items="
                                   [
                                     {'title':'Любой','code':'A'},
@@ -381,20 +381,14 @@
                             </v-list-item>
                           </v-list>
 
-                          <v-card-actions>
+                          <v-card-actions class="justify-center">
                             <v-spacer></v-spacer>
                             <v-btn
+                              class="active-button"
                               text
                               @click="menuTraveler = false"
                             >
-                              Закрыть
-                            </v-btn>
-                            <v-btn
-                              color="primary"
-                              text
-                              @click="menuTraveler = false"
-                            >
-                              Сохранить
+                              OK
                             </v-btn>
                           </v-card-actions>
                         </v-card>
@@ -600,7 +594,7 @@
                     <v-menu
                       v-model="menuHotelModal"
                       :close-on-content-click="false"
-                      :nudge-width="200"
+                      :nudge-width="50"
                       offset-x
                     >
                       <template v-slot:activator="{ on, attrs }">
@@ -616,13 +610,13 @@
                         </v-btn>
                       </template>
 
-                      <v-card>
+                      <v-card  class="py-4">
                         <v-list>
                           <v-list-item>
-                            <v-text-field v-model="adult" type="number" label="Взрослые" append-outer-icon="fas fa-plus" @click:append-outer="increment(0,true)" prepend-icon="fas fa-minus" @click:prepend="decrement(0)"></v-text-field>
+                            <v-text-field outlined v-model="adult" type="number" label="Взрослые" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(0,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(0)"></v-text-field>
                           </v-list-item>
                           <v-list-item>
-                            <v-text-field v-model="adolcent" type="number" label="Дети" append-outer-icon="fas fa-plus" @click:append-outer="increment(1,true)" prepend-icon="fas fa-minus" @click:prepend="decrement(1)"></v-text-field>
+                            <v-text-field outlined v-model="adolcent" type="number" label="Дети" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(1,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(1)"></v-text-field>
                           </v-list-item>
                         </v-list>
 
@@ -631,15 +625,9 @@
                           <v-btn
                             text
                             @click="menuHotelModal = false"
+                            class="active-button"
                           >
-                            Закрыть
-                          </v-btn>
-                          <v-btn
-                            color="primary"
-                            text
-                            @click="menuHotelModal = false"
-                          >
-                            Сохранить
+                            OK
                           </v-btn>
                         </v-card-actions>
                       </v-card>
@@ -652,7 +640,7 @@
 
             </div>
 <!--            Квартиры-->
-            <div :class="'trip__tab tab-1 '+this.tabs[3].active">
+            <div :class="'trip__tab tab-4 '+this.tabs[3].active">
               <div class="form__inner d-md-flex align-center">
                 <div class="trip__input-name grid-1 my-sm-2">
                   <v-autocomplete
@@ -741,7 +729,7 @@
                     <v-menu
                       v-model="menuApartmentTraveler"
                       :close-on-content-click="false"
-                      :nudge-width="200"
+                      :nudge-width="100"
                       offset-x
                     >
                       <template v-slot:activator="{ on, attrs }">
@@ -757,33 +745,27 @@
                         </v-btn>
                       </template>
 
-                      <v-card>
+                      <v-card class="py-4">
                         <v-list>
                           <v-list-item>
-                            <v-text-field v-model="adult" type="number" label="Взрослые(старше 12 лет)" append-outer-icon="fas fa-plus" @click:append-outer="increment(0,true)" prepend-icon="fas fa-minus" @click:prepend="decrement(0)"></v-text-field>
+                            <v-text-field outlined v-model="adult" type="number" label="Взрослые(старше 12 лет)" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(0,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(0)"></v-text-field>
                           </v-list-item>
                           <v-list-item>
-                            <v-text-field v-model="adolcent" type="number" label="Дети(2–12 лет)" append-outer-icon="fas fa-plus" @click:append-outer="increment(1,true)" prepend-icon="fas fa-minus" @click:prepend="decrement(1)"></v-text-field>
+                            <v-text-field outlined v-model="adolcent" type="number" label="Дети(2–12 лет)" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(1,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(1)"></v-text-field>
                           </v-list-item>
                           <v-list-item>
-                            <v-text-field v-model="child" type="number" label="Младенцы (до 2х лет)" append-outer-icon="fas fa-plus" @click:append-outer="increment(2,true)" prepend-icon="fas fa-minus" @click:prepend="decrement(2)"></v-text-field>
+                            <v-text-field outlined v-model="child" type="number" label="Младенцы (до 2х лет)" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(2,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(2)"></v-text-field>
                           </v-list-item>
                         </v-list>
 
                         <v-card-actions>
                           <v-spacer></v-spacer>
                           <v-btn
+                            class="active-button"
                             text
                             @click="menuApartmentTraveler = false"
                           >
-                            Закрыть
-                          </v-btn>
-                          <v-btn
-                            color="primary"
-                            text
-                            @click="menuApartmentTraveler = false"
-                          >
-                            Сохранить
+                            OK
                           </v-btn>
                         </v-card-actions>
                       </v-card>
@@ -852,7 +834,7 @@
           <div class="top-content__line"></div>
         </div>
         <div class="souvenirs__items-inner">
-          <div class="souvenirs__item" v-for="(item,i) in souvenirs.data" :key="i">
+          <div class="souvenirs__item" v-for="(item,i) in souvenirs" :key="i">
             <NuxtLink :to="'/souvenirs/'+item.alias">
               <div class="souvenirs__item-img" :style="'background-image: url('+getImages(item.image)+');'"></div>
             </NuxtLink>
@@ -1311,4 +1293,28 @@ export default {
     color: white!important;
   }
 }
+.index-page-calendar{
+  background: #c5240a;
+  padding: 10px;
+}
+
+.changeButton{
+  font-size: 12px!important;
+  &::before{
+    color: white;
+  }
+  &::after{
+    color: white;
+  }
+  padding: 4px;
+  border-radius: 50%;
+  background-color: #c42313;
+}
+.active-button{
+  background-color: #c42313;
+  color: white!important;
+}
+
+
+
 </style>

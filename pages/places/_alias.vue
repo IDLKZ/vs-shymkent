@@ -50,7 +50,7 @@
           </div>
           <div class="guide-item__content">
             <ul class="guide-item__contact">
-              <li class="guide-item__contact-item">
+              <li class="guide-item__contact-item" v-if="place.address">
                             <span class="guide-item__contact-span">
                                 {{ $t('address') }}: ​
                             </span>
@@ -58,7 +58,7 @@
                   {{place.address}}
                 </div>
               </li>
-              <li class="guide-item__contact-item">
+              <li class="guide-item__contact-item" v-if="place.workdays">
                             <span class="guide-item__contact-span">
                                 {{ $t('operating_mode') }}:
                             </span>
@@ -72,17 +72,17 @@
                   </div>
                 </div>
               </li>
-              <li class="guide-item__contact-item">
+              <li class="guide-item__contact-item" v-if="place.phone">
                             <span class="guide-item__contact-span">
                                 {{ $t('phones_for_contact') }}:
                             </span>
                 <div class="guide-item__contact-text">
                   <div v-if="place.phone">
-                    <p><a :href="'tel:'+place.phone">{{place.phone}}</a></p>
+                      <p><a class="info--text" :href="'tel:'+place.phone">{{place.phone}}</a></p>
                   </div>
                 </div>
               </li>
-              <li class="guide-item__contact-item">
+              <li class="guide-item__contact-item" v-if="place.price">
                             <span class="guide-item__contact-span">
                                 {{ $t('price') }}:
                             </span>
@@ -98,14 +98,14 @@
                             </span>
                 <div class="guide-item__contact-text" v-html="place['description_'+$i18n.locale]"></div>
               </li>
-              <li class="guide-item__contact-item">
+              <li class="guide-item__contact-item" v-if="place.sites">
                             <span class="guide-item__contact-span">
                                 {{ $t('website') }}:
                             </span>
                 <div class="guide-item__contact-text">
                   <div v-if="place.sites">
                     <div v-for="(item,i) in place.sites" :key="i">
-                      <a :href="item" target="_blank">{{item}}</a> .,
+                      <a :href="item" target="_blank">{{item}}</a>
                     </div>
                   </div>
 
@@ -117,7 +117,7 @@
                             </span>
                 <div class="guide-item__contact-text">
                   <div v-if="place.user">
-                    <a :href="'mailto:'+this.place.user.email">{{place.user.email}}</a>
+                    <a :href="'mailto:'+place.user.email">{{place.user.email}}</a>
                   </div>
                 </div>
               </li>
@@ -165,14 +165,14 @@
                     </a>
                   </div>
                 </button>
-                <form @submit.prevent="addSave(form,saveColor)">
+                <form class="my-4" @submit.prevent="addSave(form,saveColor)">
                   <input v-model="form.place_id" type="hidden" name="place_id">
                   <button type="submit" class="post__btn" :class="this.saveColor">
                     <svg data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>
                     {{ $t(btn_save) }}
                   </button>
                 </form>
-                <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
+                <yandex-share class="my-4" :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
               </div>
             </ul>
 

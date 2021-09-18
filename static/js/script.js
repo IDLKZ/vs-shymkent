@@ -74,6 +74,7 @@ $(function() {
   }
 
   function guideListAccordion(){
+
       if ($(".guide-list__accordion-trigger-svg").hasClass('active')) {
         $(".guide-list__accordion-trigger-svg").removeClass('active');
         $('.guide-list__accordion-content').hide(200);
