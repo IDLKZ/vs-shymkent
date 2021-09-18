@@ -48,7 +48,8 @@
                   <p>
                     <span>{{ $t('phones_for_contact') }}: </span>
                     <span>
-                      <a :href="'tel:'+phone" v-for="(phone,i) in item.phone" :key="i">{{phone}} .,  </a>
+                      <a :href="'tel:'+item.phone">{{item.phone}}
+                      </a>
                     </span>
 
                   </p>
@@ -56,7 +57,7 @@
               </div>
             </div>
           </div>
-          <div class="post__btns">
+          <div class="post__btns mt-3">
             <form @submit.prevent="addSave(form,saveColor)">
               <input v-model="form.route_id" type="hidden">
               <button type="submit" class="post__btn" :class="this.saveColor">
@@ -169,11 +170,13 @@ export default {
               })
             })
           } else {
-            let TIMA = JSON.parse(Route.address_link)
-            points[0] = {id:0, placemarks: TIMA, num: 1, active: ''};
-            TIMA.forEach((item, i) => {
-              points[0].placemarks[i] = [item.lat, item.lng];
-            })
+            if (Route.address_link){
+              let TIMA = JSON.parse(Route.address_link)
+              points[0] = {id:0, placemarks: TIMA, num: 1, active: ''};
+              TIMA.forEach((item, i) => {
+                points[0].placemarks[i] = [item.lat, item.lng];
+              })
+            }
           }
 
 
