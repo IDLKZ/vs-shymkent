@@ -78,7 +78,7 @@
                             </span>
                 <div class="guide-item__contact-text">
                   <div v-if="place.phone">
-                      <p><a class="info--text" :href="'tel:'+place.phone">{{place.phone}}</a></p>
+                      <p v-for="phone in place.phone"><a  class="info--text" :href="'tel:'+phone">{{phone}}</a></p><br>
                   </div>
                 </div>
               </li>

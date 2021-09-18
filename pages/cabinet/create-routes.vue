@@ -185,6 +185,35 @@
             </div>
 
             <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+                {{ $t('time') }}
+              </h5>
+              <v-text-field prepend-icon="fas fa-clock" type="number" v-model="form.time"></v-text-field>
+            </div>
+            <div v-if="fails.time">
+              <span class="error--text v-size--small" v-for="(err,i) in fails.time" :key="i">{{err}}</span>
+            </div>
+
+            <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+                {{ $t('distance') }}
+              </h5>
+              <v-text-field prepend-icon="fas fa-running" v-model="form.distance"></v-text-field>
+            </div>
+            <div v-if="fails.distance">
+              <span class="error--text v-size--small" v-for="(err,i) in fails.distance" :key="i">{{err}}</span>
+            </div>
+            <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+                {{ $t('address') }}
+              </h5>
+              <v-text-field prepend-icon="fas fa-map" type="number" v-model="form.address"></v-text-field>
+            </div>
+            <div v-if="fails.address">
+              <span class="error--text v-size--small" v-for="(err,i) in fails.address" :key="i">{{err}}</span>
+            </div>
+
+            <div class="account__blog-item">
               <button type="submit" class="button">
                 {{ $t('cabinet_btn_publish') }}
               </button>
@@ -192,6 +221,7 @@
           </form>
         </div>
       </div>
+
       <div class="account__save-tabs-content " :class="{active: moder}">
         <div class="account__blog">
           <a @click="activeTab(1)" class="account__blog-link">
@@ -296,6 +326,26 @@
             <div v-if="fails.description_en">
               <span class="error--text v-size--small" v-for="(err,i) in fails.description_en" :key="i">{{err}}</span>
             </div>
+
+            <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+                {{ $t('time') }}
+              </h5>
+              <v-tеxtarea v-model="form.time"></v-tеxtarea>
+            </div>
+            <div v-if="fails.time">
+              <span class="error--text v-size--small" v-for="(err,i) in fails.time" :key="i">{{err}}</span>
+            </div>
+
+            <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+                {{ $t('distance') }}
+              </h5>
+              <v-tеxtarea v-model="form.distance"></v-tеxtarea>
+            </div>
+            <div v-if="fails.distance">
+              <span class="error--text v-size--small" v-for="(err,i) in fails.time" :key="i">{{err}}</span>
+            </div>
             <div class="account__blog-item">
               <button type="submit" class="button">
                 {{ $t('cabinet_btn_publish') }}
@@ -374,7 +424,22 @@ export default {
       categories: [],
       types: [],
       fails: [],
-      img: ''
+      points:[],
+      img: '',
+      form:{
+        place_id:"",
+        category_id: "",
+        title_ru: "",
+        title_kz:"",
+        title_en: "",
+        description_en: "",
+        description_kz: "",
+        description_ru: "",
+        image:"",
+        time:"",
+        distance:"",
+        address:"",
+      }
     }
   },
   methods: {
@@ -443,7 +508,7 @@ export default {
           }
         })
 
-        await this.$axios.$post('/cabinet/send-event', formData).then(async (e) => {
+        await this.$axios.$post('/cabinet/send-route', formData).then(async (e) => {
           this.$toast.success('Успешно отправлен на модерацию')
           await this.loadData()
           this.activeTab(1)
@@ -496,7 +561,7 @@ export default {
     }
   },
   async asyncData({$axios}) {
-    let routes, moderation, categories, types = []
+    let places, routes, moderation, categories, types = []
     let form = {
       organizator_id: '',
       category_id: '',
@@ -517,10 +582,11 @@ export default {
         categories = e[4]
         routes = Object.values(routes)
         moderation = Object.values(moderation)
+        places = e[5];
       });
     }
     catch (e) {
-      console.log(e);
+
     }
     return {routes, moderation, categories, form, types}
   },

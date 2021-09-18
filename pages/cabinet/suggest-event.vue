@@ -694,14 +694,15 @@ export default {
     }
     try{
       await $axios.$get("/cabinet/my-events").then((e)=>{
+        console.log(e);
         events = e[0]
         moderation = e[1]
         places = e[2]
         form.organizator_id = e[3].id
       });
     }
-    catch (e) {
-      console.log(e);
+    catch (error) {
+
     }
     return {events,moderation, places, form}
   },

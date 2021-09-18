@@ -48,7 +48,7 @@
                   <p>
                     <span>{{ $t('phones_for_contact') }}: </span>
                     <span>
-                      <a :href="'tel:'+item.phone">{{item.phone}}
+                      <a class="text--info" v-for="phone in item.phone" :href="'tel:'+phone">{{phone}}
                       </a>
                     </span>
 
