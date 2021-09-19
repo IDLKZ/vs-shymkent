@@ -96,7 +96,7 @@
               </div>
             </yandex-map>
           </div>
-          <ul class="routes-item__map-points">
+          <ul class="routes-item__map-points" v-if="points">
             <li :class="'text-center routes-item__map-point '+point.active" v-for="(point,i) in points" :key="i" @click="activeTab(i)">
               <a :href="'#pointId' + point['val'].id"><span>{{point.val['title_'+$i18n.locale]}}</span></a>
             </li>
@@ -171,11 +171,13 @@ export default {
             })
           } else {
             if (Route.address_link){
-              let TIMA = JSON.parse(Route.address_link)
-              points[0] = {id:0, placemarks: TIMA, num: 1, active: ''};
+              console.log(Route.address_link);
+              let TIMA = JSON.parse(Route.address_link);
+              points[0] = {id:0, placemarks: TIMA, num: 1, val: Route, active: ''};
               TIMA.forEach((item, i) => {
                 points[0].placemarks[i] = [item.lat, item.lng];
               })
+              console.log(TIMA);
             }
           }
 

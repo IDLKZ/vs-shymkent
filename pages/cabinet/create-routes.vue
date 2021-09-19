@@ -61,10 +61,6 @@
                 <a @click.prevent="deleteBlog(item.id)" class="calendar-page__item-btn popup-modal">
                   <span>{{ $t('btn_delete') }}</span>
                 </a>
-                <a @click.prevent="activeModer(item.id)" class="calendar-page__item-link popup-modal">
-                  <span>{{ $t('btn_edit') }}</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"></path></g></svg>
-                </a>
               </div>
             </div>
           </div>
@@ -107,176 +103,33 @@
               </div>
             </div>
             <div class="account__blog-item">
-              <v-textarea
+              <v-text-field
                 counter
                 :label="$t('cabinet_title_kz')"
                 prepend-icon="mdi-comment"
                 v-model="form.title_kz"
                 rows="1"
-              ></v-textarea>
+              ></v-text-field>
               <div v-if="fails.title_kz">
                 <span class="error--text v-size--small" v-for="(err,i) in fails.title_kz" :key="i">{{err}}</span>
               </div>
-              <v-textarea
+              <v-text-field
                 counter
                 :label="$t('cabinet_title_ru')"
                 prepend-icon="mdi-comment"
                 v-model="form.title_ru"
                 rows="1"
-              ></v-textarea>
+              ></v-text-field>
               <div v-if="fails.title_ru">
                 <span class="error--text v-size--small" v-for="(err,i) in fails.title_ru" :key="i">{{err}}</span>
               </div>
-              <v-textarea
+              <v-text-field
                 counter
                 :label="$t('cabinet_title_en')"
                 prepend-icon="mdi-comment"
                 v-model="form.title_en"
                 rows="1"
-              ></v-textarea>
-              <div v-if="fails.title_en">
-                <span class="error--text v-size--small" v-for="(err,i) in fails.title_en" :key="i">{{err}}</span>
-              </div>
-              <h5 class="account__blog-item-title">
-                {{ $t('categories') }}
-              </h5>
-              <v-autocomplete
-                chips
-                clearable
-                dense
-                outlined
-                solo
-                :items="categories"
-                item-text="title_ru"
-                item-value="id"
-                v-model="form.organizator_id"
-              ></v-autocomplete>
-              <div v-if="fails.address">
-                <span class="error--text v-size--small" v-for="(err,i) in fails.address" :key="i">{{err}}</span>
-              </div>
-            </div>
-
-            <div class="account__blog-item">
-              <h5 class="account__blog-item-title">
-                {{ $t('cabinet_description_kz') }}
-              </h5>
-              <ckeditor :editor="editor" v-model="form.description_kz"></ckeditor>
-            </div>
-            <div v-if="fails.description_kz">
-              <span class="error--text v-size--small" v-for="(err,i) in fails.description_kz" :key="i">{{err}}</span>
-            </div>
-            <div class="account__blog-item">
-              <h5 class="account__blog-item-title">
-                {{ $t('cabinet_description_ru') }}
-              </h5>
-              <ckeditor :editor="editor" v-model="form.description_ru"></ckeditor>
-            </div>
-            <div v-if="fails.description_ru">
-              <span class="error--text v-size--small" v-for="(err,i) in fails.description_ru" :key="i">{{err}}</span>
-            </div>
-            <div class="account__blog-item">
-              <h5 class="account__blog-item-title">
-                {{ $t('cabinet_description_en') }}
-              </h5>
-              <ckeditor :editor="editor" v-model="form.description_en"></ckeditor>
-            </div>
-            <div v-if="fails.description_en">
-              <span class="error--text v-size--small" v-for="(err,i) in fails.description_en" :key="i">{{err}}</span>
-            </div>
-
-            <div class="account__blog-item">
-              <h5 class="account__blog-item-title">
-                {{ $t('time') }}
-              </h5>
-              <v-text-field prepend-icon="fas fa-clock" type="number" v-model="form.time"></v-text-field>
-            </div>
-            <div v-if="fails.time">
-              <span class="error--text v-size--small" v-for="(err,i) in fails.time" :key="i">{{err}}</span>
-            </div>
-
-            <div class="account__blog-item">
-              <h5 class="account__blog-item-title">
-                {{ $t('distance') }}
-              </h5>
-              <v-text-field prepend-icon="fas fa-running" v-model="form.distance"></v-text-field>
-            </div>
-            <div v-if="fails.distance">
-              <span class="error--text v-size--small" v-for="(err,i) in fails.distance" :key="i">{{err}}</span>
-            </div>
-            <div class="account__blog-item">
-              <h5 class="account__blog-item-title">
-                {{ $t('address') }}
-              </h5>
-              <v-text-field prepend-icon="fas fa-map" type="number" v-model="form.address"></v-text-field>
-            </div>
-            <div v-if="fails.address">
-              <span class="error--text v-size--small" v-for="(err,i) in fails.address" :key="i">{{err}}</span>
-            </div>
-
-            <div class="account__blog-item">
-              <button type="submit" class="button">
-                {{ $t('cabinet_btn_publish') }}
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-
-      <div class="account__save-tabs-content " :class="{active: moder}">
-        <div class="account__blog">
-          <a @click="activeTab(1)" class="account__blog-link">
-            <svg xmlns="http://www.w3.org/2000/svg" width="9.318" height="4.985" viewBox="0 0 9.318 4.985"><g transform="translate(-6.4 -33.4)"><path d="M15.623,33.5a.329.329,0,0,0-.466,0l-4.094,4.1-4.1-4.1a.329.329,0,0,0-.466.466l4.326,4.326a.321.321,0,0,0,.233.1.335.335,0,0,0,.233-.1l4.326-4.326A.323.323,0,0,0,15.623,33.5Z" transform="translate(0)"/></g></svg>
-            {{ $t('back') }}
-          </a>
-          <h3 class="account__blog-title">
-            {{ $t('cabinet_editor') }}
-          </h3>
-
-          <form @submit.prevent="update" enctype="multipart/form-data" class="account__blog-form">
-            <div class="account__personal-info-img" :style="'background-image: url('+getImage(img)+');'"></div>
-            <div class="account__blog-item">
-              <h5 class="account__blog-item-title">
-                {{ $t('cabinet_img') }}
-              </h5>
-              <v-file-input
-                accept="image/*"
-                :placeholder="$t('upload_new_photo')"
-                prepend-icon="mdi-camera"
-                :label="$t('cabinet_img')"
-                @change="uploadImg"
-              ></v-file-input>
-              <div v-if="fails.image">
-                <span class="error--text v-size--small" v-for="(err,i) in fails.image" :key="i">{{err}}</span>
-              </div>
-            </div>
-            <div class="account__blog-item">
-              <v-textarea
-                counter
-                :label="$t('cabinet_title_kz')"
-                prepend-icon="mdi-comment"
-                v-model="form.title_kz"
-                rows="1"
-              ></v-textarea>
-              <div v-if="fails.title_kz">
-                <span class="error--text v-size--small" v-for="(err,i) in fails.title_kz" :key="i">{{err}}</span>
-              </div>
-              <v-textarea
-                counter
-                :label="$t('cabinet_title_ru')"
-                prepend-icon="mdi-comment"
-                v-model="form.title_ru"
-                rows="1"
-              ></v-textarea>
-              <div v-if="fails.title_ru">
-                <span class="error--text v-size--small" v-for="(err,i) in fails.title_ru" :key="i">{{err}}</span>
-              </div>
-              <v-textarea
-                counter
-                :label="$t('cabinet_title_en')"
-                prepend-icon="mdi-comment"
-                v-model="form.title_en"
-                rows="1"
-              ></v-textarea>
+              ></v-text-field>
               <div v-if="fails.title_en">
                 <span class="error--text v-size--small" v-for="(err,i) in fails.title_en" :key="i">{{err}}</span>
               </div>
@@ -331,7 +184,7 @@
               <h5 class="account__blog-item-title">
                 {{ $t('time') }}
               </h5>
-              <v-tеxtarea v-model="form.time"></v-tеxtarea>
+              <v-text-field prepend-icon="fas fa-clock" type="number" v-model="form.time"></v-text-field>
             </div>
             <div v-if="fails.time">
               <span class="error--text v-size--small" v-for="(err,i) in fails.time" :key="i">{{err}}</span>
@@ -341,11 +194,51 @@
               <h5 class="account__blog-item-title">
                 {{ $t('distance') }}
               </h5>
-              <v-tеxtarea v-model="form.distance"></v-tеxtarea>
+              <v-text-field prepend-icon="fas fa-running" v-model="form.distance"></v-text-field>
             </div>
             <div v-if="fails.distance">
-              <span class="error--text v-size--small" v-for="(err,i) in fails.time" :key="i">{{err}}</span>
+              <span class="error--text v-size--small" v-for="(err,i) in fails.distance" :key="i">{{err}}</span>
             </div>
+            <div class="account__blog-item">
+              <h5 class="account__blog-item-title">
+                {{ $t('address') }}
+              </h5>
+              <v-autocomplete
+                :loading="searchResult"
+                :search-input.sync="searchAddress"
+                :items="addressList"
+                v-model="address"
+                item-text="GeoObject.metaDataProperty.GeocoderMetaData.text"
+                item-value="GeoObject"
+                prepend-icon="fas fa-map"
+              ></v-autocomplete>
+            </div>
+            <div v-if="fails.address">
+              <span class="error--text v-size--small" v-for="(err,i) in fails.address" :key="i">{{err}}</span>
+            </div>
+            <div class="account__blog-item">
+              <yandex-map
+                :coords="pointCord.length ? pointCord : coords"
+                zoom="10"
+                style="width: 100%;height: 500px;"
+                map-type="map"
+              >
+
+                <ymap-marker
+                  v-if="pointCord.length"
+                  marker-id="1"
+                  marker-type="placemark"
+                  :coords="pointCord"
+                  hint-content="Тут"
+                  :icon="{color: 'green', glyph: 'fas fa map'}"
+                  cluster-name="1"
+                ></ymap-marker>
+
+              </yandex-map>
+            </div>
+
+
+
             <div class="account__blog-item">
               <button type="submit" class="button">
                 {{ $t('cabinet_btn_publish') }}
@@ -354,6 +247,7 @@
           </form>
         </div>
       </div>
+
     </div>
     <div v-else>
       <div class="account__not-found">
@@ -425,9 +319,11 @@ export default {
       types: [],
       fails: [],
       points:[],
+      coords:[42.31046,69.630645],
+      searchResult:false,
       img: '',
+      pointCord:[],
       form:{
-        place_id:"",
         category_id: "",
         title_ru: "",
         title_kz:"",
@@ -439,9 +335,33 @@ export default {
         time:"",
         distance:"",
         address:"",
+        address_link:null
+      },
+      addressList:[],
+      searchAddress:"",
+      address:"",
+
+    }
+  },
+  watch:{
+    async searchAddress(val) {
+      await this.searchAddressQuery(val)
+    },
+    address(val) {
+      this.pointCord = [];
+      this.form.address_link = [];
+      this.form.address = "";
+      if(val.Point.pos !== undefined){
+        let text = val.metaDataProperty.GeocoderMetaData.text;
+        let array = val.Point.pos.split(' ');
+        this.pointCord[0] = array[1];
+        this.pointCord[1] = array[0];
+        this.form.address_link = JSON.stringify([{'lat':this.pointCord[0],"lng":this.pointCord[1]}]);
+        this.form.address = text;
       }
     }
   },
+
   methods: {
     activeTab(i){
       this.tabs.forEach((item,i) => {
@@ -507,8 +427,7 @@ export default {
             formData.append(key, this.form[key])
           }
         })
-
-        await this.$axios.$post('/cabinet/send-route', formData).then(async (e) => {
+        await this.$axios.$post('/cabinet/create-route', formData).then(async (e) => {
           this.$toast.success('Успешно отправлен на модерацию')
           await this.loadData()
           this.activeTab(1)
@@ -521,7 +440,8 @@ export default {
       }
     },
     async deleteBlog(id){
-      await this.$axios.get('/cabinet/delete-event/'+id).then((e) => {
+      await this.$axios.get('/cabinet/delete-route/'+id,
+      ).then((e) => {
         this.loadData()
         this.$toast.success('Успешно был удален!')
       }).catch((e) =>{
@@ -553,17 +473,30 @@ export default {
     },
     async loadData(){
       await this.$axios.$get("/cabinet/my-routes").then((e)=>{
-        this.form.organizator_id = e[0].id
         this.routes = e[1]
-        this.types = e[2]
-        this.categories = e[3]
+        this.moderation = e[2]
       });
-    }
+    },
+
+    async searchAddressQuery(val = null){
+      if(val !== null){
+        this.addressList = [];
+        this.searchResult = true;
+        if(val.length > 3){
+          let url = "https://geocode-maps.yandex.ru/1.x?geocode="+ val +"&apikey=" +this.$store.state.yandex.apiKey + "&format=json"
+          await this.$axios.$get(url).then((e)=>{
+            this.addressList = e.response.GeoObjectCollection.featureMember
+            this.searchResult = false;
+          }).catch(e=>{ this.searchResult = false;});
+        }
+      }
+
+    },
+
   },
   async asyncData({$axios}) {
     let places, routes, moderation, categories, types = []
     let form = {
-      organizator_id: '',
       category_id: '',
       title_kz: '',
       title_ru: '',

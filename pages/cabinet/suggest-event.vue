@@ -529,7 +529,6 @@ if (process.client) {
 export default {
   name: "suggest-event",
   layout: 'cabinet',
-  middleware:['organizator'],
   components: {
     'ckeditor-nuxt': () => { if (process.client) { return import('@blowstack/ckeditor-nuxt') } },
     ckeditor: CKEditor.component,

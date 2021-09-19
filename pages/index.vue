@@ -1315,6 +1315,21 @@ export default {
   color: white!important;
 }
 
+@media screen and (min-width: 375px) and (max-width: 420px){
+.calendar__inner{
+  display: block;
+}
+.calendar__date-wrapper{
+  flex-wrap: wrap;
+  justify-content: center;
+}
+  .index-page-calendar{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+}
 
 
 </style>

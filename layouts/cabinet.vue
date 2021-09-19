@@ -121,9 +121,9 @@ export default {
       this.tabs[2].link = '/cabinet/create-souvenir'
     }
     if ( this.$auth.user.user.role_id === 3){
-      this.tabs[2].svg = "<i class = 'far fa-question-circle mr-2'></i>"
-      this.tabs[2].title = 'cabinet_menu_request'
-      this.tabs[2].link = '/cabinet/leave-request'
+      this.tabs[4].svg = "<i class = 'far fa-question-circle mr-2'></i>"
+      this.tabs[4].title = 'cabinet_menu_request'
+      this.tabs[4].link = '/cabinet/leave-request'
     }
   },
 
