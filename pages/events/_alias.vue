@@ -100,7 +100,7 @@
                 </div>
                 <div class="calendar-item__contact-text">
                   <span v-for="(item,i) in event.phone" :key="i">
-                    {{item}}
+                    <a :href="'tel:'+item" class="info--text">{{item}}</a>
                   </span>
                 </div>
               </li>

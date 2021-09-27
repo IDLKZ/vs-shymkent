@@ -57,7 +57,7 @@
         <ul class="footer-nav__items pl-0">
           <template v-if="tabs">
             <li  v-for="(tab,i) in tabs" :key="i" :class="getActiveTab(tab.path)">
-              <NuxtLink :to="tab.path" v-html="tab.svg+$t(tab.title)"></NuxtLink>
+              <NuxtLink :class="getActiveLink(tab.path)" :to="tab.path" v-html="tab.svg+$t(tab.title)"></NuxtLink>
             </li>
           </template>
 
@@ -246,7 +246,6 @@ export default {
       location.reload();
     },
     getActiveTab(path) {
-
       if (path !== "/") {
         if (this.$route.path.indexOf(path) !== -1) {
           return 'footer-nav__item active'
@@ -261,7 +260,21 @@ export default {
         }
       }
     },
-
+    getActiveLink(path) {
+      if (path !== "/") {
+        if (this.$route.path.indexOf(path) !== -1) {
+          return 'nuxt-link-exact-active'
+        } else {
+          return '';
+        }
+      } else {
+        if (this.$route.path === "/") {
+          return 'nuxt-link-exact-active'
+        } else {
+          return '';
+        }
+      }
+    },
     getActiveNav(path) {
       if (path !== "/") {
         if (this.$route.path.indexOf(path) !== -1) {

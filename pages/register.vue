@@ -31,9 +31,13 @@
           <div class="authorization__box-note">
             {{$t('register_input')}}
           </div>
-          <input v-model="form.password" type="password" class="authorization__box-input" placeholder="Пароль *">
+          <input v-model="form.password" type="password" class="authorization__box-input" :placeholder="$t('password')+'*'">
           <div v-if="fails.password">
             <span class="error--text v-size--small" v-for="(err,i) in fails.password" :key="i">{{err}}</span>
+          </div>
+          <input v-model="form.password_confirmation" type="password" class="authorization__box-input" :placeholder="$t('confirm_password')+'*'">
+          <div v-if="fails.password_confirmation">
+            <span class="error--text v-size--small" v-for="(err,i) in fails.password_confirmation" :key="i">{{err}}</span>
           </div>
           <div class="authorization__box-note">
             * {{$t('required')}}
@@ -60,15 +64,15 @@
               <label class="authorization__box-label" for="reg4">{{ $t('register_role_craftman') }}</label>
             </div>
           </div>
-          <input v-model="form.title_kz" type="text" :class="'authorization__box-input '+this.d_none" placeholder="Наименование на каз *">
+          <input v-model="form.title_kz" type="text" :class="'authorization__box-input '+this.d_none" :placeholder="$t('title_kz')">
           <div v-if="fails.title_kz" :class="d_none">
                 <span class="error--text v-size--small" v-for="(err,i) in fails.title_kz" :key="i">{{err}}</span>
               </div>
-          <input v-model="form.title_ru" type="text" :class="'authorization__box-input '+this.d_none" placeholder="Наименование на рус *">
+          <input v-model="form.title_ru" type="text" :class="'authorization__box-input '+this.d_none" :placeholder="$t('title_ru')">
           <div v-if="fails.title_ru" :class="d_none">
                 <span class="error--text v-size--small" v-for="(err,i) in fails.title_ru" :key="i">{{err}}</span>
               </div>
-          <input v-model="form.title_en" type="text" :class="'authorization__box-input '+this.d_none" placeholder="Наименование на анг *">
+          <input v-model="form.title_en" type="text" :class="'authorization__box-input '+this.d_none" :placeholder="$t('title_en')">
           <div v-if="fails.title_en" :class="d_none">
                 <span class="error--text v-size--small" v-for="(err,i) in fails.title_en" :key="i">{{err}}</span>
               </div>
@@ -94,10 +98,12 @@ export default {
   data(){
     return {
       form: {
+        locale: this.$i18n.locale,
         name: '',
         email: '',
         phone: '',
         password: '',
+        password_confirmation: '',
         role_id: '',
         title_kz: '',
         title_ru: '',
@@ -173,6 +179,9 @@ export default {
           this.fails = response.data.errors
         });
     }
+  },
+  mounted() {
+    console.log(this.$i18n.locale)
   }
 }
 </script>

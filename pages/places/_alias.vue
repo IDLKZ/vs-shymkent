@@ -26,11 +26,11 @@
         </div>
         <div class="guide-item__inner">
           <div class="guide-item__images">
-            <lingallery :iid.sync="currentId" :width="700" :height="'auto'" :items=galleries />
+            <lingallery :iid.sync="currentId" :squareModeDektop="true" :responsive="true" :mobileHeight="250" :width="700" :items=galleries />
             <div class="guide-item__map">
               <yandex-map :coords="coords"
                           zoom="10"
-                          style="width: 400px;height: 500px;"
+                          ymap-class="ymap-style"
                           map-type="map"
               >
                 <div v-for="(item,i) in placemarks">
@@ -105,19 +105,32 @@
                 <div class="guide-item__contact-text">
                   <div v-if="place.sites">
                     <div v-for="(item,i) in place.sites" :key="i">
-                      <a :href="item" target="_blank">{{item}}</a>
+                      <a class="info--text" :href="item" target="_blank">{{item}}</a>
                     </div>
                   </div>
 
                 </div>
               </li>
-              <li class="guide-item__contact-item">
+              <li class="guide-item__contact-item" v-if="place.social_networks">
+                            <span class="guide-item__contact-span">
+                                {{ $t('social') }}:
+                            </span>
+                <div class="guide-item__contact-text">
+                  <div v-if="place.social_networks">
+                    <div v-for="(item,i) in place.social_networks" :key="i">
+                      <a class="info--text" :href="item" target="_blank">{{item}}</a>
+                    </div>
+                  </div>
+
+                </div>
+              </li>
+              <li class="guide-item__contact-item" v-if="place.email">
                             <span class="guide-item__contact-span">
                                 {{ $t('emails') }}:
                             </span>
                 <div class="guide-item__contact-text">
-                  <div v-if="place.user">
-                    <a :href="'mailto:'+place.user.email">{{place.user.email}}</a>
+                  <div>
+                    <a :href="'mailto:'+place.email">{{place.email}}</a>
                   </div>
                 </div>
               </li>
@@ -399,7 +412,7 @@ export default {
 
   },
   mounted() {
-      console.log(this.placemarks)
+      // console.log(this.placemarks)
   }
 }
 </script>

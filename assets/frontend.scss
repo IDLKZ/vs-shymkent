@@ -543,3 +543,50 @@ figure img {
     grid-template-columns: 1fr;
   }
 }
+
+
+
+blockquote {
+  display: block;
+  margin: 1em 40px;
+  padding-left: 20px;
+  border-left: #acadad solid 5px;
+}
+.v-application ul, .v-application ol{
+  padding-left: 0!important;
+}
+
+
+.ymap-style {
+  width: 400px;
+  height: 500px;
+
+  @media screen and (max-width: 500px){
+    width: 100%;
+    height: 200px;
+  }
+}
+.lingallery figure img{
+  width: auto!important;
+  max-height: 500px!important;
+}
+@media screen and (max-width: 500px){
+  .guide-item__map{
+    height: 200px;
+  }
+  .guide-item__contact-item{
+    grid-template-columns: 1fr;
+  }
+  .guide-item__contact-span{
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  .guide-item__contact-text{
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  .lingallery figure img{
+    width: auto!important;
+    max-height: 200px!important;
+  }
+}

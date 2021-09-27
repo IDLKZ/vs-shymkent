@@ -11,7 +11,7 @@
           <div class="col-md-10">
             <VueSlickCarousel v-bind="settings" v-if="fts.partners">
               <div class="partner-block" v-for="(partner,i) in fts.partners" :key="i">
-                <img class="partner-img" :src="getImage(partner.image)" width="100%">
+                <a :href="partner.alias" target="_blank"><img class="partner-img" :src="getImage(partner.image)" width="100%"></a>
               </div>
 
             </VueSlickCarousel>
