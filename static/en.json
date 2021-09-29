@@ -206,5 +206,10 @@
   "notification_success_auth": "Successfully authenticated",
   "notification_error_auth": "Error while authenticating",
   "notification_updating_in": "Update in...",
-  "notification_updated": "Successfully updated"
+  "notification_updated": "Successfully updated",
+  "traveller": "Passengers",
+  "adult": "Adults",
+  "child": "Children",
+  "baby": "Babies",
+  "peoples": "Number of Peoples"
 }

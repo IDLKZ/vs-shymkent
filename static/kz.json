@@ -199,5 +199,10 @@
   "notification_success_auth": "Сәтті аутентификацияланды",
   "notification_error_auth": "Аутентификация кезінде қате орын алды",
   "notification_updating_in": "жаңаруда...",
-  "notification_updated": "Сәтті жаңартылды"
+  "notification_updated": "Сәтті жаңартылды",
+  "traveller": "Жолаушылар",
+  "adult": "ересектер",
+  "child": "Балалар",
+  "baby": "сәбилер",
+  "peoples": "Адамдар саны"
 }

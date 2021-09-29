@@ -199,5 +199,10 @@
   "notification_success_auth": "Успешно аутентифицирован",
   "notification_error_auth": "Ошибка при аутентификации",
   "notification_updating_in": "Обновление в...",
-  "notification_updated": "Успешно обновлено"
+  "notification_updated": "Успешно обновлено",
+  "traveller": "Пассажиры",
+  "adult": "Взрослые",
+  "child": "Дети",
+  "baby": "Младенцы",
+  "peoples": "Кол-во людей"
 }

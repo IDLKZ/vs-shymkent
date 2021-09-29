@@ -23,6 +23,7 @@ const globals = {
             }
           },
           getEventum(id) {
+
             return this.$store.state.eventum.code + id
           },
           getStarClass(item, max) {
