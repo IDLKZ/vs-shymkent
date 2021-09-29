@@ -182,6 +182,18 @@ export default {
     let saveColor = ''
     let btn_save= 'save'
     let form = {}
+    function  getImage(image) {
+      let reg = new RegExp("https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)");
+      if(image == null || image == "null"){
+        return  "https://www.freeiconspng.com/uploads/no-image-icon-4.png";
+      }
+      else if(reg.test(image)){
+        return image;
+      }
+      else{
+        return store.state.image.image + image;
+      }
+    }
     await $axios.$get("/event/"+route.params.alias)
       .then(e => {
         if (Object.keys(e).length === 0) throw({ statusCode: 404, message: 'Event not found' })
@@ -212,12 +224,14 @@ export default {
         console.log(e)
       })
     galleries.push({
-      id:100, src:store.state.image.image +event.image, thumbnail:store.state.image.image +event.image
+      id:100, src:getImage(event.image), thumbnail:getImage(event.image)
     })
     if(event.galleries.length > 0){
+
       for(let i = 0; i < event.galleries.length; i++){
+
         galleries.push(
-          {id:event.galleries[i].id,src:store.state.image.image +event.galleries[i].image , thumbnail:store.state.image.image + event.galleries[i].image}
+          {id:event.galleries[i].id,src:getImage(event.galleries[i].image) , thumbnail:getImage(event.galleries[i].image)}
         )
       }
     }
