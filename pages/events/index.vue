@@ -109,6 +109,7 @@
                           v-bind="attrs"
                           v-on="on"
                           style="color: white!important;"
+                          @click="eventum = item.eventum"
                   >
                     <span>{{ $t('buy') }}</span>
                   </button>
@@ -127,7 +128,7 @@
                               height="2.7"></rect>
                       </svg>
                     </div>
-                    <iframe :src="getEventum(item.eventum)" style="height:573px;width:100%;"
+                    <iframe :src="getEventum(eventum)" style="height:573px;width:100%;"
                             frameborder="0"></iframe>
                   </v-card-text>
 
@@ -165,6 +166,7 @@ export default {
       date: "",
       menu: false,
       modal: false,
+      eventum:null
     }
   },
 

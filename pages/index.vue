@@ -175,6 +175,7 @@
                        v-bind="attrs"
                        v-on="on"
                     style="color: white!important;"
+                            @click="eventum = item.eventum"
                     >
                       <span>{{ $t('buy') }}</span>
                     </button>
@@ -193,7 +194,7 @@
                                   height="2.7"></rect>
                           </svg>
                         </div>
-                        <iframe :src="getEventum(item.eventum)" style="height:573px;width:100%;"
+                        <iframe :src="getEventum(eventum)" style="height:573px;width:100%;"
                                 frameborder="0"></iframe>
                     </v-card-text>
 
@@ -350,28 +351,28 @@
                             v-on="on"
                             elevation="0"
                           >
-                            Пассажиры
+                            {{$t('traveller')}}
                           </v-btn>
                         </template>
 
                         <v-card class="py-5">
                           <v-list>
                             <v-list-item>
-                              <v-text-field outlined v-model="adult" type="number" label="Взрослые(старше 12 лет)" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(0)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(0)"></v-text-field>
+                              <v-text-field outlined v-model="adult" type="number" :label="$t('adult')" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(0)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(0)"></v-text-field>
                             </v-list-item>
                             <v-list-item>
-                              <v-text-field outlined v-model="adolcent" type="number" label="Дети(2–12 лет)" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(1)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(1)"></v-text-field>
+                              <v-text-field outlined v-model="adolcent" type="number" :label="$t('child')" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(1)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(1)"></v-text-field>
                             </v-list-item>
                             <v-list-item>
-                              <v-text-field outlined v-model="child" type="number" label="Младенцы (до 2х лет)" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(2)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(2)"></v-text-field>
+                              <v-text-field outlined v-model="child" type="number" :label="$t('baby')" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(2)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(2)"></v-text-field>
                             </v-list-item>
                             <v-list-item>
                               <v-select outlined
                                 :items="
                                   [
-                                    {'title':'Любой','code':'A'},
-                                    {'title':'Эконом класс','code':'E'},
-                                    {'title':'Бизнес класс','code':'B'},
+                                    {'title':'Любой/Any','code':'A'},
+                                    {'title':'Эконом класс/Economy class','code':'E'},
+                                    {'title':'Бизнес класс/Business class','code':'B'},
                                   ]"
                                 item-text="title"
                                 item-value="code"
@@ -419,7 +420,7 @@
                       :items="stationsFrom"
                       v-model="railFrom"
                       :search-input.sync="search"
-                      type="text" placeholder="Откуда" />
+                      type="text" placeholder="Откуда/From" />
                   </div>
                   <div class="trip__input-name my-sm-2">
                     <v-autocomplete
@@ -436,7 +437,7 @@
                       :items="stationsTo"
                       v-model="railTo"
                       :search-input.sync="searchTo"
-                      type="text" placeholder="Куда" />
+                      type="text" placeholder="Куда/To" />
                   </div>
                   <div class="trip__input-date my-sm-2">
                     <v-menu
@@ -606,17 +607,17 @@
                           v-on="on"
                           elevation="0"
                         >
-                          Кол-во людей
+                          {{$t('peoples')}}
                         </v-btn>
                       </template>
 
                       <v-card  class="py-4">
                         <v-list>
                           <v-list-item>
-                            <v-text-field outlined v-model="adult" type="number" label="Взрослые" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(0,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(0)"></v-text-field>
+                            <v-text-field outlined v-model="adult" type="number" :label="$t('adult')" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(0,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(0)"></v-text-field>
                           </v-list-item>
                           <v-list-item>
-                            <v-text-field outlined v-model="adolcent" type="number" label="Дети" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(1,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(1)"></v-text-field>
+                            <v-text-field outlined v-model="adolcent" type="number" :label="$t('child')" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(1,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(1)"></v-text-field>
                           </v-list-item>
                         </v-list>
 
@@ -741,20 +742,20 @@
                           v-on="on"
                           elevation="0"
                         >
-                          Кол-во людей
+                          {{$t('peoples')}}
                         </v-btn>
                       </template>
 
                       <v-card class="py-4">
                         <v-list>
                           <v-list-item>
-                            <v-text-field outlined v-model="adult" type="number" label="Взрослые(старше 12 лет)" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(0,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(0)"></v-text-field>
+                            <v-text-field outlined v-model="adult" type="number" :label="$t('adult')" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(0,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(0)"></v-text-field>
                           </v-list-item>
                           <v-list-item>
-                            <v-text-field outlined v-model="adolcent" type="number" label="Дети(2–12 лет)" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(1,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(1)"></v-text-field>
+                            <v-text-field outlined v-model="adolcent" type="number" :label="$t('child')" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(1,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(1)"></v-text-field>
                           </v-list-item>
                           <v-list-item>
-                            <v-text-field outlined v-model="child" type="number" label="Младенцы (до 2х лет)" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(2,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(2)"></v-text-field>
+                            <v-text-field outlined v-model="child" type="number" :label="$t('baby')" append-outer-icon="fas fa-plus changeButton" @click:append-outer="increment(2,true)" prepend-icon="fas fa-minus changeButton" @click:prepend="decrement(2)"></v-text-field>
                           </v-list-item>
                         </v-list>
 
@@ -972,7 +973,8 @@ export default {
       //Hotels - Booking
       fromHotelModal:false,
       toHotelModal:false,
-      menuHotelModal:false
+      menuHotelModal:false,
+      eventum:null,
 
 
     }
@@ -1328,6 +1330,12 @@ export default {
     display: flex;
     justify-content: center;
     margin-top: 10px;
+  }
+}
+
+.v-dialog--active{
+  .v-card__text{
+    padding: 0!important;
   }
 }
 
