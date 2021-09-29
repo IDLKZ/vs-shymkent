@@ -30,7 +30,15 @@
       </div>
       <div class="blog-item__wrapper">
         <div class="blog-item__content-inner">
-          <div class="blog-item__img" :style="{backgroundImage:'url(' + getImage(blog.image) + ')'}"></div>
+          <v-carousel v-model="model" hide-delimiters height="auto">
+            <v-carousel-item
+              v-for="(galleryImage, i) in galleries"
+              :key="i"
+            >
+              <div class="news-item__img" :style="'background-image: url('+getImage(galleryImage)+');'"></div>
+
+            </v-carousel-item>
+          </v-carousel>
           <div class="blog-item__text">
             <div v-html="blog['description_' + $i18n.locale]">
 
@@ -176,6 +184,7 @@ export default {
         user_id:null,
         blog_id:null
       },
+      galleries:[]
 
     }
 
@@ -266,7 +275,18 @@ export default {
         })
       }
     }
-    return {blog,blogs,reviews,current_page,last_page,form,saveColor,btn_save}
+    let galleries = [];
+    galleries.push(blog.image);
+    if(blog.galleries){
+      if(blog.galleries.length > 0){
+        for (let item of blog.galleries){
+          galleries.push(item.image);
+        }
+      }
+
+    }
+
+    return {blog,blogs,reviews,current_page,last_page,form,saveColor,btn_save,galleries}
   }
 
 
@@ -281,5 +301,7 @@ export default {
 </script>
 
 <style scoped>
-
+.carousel {
+  height: auto !important;
+}
 </style>

@@ -25,7 +25,15 @@
       </div>
       <div class="news-item__wrapper">
         <div class="news-item__content-inner">
-          <div class="news-item__img" :style="'background-image: url('+getImage(New.image)+');'"></div>
+          <v-carousel v-model="model" hide-delimiters height="auto">
+            <v-carousel-item
+              v-for="(galleryImage, i) in galleries"
+              :key="i"
+            >
+              <div class="news-item__img" :style="'background-image: url('+getImage(galleryImage)+');'"></div>
+
+            </v-carousel-item>
+          </v-carousel>
           <div class="news-item__text" v-html="New['description_'+$i18n.locale]"></div>
           <div class="post__btns">
             <form @submit.prevent="addSave(form,saveColor)">
@@ -191,6 +199,7 @@ export default {
         })
       }
     }
+    let galleries=[];
     try {
       await $axios.$get('/moreNews').then((e)=>{
         addNews = e;
@@ -202,7 +211,18 @@ export default {
     catch (e){
       console.log(e);
     }
-    return {New,form,saveColor,btn_save,addNews,last_page,reviews}
+    console.log(New.galleries);
+    galleries.push(New.image);
+    if(New.galleries){
+      if(New.galleries.length > 0){
+        for (let item of New.galleries){
+          galleries.push(item.image);
+        }
+      }
+    }
+    console.log(galleries);
+
+    return {New,form,saveColor,btn_save,addNews,last_page,reviews,galleries}
   },
   methods:{
     getStarClass(item,max){
@@ -254,5 +274,7 @@ export default {
 </script>
 
 <style scoped>
-
+.carousel {
+  height: auto !important;
+}
 </style>

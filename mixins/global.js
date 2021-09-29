@@ -15,8 +15,12 @@ const globals = {
             return text.length > value ? text.substring(0, value) + '...' : text;
           },
           getImage(image) {
+            let reg = new RegExp("https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)");
             if(image == null || image == "null"){
               return  "https://www.freeiconspng.com/uploads/no-image-icon-4.png";
+            }
+            else if(reg.test(image)){
+                return image;
             }
             else{
               return this.$store.state.image.image + image;
