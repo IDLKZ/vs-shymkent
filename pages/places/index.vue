@@ -101,7 +101,7 @@
                 <NuxtLink :to="'/places/'+item.alias" class="guide-list__item-title">
                   {{item['title_'+$i18n.locale]}}
                 </NuxtLink>
-                <p class="guide-list__item-text" v-html="truncate(item['description_'+$i18n.locale],100)"></p>
+                <p class="guide-list__item-text" v-html="truncate(item['description_'+$i18n.locale],150)"></p>
                 <div class="guide-list__item-about mt-auto">
                   <NuxtLink :to="'/places/'+item.alias" class="guide-list__about-link white--text mt-3">{{ $t('more_info') }}</NuxtLink>
                 </div>
@@ -316,6 +316,36 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@media screen and (min-width: 1000px){
+  .guide-list__item-img{
+    min-height: 370px!important;
+  }
+}
+@media screen and (max-width: 370px){
+  .guide-list__item-img{
+    min-height: 280px!important;
+  }
+}
+@media screen and (min-width: 370px) and (max-width: 450px){
+  .guide-list__item-img{
+    min-height: 200px!important;
+  }
+}
+@media screen and (min-width: 370px) and (max-width: 450px){
+  .guide-list__item-img{
+    min-height: 200px!important;
+  }
+}
+@media screen and (min-width: 450px) and (max-width: 700px){
+  .guide-list__item-img{
+    min-height: 300px!important;
+  }
+}
+@media screen and (min-width: 700px) and (max-width: 1000px){
+  .guide-list__item-img{
+    min-height: 350px!important;
+  }
+}
 
 </style>

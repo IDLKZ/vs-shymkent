@@ -38,7 +38,7 @@
                 Оңтүстік аймақтағы ең ірі өнеркәсіптік, сауда және мәдени орталық Өзбекстанмен және Өзбекстанмен шекараларға жақын орналасқан
                 Қырғызстан, сондай – ақ олардың астаналары-Ташкент және Бішкек.
               </p>
-              <lingallery :iid.sync="currentId" :width="'100%'" :height="'auto'" :items=galleries responsive="true" class="mr-md-6"/>
+              <lingallery :iid.sync="currentId" :width="'100%'" :height="'auto'" :items=galleries responsive="true" class="mr-md-6 my-4"/>
               <p>
                 Қазіргі Шымкентте 95-тен астам ұлт өкілдері (қазақтар мен орыстар, өзбектер мен татарлар, кәрістер және басқалар) тату тұрады. Халықтың тұрмыс салты, этностық топтардың ортақтығы мен өзіндік ерекшелігі, олардың синтезі – осының бәрі мәдени саясатты қалыптастырды
                 қаласы.
@@ -63,7 +63,7 @@
                 Самый крупный промышленный, торговый и культурный центр южного региона расположен относительно недалеко от границ с Узбекистаном и
                 Кыргызстаном, а также их столиц – Ташкента и Бишкека.
               </p>
-              <lingallery :iid.sync="currentId" :width="'100%'" :height="'auto'" :items=galleries responsive="true" class="mr-md-6"/>
+              <lingallery :iid.sync="currentId" :width="'100%'" :height="'auto'" :items=galleries responsive="true" class="mr-md-6 my-4"/>
               <p>
                 В современном Шымкенте дружно проживают представители более 95 национальностей (казахи и русские, узбеки и татары, корейцы и другие). Жизненный уклад населения, общность и самобытность этнических групп, их синтез – все это сформировало культурную политику
                 города.
@@ -88,7 +88,7 @@
                 The largest industrial, commercial and cultural center of the southern region is located relatively close to the borders with Uzbekistan and
                 Kyrgyzstan, as well as their capitals – Tashkent and Bishkek.
               </p>
-              <lingallery :iid.sync="currentId" :width="'100%'" :height="'auto'" :items=galleries responsive="true" class="mr-md-6"/>
+              <lingallery :iid.sync="currentId" :width="'100%'" :height="'auto'" :items=galleries responsive="true" class="mr-md-6 my-4"/>
               <p>
                 Representatives of more than 95 nationalities (Kazakhs and Russians, Uzbeks and Tatars, Koreans and others) live together in modern Shymkent. The way of life of the population, the community and identity of ethnic groups, their synthesis-all this has formed the cultural policy
                 cities.
@@ -262,53 +262,12 @@
               </p>
             </div>
           </div>
+          <div class="my-5 py-5">
           <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
-<!--          <div :class="'about__tabs-content'+this.tabs[3].active">-->
-<!--            <div class="about__gallery-tabs">-->
-<!--              <ul class="about__gallery-tabs-caption">-->
-<!--                <li class="active">Все фотографии</li>-->
-<!--                <li>Из истории города</li>-->
-<!--              </ul>-->
-<!--              <div class="about__gallery-tabs-content active">-->
-<!--                <div class="about__gallery-popup" id="second-gallery">-->
-<!--                  <a href="https://avatanplus.com/files/effects/original/583eb65914425158b4f84bfb.jpg" title="The Cleaner"><img src="https://avatanplus.com/files/effects/original/583eb65914425158b4f84bfb.jpg"></a>-->
-<!--                  <a href="https://hd-wallpapersfd.info/wp-content/uploads/HTML/Wallpaper-Mountain/Wallpaper-Mountain85.jpg" title="Winter Dance"><img src="https://hd-wallpapersfd.info/wp-content/uploads/HTML/Wallpaper-Mountain/Wallpaper-Mountain85.jpg"></a>-->
-<!--                  <a href="/images/about-img.jpg" title="The Uninvited Guest"><img src="/images/about-img.jpg"></a>-->
-<!--                  <a href="http://farm9.staticflickr.com/8383/8563475581_df05e9906d_b.jpg" title="Oh no, not again!"><img src="http://farm9.staticflickr.com/8383/8563475581_df05e9906d_s.jpg"></a>-->
-<!--                  <a href="http://farm9.staticflickr.com/8235/8559402846_8b7f82e05d_b.jpg" title="Swan Lake"><img src="http://farm9.staticflickr.com/8235/8559402846_8b7f82e05d_s.jpg"></a>-->
-<!--                  <a href="http://farm9.staticflickr.com/8235/8558295467_e89e95e05a_b.jpg" title="The Shake"><img src="http://farm9.staticflickr.com/8235/8558295467_e89e95e05a_s.jpg"></a>-->
-<!--                  <a href="http://farm9.staticflickr.com/8378/8559402848_9fcd90d20b_b.jpg" title="Who's that, mommy?"><img src="http://farm9.staticflickr.com/8378/8559402848_9fcd90d20b_s.jpg"></a>-->
-<!--                  <a href="https://avatanplus.com/files/effects/original/583eb65914425158b4f84bfb.jpg" title="The Cleaner"><img src="https://avatanplus.com/files/effects/original/583eb65914425158b4f84bfb.jpg"></a>-->
-<!--                  <a href="https://hd-wallpapersfd.info/wp-content/uploads/HTML/Wallpaper-Mountain/Wallpaper-Mountain85.jpg" title="Winter Dance"><img src="https://hd-wallpapersfd.info/wp-content/uploads/HTML/Wallpaper-Mountain/Wallpaper-Mountain85.jpg"></a>-->
-<!--                  <a href="/images/about-img.jpg" title="The Uninvited Guest"><img src="/images/about-img.jpg"></a>-->
-<!--                  <a href="http://farm9.staticflickr.com/8383/8563475581_df05e9906d_b.jpg" title="Oh no, not again!"><img src="http://farm9.staticflickr.com/8383/8563475581_df05e9906d_s.jpg"></a>-->
-<!--                  <a href="http://farm9.staticflickr.com/8235/8559402846_8b7f82e05d_b.jpg" title="Swan Lake"><img src="http://farm9.staticflickr.com/8235/8559402846_8b7f82e05d_s.jpg"></a>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="about__gallery-tabs-content">-->
-<!--                <div class="about__gallery-popup" id="first-gallery">-->
-<!--                  <a href="https://hd-wallpapersfd.info/wp-content/uploads/HTML/Wallpaper-Mountain/Wallpaper-Mountain85.jpg" title="Winter Dance"><img src="https://hd-wallpapersfd.info/wp-content/uploads/HTML/Wallpaper-Mountain/Wallpaper-Mountain85.jpg"></a>-->
-<!--                  <a href="/images/about-img.jpg" title="The Uninvited Guest"><img src="/images/about-img.jpg"></a>-->
-<!--                  <a href="http://farm9.staticflickr.com/8235/8558295467_e89e95e05a_b.jpg" title="The Shake"><img src="http://farm9.staticflickr.com/8235/8558295467_e89e95e05a_s.jpg"></a>-->
-<!--                  <a href="http://farm9.staticflickr.com/8378/8559402848_9fcd90d20b_b.jpg" title="Who's that, mommy?"><img src="http://farm9.staticflickr.com/8378/8559402848_9fcd90d20b_s.jpg"></a>-->
-<!--                  <a href="https://avatanplus.com/files/effects/original/583eb65914425158b4f84bfb.jpg" title="The Cleaner"><img src="https://avatanplus.com/files/effects/original/583eb65914425158b4f84bfb.jpg"></a>-->
-<!--                  <a href="https://hd-wallpapersfd.info/wp-content/uploads/HTML/Wallpaper-Mountain/Wallpaper-Mountain85.jpg" title="Winter Dance"><img src="https://hd-wallpapersfd.info/wp-content/uploads/HTML/Wallpaper-Mountain/Wallpaper-Mountain85.jpg"></a>-->
-<!--                  <a href="http://farm9.staticflickr.com/8383/8563475581_df05e9906d_b.jpg" title="Oh no, not again!"><img src="http://farm9.staticflickr.com/8383/8563475581_df05e9906d_s.jpg"></a>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
+          </div>
         </div>
       </div>
-<!--      <div class="post__btns">-->
-<!--&lt;!&ndash;        <button class="post__btn">&ndash;&gt;-->
-<!--&lt;!&ndash;          <svg data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title/><path d="M98.78,0H29.22A7.21,7.21,0,0,0,22,7.19V120.8a7.08,7.08,0,0,0,4.42,6.63,7.22,7.22,0,0,0,7.87-1.5L63.14,97.59a1.23,1.23,0,0,1,1.72,0l28.86,28.33a7.21,7.21,0,0,0,7.87,1.5A7.08,7.08,0,0,0,106,120.8V7.19A7.21,7.21,0,0,0,98.78,0ZM100,120.8a1.14,1.14,0,0,1-.74,1.09,1.17,1.17,0,0,1-1.34-.25h0L69.06,93.31a7.26,7.26,0,0,0-10.13,0L30.08,121.64a1.18,1.18,0,0,1-1.34.25A1.14,1.14,0,0,1,28,120.8V7.19A1.21,1.21,0,0,1,29.22,6H98.78A1.21,1.21,0,0,1,100,7.19Z"/></svg>&ndash;&gt;-->
-<!--&lt;!&ndash;          Сохранить&ndash;&gt;-->
-<!--&lt;!&ndash;        </button>&ndash;&gt;-->
-<!--        <button class="post__btn">-->
-<!--          <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />-->
-<!--        </button>-->
-<!--      </div>-->
+
     </div>
   </section>
 </template>

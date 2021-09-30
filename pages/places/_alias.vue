@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="guide-item__inner">
-          <div class="guide-item__images">
+          <div class="guide-item__images justify-md-space-around">
             <lingallery :iid.sync="currentId" :squareModeDektop="true" :responsive="true" :mobileHeight="250" :width="700" :items=galleries />
             <div class="guide-item__map">
               <yandex-map :coords="coords"
@@ -33,7 +33,7 @@
                           ymap-class="ymap-style"
                           map-type="map"
               >
-                <div v-for="(item,i) in placemarks">
+                <div v-for="(item,i) in placemarks" class="my-4">
                   <ymap-marker
                     :key="i"
                     :marker-id="i"
@@ -417,6 +417,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 
 </style>

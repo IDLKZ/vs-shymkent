@@ -131,6 +131,7 @@
             </div>
           </div>
         </div>
+        <Disqus />
         <aside class="blog-item__aside">
           <h5 class="blog-item__aside-title">
             {{ $t('see_also') }}

@@ -79,7 +79,7 @@
               <div class="news-list__item-date">
                 {{ $t('published') }}: <span>{{ New.created_at }}</span>
               </div>
-              <p class="news-list__item-text" v-html="truncate(New['description_'+$i18n.locale],50)"></p>
+              <p class="news-list__item-text news-text" v-html="truncate(New['description_'+$i18n.locale],50)"></p>
             </NuxtLink>
           </div>
         </div>
@@ -181,6 +181,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+
 
 </style>

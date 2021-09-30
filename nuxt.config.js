@@ -63,7 +63,8 @@ export default {
     './plugins/stars.js',
     './plugins/slider.js',
     './plugins/switch.js',
-    '~/mixins/global.js'
+    '~/mixins/global.js',
+    '~/plugins/disqus'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

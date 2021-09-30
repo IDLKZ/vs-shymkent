@@ -40,8 +40,8 @@
                 <h4 class="routes-points__item-name">
                   {{ item['title_'+$i18n.locale] }}
                 </h4>
-                <lingallery :iid.sync="currentId" :width="400" :height="300" :items=galleries[item.id] />
-                <div class="routes-points__item-text" v-html="item['description_'+$i18n.locale]"></div>
+                <lingallery :iid.sync="currentId" class="gallery-image" :items=galleries[item.id] />
+                <div class="routes-points__item-text pa-4" v-html="item['description_'+$i18n.locale]"></div>
                 <div class="routes-points__item-info">
                   <p><span>{{ $t('address') }}: </span>{{item.address}}</p>
                   <p><span>{{ $t('operating_mode') }}: </span>с понедельника по суботу с 9:00 до 18:00.</p>
@@ -211,8 +211,20 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 html {
   scroll-behavior: smooth;
+}
+.gallery-image{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  @media screen and (max-width: 1000px){
+    width: 400px;
+  }
+
+  @media screen and (max-width: 400px) {
+    width: 100vw;
+    height: auto;
+  }
 }
 </style>

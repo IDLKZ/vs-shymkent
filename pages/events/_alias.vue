@@ -107,7 +107,7 @@
             </ul>
           </div>
           <div class="calendar-item__content-item">
-            <div class="calendar-item__content-map">
+            <div class="calendar-item__content-map my-5">
               <yandex-map :coords="coords"
                           zoom="10"
                           style="width: 100%;height: 227px;"
@@ -139,10 +139,6 @@
                 </button>
               </form>
               <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
-<!--              <button class="post__btn">-->
-<!--                <svg xmlns="http://www.w3.org/2000/svg" width="11.052" height="11.056" viewBox="0 0 11.052 11.056"><path d="M11.052,5.525,6.014,0V3.31H5.428A5.428,5.428,0,0,0,0,8.738v2.318L.967,10A6.939,6.939,0,0,1,6.014,7.741V11.05ZM.648,9.39V8.738a4.78,4.78,0,0,1,4.78-4.781H6.661V1.672l3.514,3.853L6.661,9.378V7.093H6.08A7.588,7.588,0,0,0,.648,9.39Zm0,0"/></svg>-->
-<!--                Поделиться-->
-<!--              </button>-->
             </div>
           </div>
         </div>

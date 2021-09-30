@@ -7,7 +7,7 @@
         <div class="footer-nav__search">
           <input class="footer-nav__search-input" @keyup.enter="onSearch" v-model="getSearch" type="search" :placeholder="$t('search')">
         </div>
-        <ul class="footer-nav__content-list">
+        <ul class="footer-nav__content-list px-5">
           <li :class="getActiveNav('/about')">
             <NuxtLink to="/about">{{ $t("about_city") }}</NuxtLink>
           </li>

@@ -158,6 +158,12 @@ export default {
       grid-template-columns: 1fr 1fr 1fr!important;
     }
   }
+  .routes-page__tabs-content-inner{
+    grid-template-columns: 1fr!important;
+  }
+  .routes-page__employees-list-wrapper{
+    width: 100%!important;
+  }
 }
 
 </style>

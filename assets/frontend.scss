@@ -479,9 +479,17 @@ body{
 .lingallery_thumbnails_content{
   text-align: center!important;
 }
+.lingallery_thumbnails_content{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
 .lingallery_thumbnails_content_elem img{
-  width: 80px!important;
-  height: 80px!important;
+  height: auto!important;
+  width: auto!important;
+  max-width: 100px!important;
+  max-height: 100px!important;
 }
 figure img {
   width: 100%!important;
@@ -548,7 +556,7 @@ figure img {
 
 blockquote {
   display: block;
-  margin: 1em 40px;
+  //margin: 1em 40px;
   padding-left: 20px;
   border-left: #acadad solid 5px;
 }

@@ -110,7 +110,7 @@
         <div class="blog-list__items" v-if="blogs.length">
           <div class="blog-list__item" v-for="blog in blogs" :key="blog.created_at +blog.id">
             <NuxtLink :to="'/blogs/' + blog.alias">
-              <div class="blog-list__item-img" :style="{backgroundImage:'url(' + getImage(blog.image) + ')'}"></div>
+              <div class="blog-list__item-img"  :style="{backgroundImage:'url(' + getImage(blog.image) + ')'}"></div>
             </NuxtLink>
             <div class="blog-list__item-content">
               <div class="blog-list__info">
