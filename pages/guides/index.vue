@@ -142,7 +142,6 @@ export default {
     catch (e) {
       console.log(e);
     }
-    console.log(guides);
     return {guides,current_page,last_page}
   },
   mounted() {

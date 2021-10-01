@@ -90,7 +90,6 @@ export default {
   },
   methods:{
     getImages(data){
-      console.log(this.$store.state.image.image);
       return this.$store.state.image.image + data ;
     },
     truncate(string, value) {

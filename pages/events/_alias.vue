@@ -141,6 +141,80 @@
               <yandex-share :services="['vkontakte','facebook','twitter','whatsapp','telegram']" counter />
             </div>
           </div>
+          <!--    Review Start-->
+          <div class="tour-agency__content-feedback-item">
+            <div class="touragencye__feedback-reviews">
+              <div class="tour-agency__reviews-inner" style="min-height: auto" v-if="reviews.length">
+                <h1>{{ $t('review') }}</h1>
+                <div class="tour-agency__reviews-item" v-for="(review,index) in reviews">
+                  <div class="tour-agency__reviews-item-top">
+                    <div class="tour-agency__reviews-item-img" v-bind:style="{ backgroundImage: 'url(' + getImage(review.user.image) + ')' }"></div>
+                    <div class="tour-agency__reviews-item-inner">
+                      <div class="tour-agency__reviews-inner-name">
+                        {{review.user.name}} | {{review.created_at}}
+                      </div>
+                      <div class="guide-list__item-rating">
+                        <div v-for="i in 5" :class="getStarClass(i,review.rating)">
+                          <svg height="511pt" viewBox="0 -10 511.98685 511" width="511pt" xmlns="http://www.w3.org/2000/svg"><path d="m510.652344 185.902344c-3.351563-10.367188-12.546875-17.730469-23.425782-18.710938l-147.773437-13.417968-58.433594-136.769532c-4.308593-10.023437-14.121093-16.511718-25.023437-16.511718s-20.714844 6.488281-25.023438 16.535156l-58.433594 136.746094-147.796874 13.417968c-10.859376 1.003906-20.03125 8.34375-23.402344 18.710938-3.371094 10.367187-.257813 21.738281 7.957031 28.90625l111.699219 97.960937-32.9375 145.089844c-2.410156 10.667969 1.730468 21.695313 10.582031 28.09375 4.757813 3.4375 10.324219 5.1875 15.9375 5.1875 4.839844 0 9.640625-1.304687 13.949219-3.882813l127.46875-76.183593 127.421875 76.183593c9.324219 5.609376 21.078125 5.097657 29.910156-1.304687 8.855469-6.417969 12.992187-17.449219 10.582031-28.09375l-32.9375-145.089844 111.699219-97.941406c8.214844-7.1875 11.351563-18.539063 7.980469-28.925781zm0 0"/></svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tour-agency__reviews-item-text">
+                    {{review.review}}
+                  </div>
+                </div>
+                <div class="load-more" v-if="current_page < last_page">
+                  <a  @click.prevent="loadMore"  href="#">{{ $t('load_more') }}...</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="blog-item__disqus" style="background-color: white" v-if="this.$auth.loggedIn">
+            <h3 class="blog-item__disqus-title">
+              {{ $t('leave_a_review') }}
+            </h3>
+            <div class="blog-item__disqus-inner">
+              <div class="blog-item__disqus-inner">
+                <div class="d-flex">
+                  <v-avatar >
+                    <img
+                      :src="getImage(this.$auth.user.user.image)"
+                      :alt="this.$auth.user.user.name"
+                    >
+                  </v-avatar>
+                  <p>
+                    {{this.$auth.user.user.name}}
+                  </p>
+                </div>
+                <StarRating
+                  @rating-selected="setRating"
+                  :rating="rating ? Math.round(rating.avgStar) : 0"
+                  :star-size="30"
+                  text-class="customTextRating"
+                >
+                </StarRating>
+                <v-textarea
+                  v-model="forms.review"
+                  :rules="[v => (v || '' ).length <= 1000 || 'Description must be 1000 characters or less']"
+                  label="Текст отзыва"
+                  color="teal"
+                  max="1000"
+                  counter
+                >
+                </v-textarea>
+                <div class="text-right">
+                  <v-btn @click="sendForm" v-if="forms.review && forms.review.length && forms.review.length < 1000" class="my-btn " style="height: 50px!important; width: 150px!important;">
+                    {{ $t('send') }}
+                  </v-btn>
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+          <!--Review End-->
         </div>
       </div>
     </div>
@@ -148,9 +222,12 @@
 </template>
 
 <script>
+import StarRating from "vue-star-rating";
+
 import Lingallery from 'lingallery';
 export default {
   components:{
+    StarRating,
     Lingallery
   },
   data(){
@@ -160,7 +237,17 @@ export default {
       galleries: [],
       currentId:null,
       coords: [42.340782,69.596329],
-      placemarks: []
+      placemarks: [],
+      reviews:[],
+      current_page:1,
+      last_page:1,
+      place:{},
+      forms:{
+        rating:null,
+        review:null,
+        user_id:null,
+        event_id:null
+      },
     }
   },
   methods:{
@@ -170,11 +257,62 @@ export default {
       })
       this.tabs[i].active = 'active'
     },
+    //Установка рейтинга
+    setRating(e){
+      this.forms.rating = e;
+    },
+    //Существующий рейтинг
+    getStarClass(item,max){
+      let className =  'guide-list__item-rating-star';
+      for (let i = 1; i <= max; i++){
+        if(item <= max){
+          className = 'guide-list__item-rating-star active';
+        }
+      }
+      return className;
+    },
+
+    //Отправка формы
+    async sendForm(){
+      this.forms.user_id = this.$auth.user.user.id;
+      this.forms.event_id = this.event.id;
+      this.$toast.info("Отправляем запрос")
+      await this.$axios.$post("/cabinet/reviews", this.forms).then((e)=>{
+        this.$toast.success("Успешно отправлено на модерацию")
+      }).catch((e)=>{
+        if(e.response.status == 429){
+          this.$toast.error("Убедитесь что ваши запросы потверждены, и попробуйте позже");
+        }
+      })
+      this.forms.review = "";
+      this.forms.rating = 0;
+    },
+    //Пагинация отзывов
+    async loadMore(){
+      this.current_page++
+      try{
+        await this.$axios.$get('/event/'+this.event.alias +"?page=" + this.current_page).then((e)=>{
+          this.reviews.push(...e[1].data);
+          this.current_page = e[1].current_page;
+          this.last_page = e[1].last_page;
+        }).catch((e)=>{
+          console.log(e);
+        })
+      }
+      catch (e) {
+        this.$toast.error("Упс произошла ошибка! Попробуйте позже");
+      }
+
+
+
+    },
   },
   async asyncData({$axios,route,redirect,store}) {
     let event;
     let galleries = [];
     let placemarks = [];
+    let reviews = [];
+    let current_page,last_page = 1;
     let saveColor = ''
     let btn_save= 'save'
     let form = {}
@@ -194,7 +332,10 @@ export default {
       .then(e => {
         if (Object.keys(e).length === 0) throw({ statusCode: 404, message: 'Event not found' })
         else {
-          event = e;
+          event = e[0];
+          reviews = e[1].data;
+          current_page = e[1].current_page;
+          last_page = e[1].last_page;
           form.event_id = event.id
           if (store.$auth.$state.loggedIn){
             form.user_id = store.$auth.$state.user.user.id
@@ -232,7 +373,7 @@ export default {
       }
     }
 
-    return {event,galleries,placemarks, form, saveColor, btn_save};
+    return {event,galleries,placemarks, form, saveColor, btn_save,reviews,current_page,last_page};
   },
   mounted() {
     // console.log(this.galleries)

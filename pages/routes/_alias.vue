@@ -171,13 +171,13 @@ export default {
             })
           } else {
             if (Route.address_link){
-              console.log(Route.address_link);
+              // console.log(Route.address_link);
               let TIMA = JSON.parse(Route.address_link);
               points[0] = {id:0, placemarks: TIMA, num: 1, val: Route, active: ''};
               TIMA.forEach((item, i) => {
                 points[0].placemarks[i] = [item.lat, item.lng];
               })
-              console.log(TIMA);
+              // console.log(TIMA);
             }
           }
 

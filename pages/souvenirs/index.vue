@@ -218,7 +218,6 @@ export default {
           }
         }
       }
-      console.log(this.role_id);
       this.current_page = 1;
       this.loadData();
       },

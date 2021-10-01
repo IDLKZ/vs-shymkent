@@ -180,8 +180,8 @@ export default {
   },
   computed:{
     getQueryCategory(){
-      console.log(this.categoryTypes);
-      console.log(this.categoryTypes.length);
+      // console.log(this.categoryTypes);
+      // console.log(this.categoryTypes.length);
       if(this.categoryTypes.indexOf(0) == -1){
         if(this.categoryTypes.length > 0){
           return "&category_id=" + JSON.stringify(this.categoryTypes);
@@ -195,7 +195,7 @@ export default {
       }
     },
     getQueryType(){
-      console.log(this.routeTypes.length);
+      // console.log(this.routeTypes.length);
       if(this.routeTypes.indexOf(0) == -1){
         if(this.routeTypes.length > 0){
           return "&types=" + JSON.stringify(this.routeTypes);
@@ -230,7 +230,7 @@ export default {
             else{
               this.categoryTypes.push(index);
                 if(!this.categoryTypes.includes(0)){
-                  console.log(this.categoryTypes.length);
+                  // console.log(this.categoryTypes.length);
                   this.categoryTypes.length == this.categories.length ? this.categoryTypes.push(0) : null;
                 }
             }
@@ -248,7 +248,7 @@ export default {
           else{
             this.routeTypes.push(index);
             if(!this.routeTypes.includes(0)){
-              console.log(this.routeTypes.length);
+              // console.log(this.routeTypes.length);
               this.routeTypes.length == this.types.length ? this.routeTypes.push(0) : null;
             }
           }
