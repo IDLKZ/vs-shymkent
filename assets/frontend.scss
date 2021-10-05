@@ -25,7 +25,17 @@ body{
     list-style: none;
   }
 }
-
+.footer-nav__content-item{
+  list-style: none;
+}
+.footer-nav__contact{
+  li{
+    list-style: none;
+  }
+}
+.header__lang-item{
+  list-style: none;
+}
 .my-btn{
   background: $mainColor!important;
   color:white!important;

@@ -47,7 +47,7 @@
                     <h5 class="routes-page__employees-title">
                       {{ guide.user.name }}
                     </h5>
-                    <small>Оценка сервисов</small>
+                    <small>{{$t("service_ratings")}}</small>
                     <div class="guide-item__rating-inner">
                       <div class="guide-list__item-rating">
                         <div v-for="i in 5" :class="getStarClass(i,guide.ratings_avg_rating)">
@@ -55,10 +55,10 @@
                         </div>
                       </div>
                       <div class="guide-item__contact-count">
-                        ({{guide.ratings_avg_rating}})
+                        ({{guide.ratings_avg_rating !== null ? guide.ratings_avg_rating : 0}})
                       </div>
                     </div>
-                    <small>Оценка Пользователей</small>
+                    <small>{{$t("user_ratings")}}</small>
                     <div class="guide-item__rating-inner">
                       <div class="guide-list__item-rating">
                         <div v-for="i in 5" :class="getStarClass(i,guide.reviews_avg_rating)">
@@ -66,7 +66,7 @@
                         </div>
                       </div>
                       <div class="guide-item__contact-count">
-                        ({{guide.reviews_avg_rating}})
+                        ({{guide.reviews_avg_rating !== null ? guide.reviews_avg_rating : 0}})
                       </div>
                     </div>
                     <div class="routes-page__employees-lang">

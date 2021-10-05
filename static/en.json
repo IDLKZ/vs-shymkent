@@ -211,5 +211,7 @@
   "adult": "Adults",
   "child": "Children",
   "baby": "Babies",
-  "peoples": "Number of Peoples"
+  "peoples": "Number of Peoples",
+  "service_ratings": "Evaluation of services",
+  "user_ratings": "User Rating"
 }

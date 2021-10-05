@@ -45,7 +45,7 @@
                 <h5 class="routes-page__travel-agency-title">
                   {{ agent['title_'+$i18n.locale] }}
                 </h5>
-                <small>Оценка сервисов</small>
+                <small>{{$t("service_ratings")}}</small>
                 <div class="guide-item__rating-inner">
                   <div class="guide-list__item-rating mb-0">
                     <div v-for="i in 5" :class="getStarClass(i,agent.ratings_avg_rating)">
@@ -53,10 +53,10 @@
                     </div>
                   </div>
                   <div class="guide-item__contact-count">
-                    ({{agent.ratings_avg_rating}})
+                    ({{agent.ratings_avg_rating !== null ?agent.ratings_avg_rating : 0}})
                   </div>
                 </div>
-                <small>Оценка Пользователей</small>
+                <small>{{$t("user_ratings")}}</small>
                 <div class="guide-item__rating-inner mb-0">
                   <div class="guide-list__item-rating">
                     <div v-for="i in 5" :class="getStarClass(i,agent.reviews_avg_rating)">
@@ -64,7 +64,7 @@
                     </div>
                   </div>
                   <div class="guide-item__contact-count">
-                    ({{agent.reviews_avg_rating}})
+                    ({{agent.reviews_avg_rating !== null ? agent.reviews_avg_rating : 0}})
                   </div>
                 </div>
                 <div class="routes-page__employees-info">
