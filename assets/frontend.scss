@@ -5,6 +5,26 @@ $grayColor:#cbcbcb;
 body{
   font-family: "Gilroy-Regular"!important;
 }
+.header__menu{
+  list-style: none;
+}
+.guide__content-item{
+  list-style: none;
+}
+.footer__nav-list-item{
+  list-style: none;
+}
+.footer__contact-list-item{
+  list-style: none;
+}
+.news-list__last-news-item{
+  list-style: none;
+}
+.account__save-tabs-caption{
+  li{
+    list-style: none;
+  }
+}
 
 .my-btn{
   background: $mainColor!important;

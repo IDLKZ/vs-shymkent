@@ -54,7 +54,7 @@
           <h5 class="news-list__last-news-title">
             {{ $t('last_news') }}
           </h5>
-          <ul class="news-list__last-news-inner" v-if="hotNews.length">
+          <ul class="news-list__last-news-inner px-4" v-if="hotNews.length">
             <li class="news-list__last-news-item" v-for="(hot,index) in hotNews" :key="hot.created_at + index">
               <h6 class="news-list__last-news-item-title">
                 <NuxtLink v-text="truncateTitle(hot['title_'+$i18n.locale],50)"
@@ -79,7 +79,7 @@
               <div class="news-list__item-date">
                 {{ $t('published') }}: <span>{{ New.created_at }}</span>
               </div>
-              <p class="news-list__item-text news-text" v-html="truncate(New['description_'+$i18n.locale],50)"></p>
+              <p class="news-list__item-text news-text" v-html="truncate(New['title_'+$i18n.locale],50)"></p>
             </NuxtLink>
           </div>
         </div>

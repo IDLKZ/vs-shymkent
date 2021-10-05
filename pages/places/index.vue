@@ -97,7 +97,7 @@
                   {{value['title_'+$i18n.locale]}}
                 </div>
               </div>
-              <div class="guide-list__item-content">
+              <div class="guide-list__item-content" style="overflow: hidden">
                 <NuxtLink :to="'/places/'+item.alias" class="guide-list__item-title">
                   {{item['title_'+$i18n.locale]}}
                 </NuxtLink>

@@ -91,31 +91,33 @@
                   <div class="routes-page__list-categories-item">
                     <input type="checkbox" id="cb9"
                            @click="toggleActiveCheckBox([0],'time')"
-                           :checked="getActiveCheckBox([0],'time')"
+                           :checked="time.length == 1 || time.length <1"
                     > <label for="cb9">{{ $t('all') }}</label>
                   </div>
                   <div class="routes-page__list-categories-item">
-                    <input type="radio" name="distance" id="cb10"
+                    <input type="checkbox" name="distance" id="cb10"
                            @click="toggleActiveCheckBox([0,3],'time')"
-                           :checked="getActiveCheckBox([0,3],'time')"
-                    > <label for="cb10">{{ $t('filter_time_1') }}</label>
+                           :checked="time[1] == 3"
+                    > <label for="cb10">{{ $t('filter_time_1') }}
+
+                  </label>
                   </div>
                   <div class="routes-page__list-categories-item">
-                    <input type="radio" name="distance" id="cb11"
+                    <input type="checkbox" name="distance" id="cb11"
                            @click="toggleActiveCheckBox([3,9],'time')"
-                           :checked="getActiveCheckBox([3,9],'time')"
+                           :checked="time[1] == 9"
                     > <label for="cb11">{{ $t('filter_time_2') }}</label>
                   </div>
                   <div class="routes-page__list-categories-item">
-                    <input type="radio" name="distance" id="cb12"> <label for="cb12"
+                    <input type="checkbox" name="distance" id="cb12"> <label for="cb12"
                          @click="toggleActiveCheckBox([9,24],'time')"
-                         :checked="getActiveCheckBox([9,24],'time')"
+                         :checked="time[1] == 24"
                   >{{ $t('filter_time_3') }}</label>
                   </div>
                   <div class="routes-page__list-categories-item">
-                    <input type="radio" name="distance" id="cb13"
+                    <input type="checkbox" name="distance" id="cb13"
                            @click="toggleActiveCheckBox([24,1000],'time')"
-                           :checked="getActiveCheckBox([24,1000],'time')"
+                           :checked="time[1] == 1000"
                     > <label for="cb13">{{ $t('filter_time_4') }}</label>
                   </div>
                 </div>

@@ -115,15 +115,24 @@ export default {
   created() {
     if (this.$auth.user.user.role_id === 4 || this.$auth.user.user.role_id === 5){
       this.tabs[3].active = ''
+      this.tabs[5] = {svg:null,title:null,link:null};
+      this.tabs[5].svg = "<i class = 'far fa-question-circle mr-2'></i>"
+      this.tabs[5].title = 'cabinet_menu_request'
+      this.tabs[5].link = '/cabinet/leave-request'
     }
     if (this.$auth.user.user.role_id === 6 || this.$auth.user.user.role_id === 7){
+      this.tabs[5] = {svg:null,title:null,link:null};
       this.tabs[2].title = 'cabinet_menu_souvenirs'
       this.tabs[2].link = '/cabinet/create-souvenir'
+      this.tabs[5].svg = "<i class = 'far fa-question-circle mr-2'></i>"
+      this.tabs[5].title = 'cabinet_menu_request'
+      this.tabs[5].link = '/cabinet/leave-request'
     }
     if ( this.$auth.user.user.role_id === 3){
       this.tabs[4].svg = "<i class = 'far fa-question-circle mr-2'></i>"
       this.tabs[4].title = 'cabinet_menu_request'
       this.tabs[4].link = '/cabinet/leave-request'
+      this.tabs.splice(this.tabs.findIndex(element => element.id == 3 ),1);
     }
   },
 

@@ -26,27 +26,35 @@
         </div>
         <div class="guide-item__inner">
           <div class="guide-item__images justify-md-space-around">
-            <lingallery :iid.sync="currentId" :squareModeDektop="true" :responsive="true" :mobileHeight="250" :width="700" :items=galleries />
-            <div class="guide-item__map">
-              <yandex-map :coords="coords"
-                          zoom="10"
-                          ymap-class="ymap-style"
-                          map-type="map"
-              >
-                <div v-for="(item,i) in placemarks" class="my-4">
-                  <ymap-marker
-                    :key="i"
-                    :marker-id="i"
-                    marker-type="placemark"
-                    :coords="item"
-                    :hint-content="place['title_'+$i18n.locale]"
-                    :icon="{color: 'green', glyph: 'cinema'}"
-                    cluster-name="1"
-                  ></ymap-marker>
-                </div>
+            <div class="row">
+              <div class="col-md-8">
+                <lingallery :iid.sync="currentId" :squareModeDektop="true" :responsive="true" :mobileHeight="250" :width="700" :items=galleries />
 
-              </yandex-map>
+              </div>
+              <div class="col-md-4">
+                <div class="guide-item__map">
+                  <yandex-map :coords="coords"
+                              zoom="10"
+                              ymap-class="ymap-style"
+                              map-type="map"
+                  >
+                    <div v-for="(item,i) in placemarks" class="my-4">
+                      <ymap-marker
+                        :key="i"
+                        :marker-id="i"
+                        marker-type="placemark"
+                        :coords="item"
+                        :hint-content="place['title_'+$i18n.locale]"
+                        :icon="{color: 'green', glyph: 'cinema'}"
+                        cluster-name="1"
+                      ></ymap-marker>
+                    </div>
+
+                  </yandex-map>
+                </div>
+              </div>
             </div>
+
           </div>
           <div class="guide-item__content">
             <ul class="guide-item__contact">
@@ -250,7 +258,7 @@
                     >
                     </v-textarea>
                     <div class="text-right">
-                      <v-btn @click="sendForm" v-if="forms.review && forms.review.length && forms.review.length < 1000" class="my-btn " style="height: 50px!important; width: 150px!important;">
+                      <v-btn @click="sendForm" v-if="forms.rating" class="my-btn " style="height: 50px!important; width: 150px!important;">
                         {{ $t('send') }}
                       </v-btn>
                     </div>
@@ -364,29 +372,71 @@
         </div>
         <div class="calendar__inner" v-if="place.events.length>0">
           <div class="calendar__item" v-for="(item,i) in place.events" :key="i">
-            <div class="calendar__item-img" :style="'background-image: url('+getImage(item.image)+');'">
-              <div class="calendar__item-day" v-if="item.workdays.length>0">
-                <div v-for="(day,index) in item.workdays" :key="index">
-                  <span>{{ $t('date') }} </span>{{day.date_start}} - {{day.date_end}}
-                </div>
+            <NuxtLink :to="'/events/' + item.alias">
+              <div class="calendar__item-img"
+                   :style="{'background':'linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('+getImage(item.image)+')'}">
 
-              </div>
-              <div class="calendar__item-time">
-                <div v-for="(day,index) in item.workdays" :key="index">
-                  <span>{{ $t('time') }} </span>{{day.time_start}} - {{day.time_end}}
+
+                <div class="calendar__item-day" v-if="item.workdays.length>0">
+                  <div v-for="(day,index) in item.workdays" :key="index">
+                    <small v-if="day.weekday.id == 1">{{day.weekday["title_" + $i18n.locale]}}</small>
+                    <span>{{ $t('date') }} </span>{{day.date_start}} - {{day.date_end}}
+                  </div>
+
+                </div>
+                <div class="calendar__item-time">
+                  <div v-for="(day,index) in item.workdays" :key="index">
+                    <span>{{ $t('time') }} </span>{{day.time_start}} - {{day.time_end}}
+                  </div>
                 </div>
               </div>
-            </div>
+            </NuxtLink>
             <div class="calendar__item-inner">
               <h4 class="calendar__item-title">
-                {{ item['title_'+$i18n.locale] }}
+                {{ truncateTitle(item['title_'+$i18n.locale],20) }}
               </h4>
               <div class="calendar__item-location">
                 {{ item.address }}
               </div>
               <p class="calendar__item-text" v-html="truncateTitle(item['description_'+$i18n.locale], 50)"></p>
-              <div class="calendar__btn-wrapper">
-                <NuxtLink class="calendar__item-btn mt-3" to="#">
+              <div class="calendar-page__btn-wrapper mt-3">
+                <v-dialog
+                  v-if="item.eventum"
+                  v-model="dialog"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <button class="calendar-page__item-btn"
+                            v-bind="attrs"
+                            v-on="on"
+                            style="color: white!important;"
+                            @click="eventum = item.eventum"
+                    >
+                      <span>{{ $t('buy') }}</span>
+                    </button>
+                  </template>
+
+                  <v-card>
+                    <v-card-text>
+                      <div id="modal-eventumCloseBtn" @click="dialog = false"
+                           style="float: right;height: 10px;width: 15px;cursor: pointer;position: absolute;right: 10px;top: 8px;">
+                        <svg version="1.1" x="0px" y="0px" viewBox="0 0 15 15" width="100%" height="100%">
+                          <rect fill="#000000" x="-1.8" y="6.2"
+                                transform="matrix(0.7071 0.7071 -0.7071 0.7071 7.5178 -3.1079)" width="18.6"
+                                height="2.7"></rect>
+                          <rect fill="#000000" x="-1.8" y="6.2"
+                                transform="matrix(-0.7071 0.7071 -0.7071 -0.7071 18.1391 7.5282)" width="18.6"
+                                height="2.7"></rect>
+                        </svg>
+                      </div>
+                      <iframe :src="getEventum(eventum)" style="height:573px;width:100%;"
+                              frameborder="0"></iframe>
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                  </v-card>
+                </v-dialog>
+                <NuxtLink class="calendar-page__item-link" :to="'/events/' + item.alias">
                   <span>{{ $t('more_info') }}</span>
                 </NuxtLink>
               </div>
@@ -434,6 +484,7 @@ export default {
         user_id:null,
         place_id:null
       },
+      eventum:null
     }
   },
   watch: {
@@ -533,7 +584,7 @@ export default {
         }
       })
       this.forms.review = "";
-      this.forms.rating = 0;
+      this.forms.rating = null;
     },
     //Пагинация отзывов
     async loadMore(){
