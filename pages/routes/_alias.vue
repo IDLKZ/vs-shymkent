@@ -215,6 +215,12 @@ export default {
 html {
   scroll-behavior: smooth;
 }
+.routes-item__map-point span{
+  &::before{
+    content: none!important;
+  }
+
+}
 .gallery-image{
   margin-top: 20px;
   margin-bottom: 20px;
@@ -227,7 +233,5 @@ html {
     height: auto;
   }
 }
-.routes-item__map-point span::before{
-  display: none!important;
-}
+
 </style>

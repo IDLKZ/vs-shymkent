@@ -882,7 +882,7 @@
               <div class="news__item-date">
                 {{ $t('published') }}: <span>{{ item.created_at }}</span>
               </div>
-              <p class="news__item-text" v-html="truncate(item['description_'+$i18n.locale], 50)"></p>
+              <p class="news__item-text" v-html="truncate(item['title_'+$i18n.locale], 50)"></p>
             </NuxtLink>
           </div>
         </div>
