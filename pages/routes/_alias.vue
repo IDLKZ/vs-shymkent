@@ -228,6 +228,6 @@ html {
   }
 }
 .routes-item__map-point span::before{
-  top: 10%!important;
+  display: none!important;
 }
 </style>
