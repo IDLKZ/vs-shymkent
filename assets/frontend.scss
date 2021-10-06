@@ -628,3 +628,20 @@ blockquote {
     max-height: 200px!important;
   }
 }
+.routes-item__map-point{
+  height: auto!important;
+  list-style: none!important;
+  padding: 15px;
+}
+.routes-item__map-point span::before{
+  background-color: #c42313;
+}
+.routes-item__map-point.active{
+  a{
+    color: white!important;
+  }
+
+}
+.calendar-page__item-not-found{
+  color: #c42313;
+}

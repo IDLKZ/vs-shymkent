@@ -36,7 +36,7 @@
           <p class="routes-item__text" v-html="Route['description_'+$i18n.locale]"></p>
           <div class="routes-points" v-if="Route.places.length>0" id="pointNav">
             <div class="routes-points__item" v-for="(item,i) in Route.places" :key="i" :id="'pointId' + item.id">
-              <div class="routes-points__item-content">
+              <div class="routes-points__item-content my-10">
                 <h4 class="routes-points__item-name">
                   {{ item['title_'+$i18n.locale] }}
                 </h4>
@@ -226,5 +226,8 @@ html {
     width: 100vw;
     height: auto;
   }
+}
+.routes-item__map-point span::before{
+  top: 10%!important;
 }
 </style>
