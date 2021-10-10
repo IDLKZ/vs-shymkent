@@ -130,7 +130,7 @@ export default {
     }
     let galleries=[];
     try {
-      await $axios.$get('/moreNews').then((e)=>{
+      await $axios.$get('/moreNews?news_id='+New.id).then((e)=>{
         addNews = e;
       })
         .catch((e)=>{

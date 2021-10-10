@@ -39,7 +39,7 @@
 
             </v-carousel-item>
           </v-carousel>
-          <div class="blog-item__text">
+          <div class="blog-item__text blog_desc">
             <div v-html="blog['description_' + $i18n.locale]">
 
             </div>
@@ -231,8 +231,16 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .carousel {
   height: auto !important;
+}
+.blog_desc{
+  div{
+    ul{
+      padding-left: 20px!important;
+    }
+  }
+
 }
 </style>

@@ -175,12 +175,7 @@
                       <h5 class="guide-item__rating-item-title">
                         В {{rating.title}}
                       </h5>
-                      <div class="guide-item__rating-inner">
-                        <star-rating :rating="rating.rating"
-                                     star-size="15"
-                                     read-only='true'
-                        ></star-rating>
-                      </div>
+                      <star-rating :rating="rating.rating" star-size="16" :read-only="true" :round-start-rating="false" :show-rating="true"></star-rating>
                     </div>
                   </div>
                   <div v-else>--</div>
@@ -294,7 +289,7 @@
               </div>
               <!--Review End-->
             </ul>
-            <div class="guide-item__sameplace">
+            <div class="guide-item__sameplace" v-if="places.length">
               <h4 class="guide-item__sameplace-title">
                 {{ $t('place__p') }}
               </h4>
@@ -566,7 +561,7 @@ export default {
     current_page = place[1].current_page;
     last_page = place[1].last_page;
     place = place[0];
-    const places = await $axios.$get('/getPlace?count=2');
+    const places = await $axios.$get('/getPlace?count=2&place_id='+place.id);
     form.place_id = place.id
     if (store.$auth.$state.loggedIn){
       form.user_id = store.$auth.$state.user.user.id

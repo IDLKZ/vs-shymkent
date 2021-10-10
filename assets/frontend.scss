@@ -591,7 +591,7 @@ blockquote {
   border-left: #acadad solid 5px;
 }
 .v-application ul, .v-application ol{
-  padding-left: 0!important;
+  //padding-left: 0!important;
 }
 
 
@@ -643,3 +643,12 @@ blockquote {
 
 }
 
+.news-list__categories{
+  list-style: none!important;
+}
+.tour-agency__reviews-inner{
+  h1{
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}

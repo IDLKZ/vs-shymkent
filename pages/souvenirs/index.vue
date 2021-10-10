@@ -67,16 +67,16 @@
                     {{ $t('souvenirs_cost') }}
                   </h4>
                   <div class="souvenirs-page__list-categories-item">
-                    <input type="radio" value="[0,10000000]" v-model="price" id="route-tab3-4"> <label for="route-tab3-4">{{ $t('all') }}</label>
+                    <input type="checkbox" value="[0,10000000]" v-model="price" id="route-tab3-4"> <label for="route-tab3-4">{{ $t('all') }}</label>
                   </div>
                   <div class="souvenirs-page__list-categories-item">
-                    <input type="radio" value="[0,5000]" v-model="price" id="route-tab3-5"> <label for="route-tab3-5">{{ $t('filter_price_1') }}</label>
+                    <input type="checkbox" value="[0,5000]" v-model="price" id="route-tab3-5"> <label for="route-tab3-5">{{ $t('filter_price_1') }}</label>
                   </div>
                   <div class="souvenirs-page__list-categories-item">
-                    <input type="radio" value="[5000,50000]" v-model="price" id="route-tab3-6"> <label for="route-tab3-6">{{ $t('filter_price_2') }}</label>
+                    <input type="checkbox" value="[5000,50000]" v-model="price" id="route-tab3-6"> <label for="route-tab3-6">{{ $t('filter_price_2') }}</label>
                   </div>
                   <div class="souvenirs-page__list-categories-item">
-                    <input type="radio" value="[50000,10000000]" v-model="price" id="route-tab3-7"> <label for="route-tab3-7">{{ $t('filter_price_3') }}</label>
+                    <input type="checkbox" value="[50000,10000000]" v-model="price" id="route-tab3-7"> <label for="route-tab3-7">{{ $t('filter_price_3') }}</label>
                   </div>
                 </div>
               </div>
