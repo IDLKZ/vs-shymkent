@@ -95,7 +95,7 @@
             <h4 class="calendar__item-title">
               {{ truncateTitle(item['title_'+$i18n.locale],20) }}
             </h4>
-            <div class="d-flex justify-space-around my-2">
+            <div class="d-flex justify-space-around my-2" v-if="item.ratings_avg_rating && item.reviews_avg_rating">
               <div>
                 <small>{{$t('service_ratings')}}</small>
                 <div class="guide-item__rating-inner">

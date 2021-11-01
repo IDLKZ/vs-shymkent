@@ -27,11 +27,15 @@ export default {
     script: [
       {src: 'https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js',type: "text/javascript"},
       {src: 'https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js'},
+      {src: 'https://www.googletagmanager.com/gtag/js?id=G-R3JM0CETH6',async:true},
       {src: '/js/script.js'},
      {
         async:true,
         src: "/fullsee.js",
-
+      },
+      {
+        async:true,
+        src: "/chat.js",
       },
     ]
   },
