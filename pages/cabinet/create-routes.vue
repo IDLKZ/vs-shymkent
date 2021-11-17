@@ -11,8 +11,8 @@
         <button class="account__save-tabs-btn" @click="activeTrue"><span>{{ $t('cabinet_add_record') }}</span></button>
       </ul>
       <div :class="'account__save-tabs-content '+this.tabs[0].active">
-        <div class="calendar__inner__cabinet" v-if="routes.length>0">
-          <div class="calendar__item" v-for="(item,i) in routes" :key="i">
+        <div class="calendar__inner__cabinet" v-if="this.routes.length>0">
+          <div class="calendar__item" v-for="(item,i) in this.routes" :key="i">
             <div class="calendar__item-img" :style="'background-image: url('+getImage(item.image)+');'">
 
             </div>
@@ -44,8 +44,8 @@
         </div>
       </div>
       <div :class="'account__save-tabs-content '+this.tabs[1].active">
-        <div class="calendar__inner__cabinet" v-if="moderation.length>0">
-          <div class="calendar__item" v-for="(item,i) in moderation" :key="i">
+        <div class="calendar__inner__cabinet" v-if="this.moderation.length>0">
+          <div class="calendar__item" v-for="(item,i) in this.moderation" :key="i">
             <div class="calendar__item-img" :style="'background-image: url('+getImage(item.image)+');'">
 
             </div>
@@ -315,6 +315,8 @@ export default {
         }
       ],
       active: false,
+      routes: [],
+      moderation: [],
       categories: [],
       types: [],
       fails: [],
@@ -508,9 +510,9 @@ export default {
     }
     try{
       await $axios.$get("/cabinet/my-routes").then((e)=>{
-        form.organizator_id = e[0].id
-        routes = e[1]
-        moderation = e[2]
+        form.organizator_id = e[0] != null ? e[0].id : ''
+        routes = e[1].length>0 ? e[1] : []
+        moderation = e[2].length>0 ? e[2] : []
         types = e[3]
         categories = e[4]
         routes = Object.values(routes)
@@ -525,7 +527,7 @@ export default {
   },
 
   mounted() {
-    // console.log(this.moderation)
+    console.log(this.moderation)
   }
 }
 

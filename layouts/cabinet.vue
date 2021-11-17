@@ -108,6 +108,9 @@ export default {
         item.active = ''
         item.color= ''
       })
+      if (this.$auth.user.user.role_id === 6 || this.$auth.user.user.role_id === 7){
+        this.tabs[3].active = 'd-none';
+      }
       this.tabs[i].active = 'active'
       this.tabs[i].color = 'white!important'
     },
