@@ -104,7 +104,7 @@
               </div>
               <div v-else>
                 <li class="footer__contact-list-item">
-                  <a href="tel:77022695885">+7 702 269 5885</a>
+                  <a href="tel:77022695885">+7 771 949 92 10</a>
                 </li>
               </div>
               <div v-if="this.fts.emails.length>0">
