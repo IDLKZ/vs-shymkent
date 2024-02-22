@@ -1,3 +1,3 @@
 export const state = () => ({
-  image: "https://admin.visit-shymkent.kz/uploads/"
+  image: "http://127.0.0.1:8000/uploads/"
 })

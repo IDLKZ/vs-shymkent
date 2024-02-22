@@ -89,7 +89,7 @@
           </div>
           <div class="guide-list__items">
             <div class="guide-list__item" v-for="(item,i) in places" :key="i">
-              <div class="guide-list__item-img" :style="'background-image: url('+getImages(item.image)+');'">
+              <div class="guide-list__item-img" style="background-size: cover;background-position: center; max-width: 100%!important;" :style="'background-image: url('+getImages(item.image)+');'">
                 <NuxtLink :to="'/places/'+item.alias"></NuxtLink>
               </div>
               <div class="guide-list__item-info">

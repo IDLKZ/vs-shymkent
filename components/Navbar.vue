@@ -107,7 +107,7 @@
                  class="header__map"
                  :class="{ active: map }">
               <button class="header__map-btn"></button>
-              <a class="header__map-link popup-modal" href="https://www.3Dshymkent.kz">{{ $t('map_shym') }}</a>
+              <a class="header__map-link popup-modal" href="https://www.gov.kz/memleket/entities/shymkent">E-Akimat</a>
             </div>
             <div @mouseover="hoverEffect(null,true,null)"
                  class="header__search"
